@@ -1,0 +1,876 @@
+
+
+SQL> REM LIST OF CHARACTER FUNCTIONS : CONCAT LPAD RPAD LTRIM RTRIM TRIM    LENGTH TRANSLATE REPLACE SUBSTR ILLNSTR
+SQL> 
+SQL> SELECT LAST_NAME , LENGTH(LAST_NAME) FROM EMPLOYEES;
+
+LAST_NAME  LENGTH(LAST_NAME)                                                    
+---------- -----------------                                                    
+King                       4                                                    
+Kochhar                    7                                                    
+De Haan                    7                                                    
+Hunold                     6                                                    
+Ernst                      5                                                    
+Lorentz                    7                                                    
+Mourgos                    7                                                    
+Rajs                       4                                                    
+Davies                     6                                                    
+Matos                      5                                                    
+Vargas                     6                                                    
+
+LAST_NAME  LENGTH(LAST_NAME)                                                    
+---------- -----------------                                                    
+Zlotkey                    7                                                    
+Abel                       4                                                    
+Taylor                     6                                                    
+Grant                      5                                                    
+Whalen                     6                                                    
+Hartstein                  9                                                    
+Fay                        3                                                    
+Higgins                    7                                                    
+Gietz                      5                                                    
+
+20 rows selected.
+
+SQL> SET LINES 200 PAGES 24
+SQL> 
+SQL> R
+  1* SELECT LAST_NAME , LENGTH(LAST_NAME) FROM EMPLOYEES
+
+LAST_NAME  LENGTH(LAST_NAME)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+King                       4                                                                                                                                                                            
+Kochhar                    7                                                                                                                                                                            
+De Haan                    7                                                                                                                                                                            
+Hunold                     6                                                                                                                                                                            
+Ernst                      5                                                                                                                                                                            
+Lorentz                    7                                                                                                                                                                            
+Mourgos                    7                                                                                                                                                                            
+Rajs                       4                                                                                                                                                                            
+Davies                     6                                                                                                                                                                            
+Matos                      5                                                                                                                                                                            
+Vargas                     6                                                                                                                                                                            
+Zlotkey                    7                                                                                                                                                                            
+Abel                       4                                                                                                                                                                            
+Taylor                     6                                                                                                                                                                            
+Grant                      5                                                                                                                                                                            
+Whalen                     6                                                                                                                                                                            
+Hartstein                  9                                                                                                                                                                            
+Fay                        3                                                                                                                                                                            
+Higgins                    7                                                                                                                                                                            
+Gietz                      5                                                                                                                                                                            
+
+20 rows selected.
+
+SQL> REM ALL CHARACTER FUNCTION WORKS WITH ALL 3 BASIC DATA TYPES INPUT.
+SQL> 
+SQL> REM 1 CHARACTER 2 NUMBER 3 DATE
+SQL> 
+SQL> SELECT SALARY , LENGTH(SALARY) FROM EMPLOYEES;
+
+    SALARY LENGTH(SALARY)                                                                                                                                                                               
+---------- --------------                                                                                                                                                                               
+     24000              5                                                                                                                                                                               
+     17000              5                                                                                                                                                                               
+     17000              5                                                                                                                                                                               
+      9000              4                                                                                                                                                                               
+      6000              4                                                                                                                                                                               
+      4200              4                                                                                                                                                                               
+      5800              4                                                                                                                                                                               
+      3500              4                                                                                                                                                                               
+      3100              4                                                                                                                                                                               
+      2600              4                                                                                                                                                                               
+      2500              4                                                                                                                                                                               
+     10500              5                                                                                                                                                                               
+     11000              5                                                                                                                                                                               
+      8600              4                                                                                                                                                                               
+      7000              4                                                                                                                                                                               
+      4400              4                                                                                                                                                                               
+     13000              5                                                                                                                                                                               
+      6000              4                                                                                                                                                                               
+     12000              5                                                                                                                                                                               
+      8300              4                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , LENGTH(HIRE_DATE) FROM EMPLOYEES;
+
+HIRE_DATE LENGTH(HIRE_DATE)                                                                                                                                                                             
+--------- -----------------                                                                                                                                                                             
+17-JUL-87                 9                                                                                                                                                                             
+21-SEP-89                 9                                                                                                                                                                             
+13-JAN-93                 9                                                                                                                                                                             
+03-JAN-90                 9                                                                                                                                                                             
+21-MAY-91                 9                                                                                                                                                                             
+07-FEB-99                 9                                                                                                                                                                             
+16-NOV-99                 9                                                                                                                                                                             
+17-OCT-95                 9                                                                                                                                                                             
+29-JAN-97                 9                                                                                                                                                                             
+15-MAR-98                 9                                                                                                                                                                             
+09-JUL-98                 9                                                                                                                                                                             
+29-JAN-00                 9                                                                                                                                                                             
+11-MAY-96                 9                                                                                                                                                                             
+24-MAR-98                 9                                                                                                                                                                             
+24-MAY-99                 9                                                                                                                                                                             
+17-SEP-87                 9                                                                                                                                                                             
+17-FEB-96                 9                                                                                                                                                                             
+17-AUG-97                 9                                                                                                                                                                             
+07-JUN-94                 9                                                                                                                                                                             
+07-JUN-94                 9                                                                                                                                                                             
+
+20 rows selected.
+
+
+SQL> SELECT HIRE_DATE , LENGTH(HIRE_DATE) FROM EMPLOYEES;
+
+HIRE_DATE         LENGTH(HIRE_DATE)                                                                                                                                                                     
+----------------- -----------------                                                                                                                                                                     
+17-JULY     -1987                17                                                                                                                                                                     
+21-SEPTEMBER-1989                17                                                                                                                                                                     
+13-JANUARY  -1993                17                                                                                                                                                                     
+03-JANUARY  -1990                17                                                                                                                                                                     
+21-MAY      -1991                17                                                                                                                                                                     
+07-FEBRUARY -1999                17                                                                                                                                                                     
+16-NOVEMBER -1999                17                                                                                                                                                                     
+17-OCTOBER  -1995                17                                                                                                                                                                     
+29-JANUARY  -1997                17                                                                                                                                                                     
+15-MARCH    -1998                17                                                                                                                                                                     
+09-JULY     -1998                17                                                                                                                                                                     
+29-JANUARY  -2000                17                                                                                                                                                                     
+11-MAY      -1996                17                                                                                                                                                                     
+24-MARCH    -1998                17                                                                                                                                                                     
+24-MAY      -1999                17                                                                                                                                                                     
+17-SEPTEMBER-1987                17                                                                                                                                                                     
+17-FEBRUARY -1996                17                                                                                                                                                                     
+17-AUGUST   -1997                17                                                                                                                                                                     
+07-JUNE     -1994                17                                                                                                                                                                     
+07-JUNE     -1994                17                                                                                                                                                                     
+
+20 rows selected.
+
+
+
+
+SQL> REM MAXIMUM LENGTH SPELLING OF DAY : 9 FOR WEDNESDAY
+SQL> 
+SQL> REM TRANSLATE : REMOVES/REPLACES CHARACTER BY CHARACTER
+SQL> 
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN','ja') FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------------------------                                                                                                                                                                             
+TRANSLATE(HIRE_DATE,'JAN','JA')                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+17-JULY     -1987 FRIDAY                                                                                                                                                                                
+17-jULY     -1987 FRIDaY                                                                                                                                                                                
+                                                                                                                                                                                                        
+21-SEPTEMBER-1989 THURSDAY                                                                                                                                                                              
+21-SEPTEMBER-1989 THURSDaY                                                                                                                                                                              
+                                                                                                                                                                                                        
+13-JANUARY  -1993 WEDNESDAY                                                                                                                                                                             
+13-jaUaRY  -1993 WEDESDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+03-JANUARY  -1990 WEDNESDAY                                                                                                                                                                             
+03-jaUaRY  -1990 WEDESDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+21-MAY      -1991 TUESDAY                                                                                                                                                                               
+21-MaY      -1991 TUESDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+07-FEBRUARY -1999 SUNDAY                                                                                                                                                                                
+07-FEBRUaRY -1999 SUDaY                                                                                                                                                                                 
+                                                                                                                                                                                                        
+16-NOVEMBER -1999 TUESDAY                                                                                                                                                                               
+
+HIRE_DATE                                                                                                                                                                                               
+---------------------------                                                                                                                                                                             
+TRANSLATE(HIRE_DATE,'JAN','JA')                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+16-OVEMBER -1999 TUESDaY                                                                                                                                                                                
+                                                                                                                                                                                                        
+17-OCTOBER  -1995 TUESDAY                                                                                                                                                                               
+17-OCTOBER  -1995 TUESDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+29-JANUARY  -1997 WEDNESDAY                                                                                                                                                                             
+29-jaUaRY  -1997 WEDESDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+15-MARCH    -1998 SUNDAY                                                                                                                                                                                
+15-MaRCH    -1998 SUDaY                                                                                                                                                                                 
+                                                                                                                                                                                                        
+09-JULY     -1998 THURSDAY                                                                                                                                                                              
+09-jULY     -1998 THURSDaY                                                                                                                                                                              
+                                                                                                                                                                                                        
+29-JANUARY  -2000 SATURDAY                                                                                                                                                                              
+29-jaUaRY  -2000 SaTURDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+11-MAY      -1996 SATURDAY                                                                                                                                                                              
+11-MaY      -1996 SaTURDaY                                                                                                                                                                              
+
+HIRE_DATE                                                                                                                                                                                               
+---------------------------                                                                                                                                                                             
+TRANSLATE(HIRE_DATE,'JAN','JA')                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                                                                                        
+24-MARCH    -1998 TUESDAY                                                                                                                                                                               
+24-MaRCH    -1998 TUESDaY                                                                                                                                                                               
+                                                                                                                                                                                                        
+24-MAY      -1999 MONDAY                                                                                                                                                                                
+24-MaY      -1999 MODaY                                                                                                                                                                                 
+                                                                                                                                                                                                        
+17-SEPTEMBER-1987 THURSDAY                                                                                                                                                                              
+17-SEPTEMBER-1987 THURSDaY                                                                                                                                                                              
+                                                                                                                                                                                                        
+17-FEBRUARY -1996 SATURDAY                                                                                                                                                                              
+17-FEBRUaRY -1996 SaTURDaY                                                                                                                                                                              
+                                                                                                                                                                                                        
+17-AUGUST   -1997 SUNDAY                                                                                                                                                                                
+17-aUGUST   -1997 SUDaY                                                                                                                                                                                 
+                                                                                                                                                                                                        
+07-JUNE     -1994 TUESDAY                                                                                                                                                                               
+07-jUE     -1994 TUESDaY                                                                                                                                                                                
+                                                                                                                                                                                                        
+
+HIRE_DATE                                                                                                                                                                                               
+---------------------------                                                                                                                                                                             
+TRANSLATE(HIRE_DATE,'JAN','JA')                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+07-JUNE     -1994 TUESDAY                                                                                                                                                                               
+07-jUE     -1994 TUESDaY                                                                                                                                                                                
+                                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> CONN SCOTT/TIGER
+Connected.
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN','ja') FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'JAN','JA')                                                                                                                                                               
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87 17-jUL-87                                                                                                                                                                                     
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13-ja-93                                                                                                                                                                                      
+03-JAN-90 03-ja-90                                                                                                                                                                                      
+21-MAY-91 21-MaY-91                                                                                                                                                                                     
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-OV-99                                                                                                                                                                                      
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29-ja-97                                                                                                                                                                                      
+15-MAR-98 15-MaR-98                                                                                                                                                                                     
+09-JUL-98 09-jUL-98                                                                                                                                                                                     
+29-JAN-00 29-ja-00                                                                                                                                                                                      
+11-MAY-96 11-MaY-96                                                                                                                                                                                     
+24-MAR-98 24-MaR-98                                                                                                                                                                                     
+24-MAY-99 24-MaY-99                                                                                                                                                                                     
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-aUG-97                                                                                                                                                                                     
+07-JUN-94 07-jU-94                                                                                                                                                                                      
+07-JUN-94 07-jU-94                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> REM 1787
+SQL> REM 2189
+SQL> 
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN') FROM EMPLOYEES;
+SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN') FROM EMPLOYEES
+                   *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN',) FROM EMPLOYEES;
+SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN',) FROM EMPLOYEES
+                                             *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN',NULL) FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'JAN',NULL)                                                                                                                                                               
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN','') FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'JAN','')                                                                                                                                                                 
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN',' ') FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'JAN','')                                                                                                                                                                 
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87 17- UL-87                                                                                                                                                                                     
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13- -93                                                                                                                                                                                       
+03-JAN-90 03- -90                                                                                                                                                                                       
+21-MAY-91 21-MY-91                                                                                                                                                                                      
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-OV-99                                                                                                                                                                                      
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29- -97                                                                                                                                                                                       
+15-MAR-98 15-MR-98                                                                                                                                                                                      
+09-JUL-98 09- UL-98                                                                                                                                                                                     
+29-JAN-00 29- -00                                                                                                                                                                                       
+11-MAY-96 11-MY-96                                                                                                                                                                                      
+24-MAR-98 24-MR-98                                                                                                                                                                                      
+24-MAY-99 24-MY-99                                                                                                                                                                                      
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-UG-97                                                                                                                                                                                      
+07-JUN-94 07- U-94                                                                                                                                                                                      
+07-JUN-94 07- U-94                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'*JAN','*') FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'*JAN','*')                                                                                                                                                               
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87 17-UL-87                                                                                                                                                                                      
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13--93                                                                                                                                                                                        
+03-JAN-90 03--90                                                                                                                                                                                        
+21-MAY-91 21-MY-91                                                                                                                                                                                      
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-OV-99                                                                                                                                                                                      
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29--97                                                                                                                                                                                        
+15-MAR-98 15-MR-98                                                                                                                                                                                      
+09-JUL-98 09-UL-98                                                                                                                                                                                      
+29-JAN-00 29--00                                                                                                                                                                                        
+11-MAY-96 11-MY-96                                                                                                                                                                                      
+24-MAR-98 24-MR-98                                                                                                                                                                                      
+24-MAY-99 24-MY-99                                                                                                                                                                                      
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-UG-97                                                                                                                                                                                      
+07-JUN-94 07-U-94                                                                                                                                                                                       
+07-JUN-94 07-U-94                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'JAN','january') FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'JAN','JANUARY')                                                                                                                                                          
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87 17-jUL-87                                                                                                                                                                                     
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13-jan-93                                                                                                                                                                                     
+03-JAN-90 03-jan-90                                                                                                                                                                                     
+21-MAY-91 21-MaY-91                                                                                                                                                                                     
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-nOV-99                                                                                                                                                                                     
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29-jan-97                                                                                                                                                                                     
+15-MAR-98 15-MaR-98                                                                                                                                                                                     
+09-JUL-98 09-jUL-98                                                                                                                                                                                     
+29-JAN-00 29-jan-00                                                                                                                                                                                     
+11-MAY-96 11-MaY-96                                                                                                                                                                                     
+24-MAR-98 24-MaR-98                                                                                                                                                                                     
+24-MAY-99 24-MaY-99                                                                                                                                                                                     
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-aUG-97                                                                                                                                                                                     
+07-JUN-94 07-jUn-94                                                                                                                                                                                     
+07-JUN-94 07-jUn-94                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM 1787
+SQL> REM 2189
+SQL> 
+SQL> SELECT HIRE_DATE , TRANSLATE(HIRE_DATE,'*-ABCDEFGHIJKLMNOPQRSTUVWXYZ','*') FROM EMPLOYEES;
+
+HIRE_DATE TRANSLATE(HIRE_DATE,'*-ABCDEFGHIJKLMNOPQRSTUVWXYZ','*')                                                                                                                                       
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87 1787                                                                                                                                                                                          
+21-SEP-89 2189                                                                                                                                                                                          
+13-JAN-93 1393                                                                                                                                                                                          
+03-JAN-90 0390                                                                                                                                                                                          
+21-MAY-91 2191                                                                                                                                                                                          
+07-FEB-99 0799                                                                                                                                                                                          
+16-NOV-99 1699                                                                                                                                                                                          
+17-OCT-95 1795                                                                                                                                                                                          
+29-JAN-97 2997                                                                                                                                                                                          
+15-MAR-98 1598                                                                                                                                                                                          
+09-JUL-98 0998                                                                                                                                                                                          
+29-JAN-00 2900                                                                                                                                                                                          
+11-MAY-96 1196                                                                                                                                                                                          
+24-MAR-98 2498                                                                                                                                                                                          
+24-MAY-99 2499                                                                                                                                                                                          
+17-SEP-87 1787                                                                                                                                                                                          
+17-FEB-96 1796                                                                                                                                                                                          
+17-AUG-97 1797                                                                                                                                                                                          
+07-JUN-94 0794                                                                                                                                                                                          
+07-JUN-94 0794                                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> REM REPLACE : REPLACES/REMOVES WORD BY WORD
+SQL> 
+SQL> SELECT HIRE_DATE , REPLACE(HIRE_DATE,'JAN','january') FROM EMPLOYEES;
+
+HIRE_DATE REPLACE(HIRE_DATE,'JAN','JANUARY')                                                                                                                                                            
+--------- ------------------------------------------------------------------------------------------------------------------------------                                                                
+17-JUL-87 17-JUL-87                                                                                                                                                                                     
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13-january-93                                                                                                                                                                                 
+03-JAN-90 03-january-90                                                                                                                                                                                 
+21-MAY-91 21-MAY-91                                                                                                                                                                                     
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-NOV-99                                                                                                                                                                                     
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29-january-97                                                                                                                                                                                 
+15-MAR-98 15-MAR-98                                                                                                                                                                                     
+09-JUL-98 09-JUL-98                                                                                                                                                                                     
+29-JAN-00 29-january-00                                                                                                                                                                                 
+11-MAY-96 11-MAY-96                                                                                                                                                                                     
+24-MAR-98 24-MAR-98                                                                                                                                                                                     
+24-MAY-99 24-MAY-99                                                                                                                                                                                     
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-AUG-97                                                                                                                                                                                     
+07-JUN-94 07-JUN-94                                                                                                                                                                                     
+07-JUN-94 07-JUN-94                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , REPLACE(HIRE_DATE,'JAN','01') FROM EMPLOYEES;
+
+HIRE_DATE REPLACE(HIRE_DATE,'JAN','01')                                                                                                                                                                 
+--------- ------------------------------------                                                                                                                                                          
+17-JUL-87 17-JUL-87                                                                                                                                                                                     
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13-01-93                                                                                                                                                                                      
+03-JAN-90 03-01-90                                                                                                                                                                                      
+21-MAY-91 21-MAY-91                                                                                                                                                                                     
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-NOV-99                                                                                                                                                                                     
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29-01-97                                                                                                                                                                                      
+15-MAR-98 15-MAR-98                                                                                                                                                                                     
+09-JUL-98 09-JUL-98                                                                                                                                                                                     
+29-JAN-00 29-01-00                                                                                                                                                                                      
+11-MAY-96 11-MAY-96                                                                                                                                                                                     
+24-MAR-98 24-MAR-98                                                                                                                                                                                     
+24-MAY-99 24-MAY-99                                                                                                                                                                                     
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-AUG-97                                                                                                                                                                                     
+07-JUN-94 07-JUN-94                                                                                                                                                                                     
+07-JUN-94 07-JUN-94                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , REPLACE(HIRE_DATE,'JAN','janu') FROM EMPLOYEES;
+
+HIRE_DATE REPLACE(HIRE_DATE,'JAN','JANU')                                                                                                                                                               
+--------- ------------------------------------------------------------------------                                                                                                                      
+17-JUL-87 17-JUL-87                                                                                                                                                                                     
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13-janu-93                                                                                                                                                                                    
+03-JAN-90 03-janu-90                                                                                                                                                                                    
+21-MAY-91 21-MAY-91                                                                                                                                                                                     
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-NOV-99                                                                                                                                                                                     
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29-janu-97                                                                                                                                                                                    
+15-MAR-98 15-MAR-98                                                                                                                                                                                     
+09-JUL-98 09-JUL-98                                                                                                                                                                                     
+29-JAN-00 29-janu-00                                                                                                                                                                                    
+11-MAY-96 11-MAY-96                                                                                                                                                                                     
+24-MAR-98 24-MAR-98                                                                                                                                                                                     
+24-MAY-99 24-MAY-99                                                                                                                                                                                     
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-AUG-97                                                                                                                                                                                     
+07-JUN-94 07-JUN-94                                                                                                                                                                                     
+07-JUN-94 07-JUN-94                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , REPLACE(HIRE_DATE,'J','01') FROM EMPLOYEES;
+
+HIRE_DATE REPLACE(HIRE_DATE,'J','01')                                                                                                                                                                   
+--------- ------------------------------------                                                                                                                                                          
+17-JUL-87 17-01UL-87                                                                                                                                                                                    
+21-SEP-89 21-SEP-89                                                                                                                                                                                     
+13-JAN-93 13-01AN-93                                                                                                                                                                                    
+03-JAN-90 03-01AN-90                                                                                                                                                                                    
+21-MAY-91 21-MAY-91                                                                                                                                                                                     
+07-FEB-99 07-FEB-99                                                                                                                                                                                     
+16-NOV-99 16-NOV-99                                                                                                                                                                                     
+17-OCT-95 17-OCT-95                                                                                                                                                                                     
+29-JAN-97 29-01AN-97                                                                                                                                                                                    
+15-MAR-98 15-MAR-98                                                                                                                                                                                     
+09-JUL-98 09-01UL-98                                                                                                                                                                                    
+29-JAN-00 29-01AN-00                                                                                                                                                                                    
+11-MAY-96 11-MAY-96                                                                                                                                                                                     
+24-MAR-98 24-MAR-98                                                                                                                                                                                     
+24-MAY-99 24-MAY-99                                                                                                                                                                                     
+17-SEP-87 17-SEP-87                                                                                                                                                                                     
+17-FEB-96 17-FEB-96                                                                                                                                                                                     
+17-AUG-97 17-AUG-97                                                                                                                                                                                     
+07-JUN-94 07-01UN-94                                                                                                                                                                                    
+07-JUN-94 07-01UN-94                                                                                                                                                                                    
+
+20 rows selected.
+
+SQL> SELECT TRANSLATE('ORACLE','O','MI') FROM DUAL;
+
+TRANSL                                                                                                                                                                                                  
+------                                                                                                                                                                                                  
+MRACLE                                                                                                                                                                                                  
+
+SQL> SELECT REPLACE('ORACLE','O','MI') FROM DUAL;
+
+REPLACE                                                                                                                                                                                                 
+-------                                                                                                                                                                                                 
+MIRACLE                                                                                                                                                                                                 
+
+SQL> SELECT REPLACE(TRANSLATE('ORACLE','O','MI'),'CLE','KAL') FROM DUAL;
+
+REPLAC                                                                                                                                                                                                  
+------                                                                                                                                                                                                  
+MRAKAL                                                                                                                                                                                                  
+
+SQL> REM SUBSTR : SUB MEANS PART
+SQL> 
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',7,4) FROM DUAL;
+
+SUBS                                                                                                                                                                                                    
+----                                                                                                                                                                                                    
+Shiv                                                                                                                                                                                                    
+
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',11,3) FROM DUAL;
+
+SUB                                                                                                                                                                                                     
+---                                                                                                                                                                                                     
+Ram                                                                                                                                                                                                     
+
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',14) FROM DUAL;
+
+SUBSTR('                                                                                                                                                                                                
+--------                                                                                                                                                                                                
+Krishnan                                                                                                                                                                                                
+
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',1,6) FROM DUAL;
+
+SUBSTR                                                                                                                                                                                                  
+------                                                                                                                                                                                                  
+Laxman                                                                                                                                                                                                  
+
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',-8,5) FROM DUAL;
+
+SUBST                                                                                                                                                                                                   
+-----                                                                                                                                                                                                   
+Krish                                                                                                                                                                                                   
+
+SQL> REM NEGATIVE : ShivRam
+SQL> 
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',-15,7) FROM DUAL;
+
+SUBSTR(                                                                                                                                                                                                 
+-------                                                                                                                                                                                                 
+ShivRam                                                                                                                                                                                                 
+
+SQL> SELECT SUBSTR('LaxmanShivRamKrishnan',7,7) FROM DUAL;
+
+SUBSTR(                                                                                                                                                                                                 
+-------                                                                                                                                                                                                 
+ShivRam                                                                                                                                                                                                 
+
+SQL> REM RAMKRISHNA
+SQL> 
+SQL> REM RAMKRISHNA : LaxmanShivRamKrishnan
+SQL> 
+SQL> SELECT UPPER(SUBSTR('LaxmanShivRamKrishnan',11,10)) FROM DUAL;
+
+UPPER(SUBS                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+RAMKRISHNA                                                                                                                                                                                              
+
+SQL> SELECT SUBSTR(UPPER('LaxmanShivRamKrishnan'),11,10)) FROM DUAL;
+SELECT SUBSTR(UPPER('LaxmanShivRamKrishnan'),11,10)) FROM DUAL
+                                                   *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT SUBSTR(UPPER('LaxmanShivRamKrishnan'),11,10) FROM DUAL;
+
+SUBSTR(UPP                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+RAMKRISHNA                                                                                                                                                                                              
+
+SQL> REM INSTR : TO FIND POSITION OF STRING/WORD WITHIN ANOTHER STRING/WORD
+SQL> 
+SQL> SELECT INSTR('NEELKAMAL','A') FROM DUAL;
+
+INSTR('NEELKAMAL','A')                                                                                                                                                                                  
+----------------------                                                                                                                                                                                  
+                     6                                                                                                                                                                                  
+
+SQL> SELECT INSTR('NEELKAMAL','L') FROM DUAL;
+
+INSTR('NEELKAMAL','L')                                                                                                                                                                                  
+----------------------                                                                                                                                                                                  
+                     4                                                                                                                                                                                  
+
+SQL> SELECT INSTR('NEELKAMAL','L',6) FROM DUAL;
+
+INSTR('NEELKAMAL','L',6)                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                       9                                                                                                                                                                                
+
+SQL> SELECT INSTR('NEELKAMAL','X',3) FROM DUAL;
+
+INSTR('NEELKAMAL','X',3)                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                       0                                                                                                                                                                                
+
+SQL> SELECT INSTR('NEELKAMAL','L',-2) FROM DUAL;
+
+INSTR('NEELKAMAL','L',-2)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        4                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','L',3,2) FROM DUAL;
+
+INSTR('NEELKAMAL','L',3,2)                                                                                                                                                                              
+--------------------------                                                                                                                                                                              
+                         9                                                                                                                                                                              
+
+SQL> SELECT INSTR('NEELKAMAL','L',2,3) FROM DUAL;
+
+INSTR('NEELKAMAL','L',2,3)                                                                                                                                                                              
+--------------------------                                                                                                                                                                              
+                         0                                                                                                                                                                              
+
+SQL> SELECT INSTR('NEELKAMAL','AMAL') FROM DUAL;
+
+INSTR('NEELKAMAL','AMAL')                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        6                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','RAM') FROM DUAL;
+
+INSTR('NEELKAMAL','RAM')                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                       0                                                                                                                                                                                
+
+SQL> SELECT INSTR('NEELKAMAL','A',-2,2) FROM DUAL;
+
+INSTR('NEELKAMAL','A',-2,2)                                                                                                                                                                             
+---------------------------                                                                                                                                                                             
+                          6                                                                                                                                                                             
+
+SQL> SELECT INSTR('NEELKAMAL','L',-2,2) FROM DUAL;
+
+INSTR('NEELKAMAL','L',-2,2)                                                                                                                                                                             
+---------------------------                                                                                                                                                                             
+                          0                                                                                                                                                                             
+
+SQL> SELECT INSTR('NEELKAMAL','L',-1,2) FROM DUAL;
+
+INSTR('NEELKAMAL','L',-1,2)                                                                                                                                                                             
+---------------------------                                                                                                                                                                             
+                          4                                                                                                                                                                             
+
+SQL> SELECT INSTR('NEELKAMAL','L',-1) FROM DUAL;
+
+INSTR('NEELKAMAL','L',-1)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        9                                                                                                                                                                               
+
+SQL> SELECT FIRST_NAME , LAST_NAME , EMAIL FROM EMPLOYEES;
+
+FIRST_NAME LAST_NAME  EMAIL                                                                                                                                                                             
+---------- ---------- ----------                                                                                                                                                                        
+Steven     King       SKING                                                                                                                                                                             
+Neena      Kochhar    NKOCHHAR                                                                                                                                                                          
+Lex        De Haan    LDEHAAN                                                                                                                                                                           
+Alexander  Hunold     AHUNOLD                                                                                                                                                                           
+Bruce      Ernst      BERNST                                                                                                                                                                            
+Diana      Lorentz    DLORENTZ                                                                                                                                                                          
+Kevin      Mourgos    KMOURGOS                                                                                                                                                                          
+Trenna     Rajs       TRAJS                                                                                                                                                                             
+Curtis     Davies     CDAVIES                                                                                                                                                                           
+Randall    Matos      RMATOS                                                                                                                                                                            
+Peter      Vargas     PVARGAS                                                                                                                                                                           
+Eleni      Zlotkey    EZLOTKEY                                                                                                                                                                          
+Ellen      Abel       EABEL                                                                                                                                                                             
+Jonathon   Taylor     JTAYLOR                                                                                                                                                                           
+Kimerely   Grant      KGRANT                                                                                                                                                                            
+Jennifer   Whalen     JWAHLEN                                                                                                                                                                           
+Michael    Hartstein  MHARTSTE                                                                                                                                                                          
+Pat        Fay        PFAY                                                                                                                                                                              
+Shelley    Higgins    SHIGGINS                                                                                                                                                                          
+William    Gietz      WGIETZ                                                                                                                                                                            
+
+20 rows selected.
+
+SQL> REM EMAIL :
+SQL> 
+SQL> SELECT FIRST_NAME , LAST_NAME , EMAIL , UPPER(SUBSTR(FIRST_NAME,1,1)||SUBSTR(REPLACE(LAST_NAME,' '),1,7)) NEW_EMAIL FROM EMPLOYEES;
+
+FIRST_NAME LAST_NAME  EMAIL      NEW_EMAIL                                                                                                                                                              
+---------- ---------- ---------- --------------------------------                                                                                                                                       
+Steven     King       SKING      SKING                                                                                                                                                                  
+Neena      Kochhar    NKOCHHAR   NKOCHHAR                                                                                                                                                               
+Lex        De Haan    LDEHAAN    LDEHAAN                                                                                                                                                                
+Alexander  Hunold     AHUNOLD    AHUNOLD                                                                                                                                                                
+Bruce      Ernst      BERNST     BERNST                                                                                                                                                                 
+Diana      Lorentz    DLORENTZ   DLORENTZ                                                                                                                                                               
+Kevin      Mourgos    KMOURGOS   KMOURGOS                                                                                                                                                               
+Trenna     Rajs       TRAJS      TRAJS                                                                                                                                                                  
+Curtis     Davies     CDAVIES    CDAVIES                                                                                                                                                                
+Randall    Matos      RMATOS     RMATOS                                                                                                                                                                 
+Peter      Vargas     PVARGAS    PVARGAS                                                                                                                                                                
+Eleni      Zlotkey    EZLOTKEY   EZLOTKEY                                                                                                                                                               
+Ellen      Abel       EABEL      EABEL                                                                                                                                                                  
+Jonathon   Taylor     JTAYLOR    JTAYLOR                                                                                                                                                                
+Kimerely   Grant      KGRANT     KGRANT                                                                                                                                                                 
+Jennifer   Whalen     JWAHLEN    JWHALEN                                                                                                                                                                
+Michael    Hartstein  MHARTSTE   MHARTSTE                                                                                                                                                               
+Pat        Fay        PFAY       PFAY                                                                                                                                                                   
+Shelley    Higgins    SHIGGINS   SHIGGINS                                                                                                                                                               
+William    Gietz      WGIETZ     WGIETZ                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> REM 87/Jul\17
+SQL> 
+SQL> REM 87/Jul\17 : DON'T USE ALTER SESSION.
+SQL> 
+SQL> REM 17-JUL-87  87/Jul\17
+SQL> REM 21-SEP-89  89/Sep\21
+SQL> 
+SQL> SELECT HIRE_DATE , SUBSTR(HIRE_DATE,8)||INITCAP(SUBSTR(HIRE_DATE,4,3))||SUBSTR(HIRE_DATE,1,2) NEW_HD FROM EMPLOYEES;
+
+HIRE_DATE NEW_HD                                                                                                                                                                                        
+--------- ----------------------------------------------------------------                                                                                                                              
+17-JUL-87 87Jul17                                                                                                                                                                                       
+21-SEP-89 89Sep21                                                                                                                                                                                       
+13-JAN-93 93Jan13                                                                                                                                                                                       
+03-JAN-90 90Jan03                                                                                                                                                                                       
+21-MAY-91 91May21                                                                                                                                                                                       
+07-FEB-99 99Feb07                                                                                                                                                                                       
+16-NOV-99 99Nov16                                                                                                                                                                                       
+17-OCT-95 95Oct17                                                                                                                                                                                       
+29-JAN-97 97Jan29                                                                                                                                                                                       
+15-MAR-98 98Mar15                                                                                                                                                                                       
+09-JUL-98 98Jul09                                                                                                                                                                                       
+29-JAN-00 00Jan29                                                                                                                                                                                       
+11-MAY-96 96May11                                                                                                                                                                                       
+24-MAR-98 98Mar24                                                                                                                                                                                       
+24-MAY-99 99May24                                                                                                                                                                                       
+17-SEP-87 87Sep17                                                                                                                                                                                       
+17-FEB-96 96Feb17                                                                                                                                                                                       
+17-AUG-97 97Aug17                                                                                                                                                                                       
+07-JUN-94 94Jun07                                                                                                                                                                                       
+07-JUN-94 94Jun07                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , SUBSTR(HIRE_DATE,8)||'/'||INITCAP(SUBSTR(HIRE_DATE,4,3))||'\'||SUBSTR(HIRE_DATE,1,2) NEW_HD FROM EMPLOYEES;
+
+HIRE_DATE NEW_HD                                                                                                                                                                                        
+--------- ------------------------------------------------------------------                                                                                                                            
+17-JUL-87 87/Jul\17                                                                                                                                                                                     
+21-SEP-89 89/Sep\21                                                                                                                                                                                     
+13-JAN-93 93/Jan\13                                                                                                                                                                                     
+03-JAN-90 90/Jan\03                                                                                                                                                                                     
+21-MAY-91 91/May\21                                                                                                                                                                                     
+07-FEB-99 99/Feb\07                                                                                                                                                                                     
+16-NOV-99 99/Nov\16                                                                                                                                                                                     
+17-OCT-95 95/Oct\17                                                                                                                                                                                     
+29-JAN-97 97/Jan\29                                                                                                                                                                                     
+15-MAR-98 98/Mar\15                                                                                                                                                                                     
+09-JUL-98 98/Jul\09                                                                                                                                                                                     
+29-JAN-00 00/Jan\29                                                                                                                                                                                     
+11-MAY-96 96/May\11                                                                                                                                                                                     
+24-MAR-98 98/Mar\24                                                                                                                                                                                     
+24-MAY-99 99/May\24                                                                                                                                                                                     
+17-SEP-87 87/Sep\17                                                                                                                                                                                     
+17-FEB-96 96/Feb\17                                                                                                                                                                                     
+17-AUG-97 97/Aug\17                                                                                                                                                                                     
+07-JUN-94 94/Jun\07                                                                                                                                                                                     
+07-JUN-94 94/Jun\07                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM LIST OF 14 CHARACTER FUNCTIONS : UPPER LOWER INITCAP CONCAT LPAD RPAD LTRIM RTRIM TRIM LENGTH TRANSLATE REPLACE SUBSTR INSTR
+SQL> 
+SQL> SPOOL OFF

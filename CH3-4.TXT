@@ -1,0 +1,228 @@
+SQL> 
+SQL> CL SCR
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                               
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                               
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                               
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                               
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                               
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                               
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                               
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                               
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                               
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                               
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                               
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                               
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                               
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                             
+        200 Jennifer   Whalen     JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                               
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                               
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                               
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                               
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                               
+
+20 rows selected.
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH AS SECOND LAST ALPHABET 'e' (DON'T USE LIKE)
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE SUBSTR(FIRST_NAME,2,1) = 'e';
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Kevin                                                                                                                                                                                                   
+Peter                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+
+SQL> REM FIRST_NAME MUST HAVE SECOND LAST CHARACTER 'i' AND LAST_NAME MUST HAVE 'i' ANY WHERE IN SPELLING.
+SQL> 
+SQL> REM FIRST_NAME MUST HAVE SECOND LAST CHARACTER 'i' OR LAST_NAME MUST HAVE 'i' ANY WHERE IN SPELLING.
+SQL> 
+SQL> REM FIRST_NAME MUST HAVE SECOND LAST CHARACTER 'i' OR LAST_NAME MUST HAVE 'i' ANY WHERE IN SPELLING. (DONT' USE LIKE)
+SQL> 
+SQL> SELECT FIRST_NAME , LAST_NAME FROM EMPLOYEES WHERE SUBSTR(FIRST_NAME,-2,1) = 'i' OR INSTR(LAST_NAME,'i') > 0;
+
+FIRST_NAME LAST_NAME                                                                                                                                                                                    
+---------- ----------                                                                                                                                                                                   
+Steven     King                                                                                                                                                                                         
+Kevin      Mourgos                                                                                                                                                                                      
+Curtis     Davies                                                                                                                                                                                       
+Michael    Hartstein                                                                                                                                                                                    
+Shelley    Higgins                                                                                                                                                                                      
+William    Gietz                                                                                                                                                                                        
+
+6 rows selected.
+
+SQL> REM DATE ARITHMETIC + DATE FUNCTIONS
+SQL> 
+SQL> REM LIST OF DATE FUNCTIONS : SYSDATE CURRENT_DATE ADD_MONTHS MONTHS_BETWEEN LAST_DAY NEXT_DAY TRUNC ROUND
+SQL> 
+SQL> SELECT MOD(20,6) FROM DUAL;
+
+ MOD(20,6)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT MOD(20.45,6) FROM DUAL;
+
+MOD(20.45,6)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+        2.45                                                                                                                                                                                            
+
+SQL> SELECT MOD(20.45,6.56) FROM DUAL;
+
+MOD(20.45,6.56)                                                                                                                                                                                         
+---------------                                                                                                                                                                                         
+            .77                                                                                                                                                                                         
+
+SQL> SELECT MOD(-20.45,6.56) FROM DUAL;
+
+MOD(-20.45,6.56)                                                                                                                                                                                        
+----------------                                                                                                                                                                                        
+            -.77                                                                                                                                                                                        
+
+SQL> SELECT MOD(20.45,-6.56) FROM DUAL;
+
+MOD(20.45,-6.56)                                                                                                                                                                                        
+----------------                                                                                                                                                                                        
+             .77                                                                                                                                                                                        
+
+SQL> REM SYSDATE : IT RETURNS SERVER MACHINE'S DATE AND TIME INFO.
+SQL> 
+SQL> REM CURRENT_DATE : IT RETURNS CLIENT/LOCAL MACHINE'S DATE AND TIME INFO.
+SQL> 
+SQL> 
+SQL> SELECT SYSDATE , CURRENT_DATE FROM DUAL;
+
+SYSDATE   CURRENT_D                                                                                                                                                                                     
+--------- ---------                                                                                                                                                                                     
+17-JUN-22 17-JUN-22                                                                                                                                                                                     
+
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-RRRR HH:MI.SS AM';
+
+Session altered.
+
+SQL> SELECT SYSDATE , CURRENT_DATE FROM DUAL;
+
+SYSDATE                 CURRENT_DATE                                                                                                                                                                    
+----------------------- -----------------------                                                                                                                                                         
+17-JUN-2022 04:40.25 PM 17-JUN-2022 04:40.25 PM                                                                                                                                                         
+
+SQL> REM DATE IS STORED IN 7 PARTS/COMPONENTS
+SQL> 
+SQL> REM CENTURY YEAR MONTH DATE HOUR(24) MINUTE SECOND
+SQL> 
+SQL> 
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'RRRR-MM-DD HH24:MI.SS';
+
+Session altered.
+
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+-------------------                                                                                                                                                                                     
+2022-06-17 16:45.17                                                                                                                                                                                     
+
+SQL> 
+SQL> REM CENTURY YEAR MONTH DATE HOUR(24) MINUTE SECOND
+SQL> 
+SQL> REM 20      22   06    17   16       45     17
+SQL> 
+SQL> 
+SQL> 
+SQL> REM WE CAN ADD/SUBTRACT ALL ABOVE 7 INTERVALS TO/FROM DATE
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 3 , SYSDATE - 2 FROM DUAL;
+
+SYSDATE             SYSDATE+3           SYSDATE-2                                                                                                                                                       
+------------------- ------------------- -------------------                                                                                                                                             
+2022-06-17 16:47.10 2022-06-20 16:47.10 2022-06-15 16:47.10                                                                                                                                             
+
+SQL> REM 1 DAY = 24 HOURS
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + (3/24) , SYSDATE - (2/24) FROM DUAL;
+
+SYSDATE             SYSDATE+(3/24)      SYSDATE-(2/24)                                                                                                                                                  
+------------------- ------------------- -------------------                                                                                                                                             
+2022-06-17 16:48.27 2022-06-17 19:48.27 2022-06-17 14:48.27                                                                                                                                             
+
+SQL> REM 1 HOUR = 60 MINUTES
+SQL> 
+SQL> REM 1 DAY = 24 * 60 MINUTES = 1440 MINUTES
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + (3/(24*60)) , SYSDATE - (2/1440) FROM DUAL;
+
+SYSDATE             SYSDATE+(3/(24*60)) SYSDATE-(2/1440)                                                                                                                                                
+------------------- ------------------- -------------------                                                                                                                                             
+2022-06-17 16:49.34 2022-06-17 16:52.34 2022-06-17 16:47.34                                                                                                                                             
+
+SQL> REM 1 MINUTE = 60 SECONDS
+SQL> 
+SQL> REM 1 HOUR = 60 * 60 SECONDS = 3600 SECONDS
+SQL> 
+SQL> REM 1 DAY = 24 * 60 * 60 SECONDS = 86400 SECONDS
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + (3/(24*60*60)) , SYSDATE - (2/86400) FROM DUAL;
+
+SYSDATE             SYSDATE+(3/(24*60*6 SYSDATE-(2/86400)                                                                                                                                               
+------------------- ------------------- -------------------                                                                                                                                             
+2022-06-17 16:50.54 2022-06-17 16:50.57 2022-06-17 16:50.52                                                                                                                                             
+
+SQL> REM 1 MONTH = ?? DAYS (28/29/30/31)
+SQL> 
+SQL> REM ADD_MONTHS : IT IS USED TO ADD/SUBTRACT MONTHS FROM DATE
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,3) , ADD_MONTHS(SYSDATE,-2) FROM DUAL;
+
+SYSDATE             ADD_MONTHS(SYSDATE, ADD_MONTHS(SYSDATE,                                                                                                                                             
+------------------- ------------------- -------------------                                                                                                                                             
+2022-06-17 16:52.29 2022-09-17 16:52.29 2022-04-17 16:52.29                                                                                                                                             
+
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR HH:MI.SS AM';
+
+Session altered.
+
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,3) , ADD_MONTHS(SYSDATE,-2) FROM DUAL;
+
+SYSDATE                       ADD_MONTHS(SYSDATE,3)         ADD_MONTHS(SYSDATE,-2)                                                                                                                      
+----------------------------- ----------------------------- -----------------------------                                                                                                               
+17-JUNE     -2022 04:53.08 PM 17-SEPTEMBER-2022 04:53.08 PM 17-APRIL    -2022 04:53.08 PM                                                                                                               
+
+SQL> REM 1 YEAR = 12 MONTHS
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12) , ADD_MONTHS(SYSDATE,-12) FROM DUAL;
+
+SYSDATE                       ADD_MONTHS(SYSDATE,12)        ADD_MONTHS(SYSDATE,-12)                                                                                                                     
+----------------------------- ----------------------------- -----------------------------                                                                                                               
+17-JUNE     -2022 04:53.43 PM 17-JUNE     -2023 04:53.43 PM 17-JUNE     -2021 04:53.43 PM                                                                                                               
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12*5) , ADD_MONTHS(SYSDATE,-12*3) FROM DUAL;
+
+SYSDATE                       ADD_MONTHS(SYSDATE,12*5)      ADD_MONTHS(SYSDATE,-12*3)                                                                                                                   
+----------------------------- ----------------------------- -----------------------------                                                                                                               
+17-JUNE     -2022 04:54.35 PM 17-JUNE     -2027 04:54.35 PM 17-JUNE     -2019 04:54.35 PM                                                                                                               
+
+SQL> REM 1 CENTURY = 100 YEARS
+SQL> 
+SQL> REM 1 CENTURY = 100 YEARS = 1200 MONTHS
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12*100) , ADD_MONTHS(SYSDATE,-12*100) FROM DUAL;
+
+SYSDATE                       ADD_MONTHS(SYSDATE,12*100)    ADD_MONTHS(SYSDATE,-12*100)                                                                                                                 
+----------------------------- ----------------------------- -----------------------------                                                                                                               
+17-JUNE     -2022 04:55.03 PM 17-JUNE     -2122 04:55.03 PM 17-JUNE     -1922 04:55.03 PM                                                                                                               
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12*100*2) , ADD_MONTHS(SYSDATE,-12*100*3) FROM DUAL;
+
+SYSDATE                       ADD_MONTHS(SYSDATE,12*100*2)  ADD_MONTHS(SYSDATE,-12*100*3)                                                                                                               
+----------------------------- ----------------------------- -----------------------------                                                                                                               
+17-JUNE     -2022 04:55.17 PM 17-JUNE     -2222 04:55.17 PM 17-JUNE     -1722 04:55.17 PM                                                                                                               
+
+SQL> SPOOL OFF

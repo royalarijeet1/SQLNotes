@@ -1,0 +1,339 @@
+SQL> 
+SQL> REM DISPLAY SALARY IN FORMAT SPECIFIED : @24|000*00 (USING 3 PARAMETERS)
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , TO_CHAR(SALARY,'L99G999D00','NLS_CURRENCY=@ NLS_NUMERIC_CHARACTERS=|*') FROM EMPLOYEES;
+
+FIRST_NAME TO_CHAR(SALARY,'L99G                                                                                                                                                                         
+---------- --------------------                                                                                                                                                                         
+Steven               @24*000|00                                                                                                                                                                         
+Neena                @17*000|00                                                                                                                                                                         
+Lex                  @17*000|00                                                                                                                                                                         
+Alexander             @9*000|00                                                                                                                                                                         
+Bruce                 @6*000|00                                                                                                                                                                         
+Diana                 @4*200|00                                                                                                                                                                         
+Kevin                 @5*800|00                                                                                                                                                                         
+Trenna                @3*500|00                                                                                                                                                                         
+Curtis                @3*100|00                                                                                                                                                                         
+Randall               @2*600|00                                                                                                                                                                         
+Peter                 @2*500|00                                                                                                                                                                         
+Eleni                @10*500|00                                                                                                                                                                         
+Ellen                @11*000|00                                                                                                                                                                         
+Jonathon              @8*600|00                                                                                                                                                                         
+Kimerely              @7*000|00                                                                                                                                                                         
+Jennifer              @4*400|00                                                                                                                                                                         
+Michael              @13*000|00                                                                                                                                                                         
+Pat                   @6*000|00                                                                                                                                                                         
+Shelley              @12*000|00                                                                                                                                                                         
+William               @8*300|00                                                                                                                                                                         
+
+20 rows selected.
+
+SQL> CL SCR
+
+SQL> REM TO_CHAR : FOR DISPLAYING DATE VALUES IN NON-DEFAULT / USER DEFINED FORMATS.
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : D DD DDD DY DAY dy day Dy Day
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : MM RM MON MONTH mon month Mon Month
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : Y YY YYY YYYY RR RRRR YEAR
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : SP TH FM FX
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : Q J W WW
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : HH HH12 HH24 MI SS SSSSS
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : AM PM am pm Am Pm A.M. P.M. a.m. p.m.
+SQL> 
+SQL> 
+SQL> ALTER SESSION SET NLS_dATE_FORMAT = 'DD-MONTH-RRRR HH:MI.SS AM';
+
+Session altered.
+
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'D DD DDD DY DAY dy day Dy Day') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'DDDDDDDYDAYDYDAYDYDAY')                                                                                                                                  
+----------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------            
+01-JULY     -2022 04:18.52 PM 6 01 182 FRI FRIDAY    fri friday    Fri Friday                                                                                                                           
+
+SQL> REM WEDNESDAY : 9 CHARACTERS
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'MM RM MON MONTH mon month Mon Month') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'MMRMMONMONTHMONMONTHMONMONTH')                                                                                                                           
+----------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------             
+01-JULY     -2022 04:22.00 PM 07 VII  JUL JULY      jul july      Jul July                                                                                                                              
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'MM RM Rm rm MON MONTH mon month Mon Month') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'MMRMRMRMMONMONTHMONMONTHMONMONTH')                                                                                                                       
+----------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------   
+01-JULY     -2022 04:22.14 PM 07 VII  Vii  vii  JUL JULY      jul july      Jul July                                                                                                                    
+
+SQL> REM SEPTEMBER : 9 CHARACTERS
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'Y YY YYY YYYY RR RRRR YEAR') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'YYYYYYYYYYRRRRRRYEAR')                                                                                                                                   
+----------------------------- ----------------------------------------------------------------                                                                                                          
+01-JULY     -2022 04:23.41 PM 2 22 022 2022 22 2022 TWENTY TWENTY-TWO                                                                                                                                   
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'DD DDSP DDTH DDSPTH DDTHSP ddTHSP') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'DDDDSPDDTHDDSPTHDDTHSPDDTHSP')                                                                                                                           
+----------------------------- -----------------------------------------------------------------                                                                                                         
+01-JULY     -2022 04:25.06 PM 01 ONE 01ST FIRST FIRST first                                                                                                                                             
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'month MONTH Month mONTH MOnth mOnTh MoNtH') FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+-----------------------------                                                                                                                                                                           
+TO_CHAR(SYSDATE,'MONTHMONTHMONTHMONTHMONTHMONTHMONTH')                                                                                                                                                  
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+01-JULY     -2022 04:27.20 PM                                                                                                                                                                           
+july      JULY      July      july      JULY      july      July                                                                                                                                        
+                                                                                                                                                                                                        
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'DD-MONTH-RR') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'DD-MONTH-RR')                                                                                                                                            
+----------------------------- ------------------------------------------                                                                                                                                
+01-JULY     -2022 04:29.36 PM 01-JULY     -22                                                                                                                                                           
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-MONTH-RR') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'FMDD-MONTH-RR')                                                                                                                                          
+----------------------------- ------------------------------------------                                                                                                                                
+01-JULY     -2022 04:29.54 PM 1-JULY-22                                                                                                                                                                 
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'DD-FMMONTH-RR') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'DD-FMMONTH-RR')                                                                                                                                          
+----------------------------- ------------------------------------------                                                                                                                                
+01-JULY     -2022 04:30.07 PM 01-JULY-22                                                                                                                                                                
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-FMMONTH-RR') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'FMDD-FMMONTH-RR')                                                                                                                                        
+----------------------------- ------------------------------------------                                                                                                                                
+01-JULY     -2022 04:31.07 PM 1-JULY     -22                                                                                                                                                            
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-DEC-95';
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- -----------------------------                                                                                                                                                                
+Diana      07-FEBRUARY -1999 12:00.00 AM                                                                                                                                                                
+Kevin      16-NOVEMBER -1999 12:00.00 AM                                                                                                                                                                
+Curtis     29-JANUARY  -1997 12:00.00 AM                                                                                                                                                                
+Randall    15-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Peter      09-JULY     -1998 12:00.00 AM                                                                                                                                                                
+Eleni      29-JANUARY  -2000 12:00.00 AM                                                                                                                                                                
+Ellen      11-MAY      -1996 12:00.00 AM                                                                                                                                                                
+Jonathon   24-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Kimerely   24-MAY      -1999 12:00.00 AM                                                                                                                                                                
+Michael    17-FEBRUARY -1996 12:00.00 AM                                                                                                                                                                
+Pat        17-AUGUST   -1997 12:00.00 AM                                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-DEC-1995';
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- -----------------------------                                                                                                                                                                
+Diana      07-FEBRUARY -1999 12:00.00 AM                                                                                                                                                                
+Kevin      16-NOVEMBER -1999 12:00.00 AM                                                                                                                                                                
+Curtis     29-JANUARY  -1997 12:00.00 AM                                                                                                                                                                
+Randall    15-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Peter      09-JULY     -1998 12:00.00 AM                                                                                                                                                                
+Eleni      29-JANUARY  -2000 12:00.00 AM                                                                                                                                                                
+Ellen      11-MAY      -1996 12:00.00 AM                                                                                                                                                                
+Jonathon   24-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Kimerely   24-MAY      -1999 12:00.00 AM                                                                                                                                                                
+Michael    17-FEBRUARY -1996 12:00.00 AM                                                                                                                                                                
+Pat        17-AUGUST   -1997 12:00.00 AM                                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-DECember-1995';
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- -----------------------------                                                                                                                                                                
+Diana      07-FEBRUARY -1999 12:00.00 AM                                                                                                                                                                
+Kevin      16-NOVEMBER -1999 12:00.00 AM                                                                                                                                                                
+Curtis     29-JANUARY  -1997 12:00.00 AM                                                                                                                                                                
+Randall    15-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Peter      09-JULY     -1998 12:00.00 AM                                                                                                                                                                
+Eleni      29-JANUARY  -2000 12:00.00 AM                                                                                                                                                                
+Ellen      11-MAY      -1996 12:00.00 AM                                                                                                                                                                
+Jonathon   24-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Kimerely   24-MAY      -1999 12:00.00 AM                                                                                                                                                                
+Michael    17-FEBRUARY -1996 12:00.00 AM                                                                                                                                                                
+Pat        17-AUGUST   -1997 12:00.00 AM                                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-12-1995';
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-12-1995'
+                                                               *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-1995','DD-MM-RRRR');
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- -----------------------------                                                                                                                                                                
+Diana      07-FEBRUARY -1999 12:00.00 AM                                                                                                                                                                
+Kevin      16-NOVEMBER -1999 12:00.00 AM                                                                                                                                                                
+Curtis     29-JANUARY  -1997 12:00.00 AM                                                                                                                                                                
+Randall    15-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Peter      09-JULY     -1998 12:00.00 AM                                                                                                                                                                
+Eleni      29-JANUARY  -2000 12:00.00 AM                                                                                                                                                                
+Ellen      11-MAY      -1996 12:00.00 AM                                                                                                                                                                
+Jonathon   24-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Kimerely   24-MAY      -1999 12:00.00 AM                                                                                                                                                                
+Michael    17-FEBRUARY -1996 12:00.00 AM                                                                                                                                                                
+Pat        17-AUGUST   -1997 12:00.00 AM                                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-1995','DD-MM-RR');
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- -----------------------------                                                                                                                                                                
+Diana      07-FEBRUARY -1999 12:00.00 AM                                                                                                                                                                
+Kevin      16-NOVEMBER -1999 12:00.00 AM                                                                                                                                                                
+Curtis     29-JANUARY  -1997 12:00.00 AM                                                                                                                                                                
+Randall    15-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Peter      09-JULY     -1998 12:00.00 AM                                                                                                                                                                
+Eleni      29-JANUARY  -2000 12:00.00 AM                                                                                                                                                                
+Ellen      11-MAY      -1996 12:00.00 AM                                                                                                                                                                
+Jonathon   24-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Kimerely   24-MAY      -1999 12:00.00 AM                                                                                                                                                                
+Michael    17-FEBRUARY -1996 12:00.00 AM                                                                                                                                                                
+Pat        17-AUGUST   -1997 12:00.00 AM                                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-1995','FXDD-MM-RR');
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-1995','FXDD-MM-RR')
+                                                                       *
+ERROR at line 1:
+ORA-01830: date format picture ends before converting entire input string 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('&HD','FXDD-MM-RR');
+Enter value for hd: 31-12-95
+old   1: SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('&HD','FXDD-MM-RR')
+new   1: SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-95','FXDD-MM-RR')
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- -----------------------------                                                                                                                                                                
+Diana      07-FEBRUARY -1999 12:00.00 AM                                                                                                                                                                
+Kevin      16-NOVEMBER -1999 12:00.00 AM                                                                                                                                                                
+Curtis     29-JANUARY  -1997 12:00.00 AM                                                                                                                                                                
+Randall    15-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Peter      09-JULY     -1998 12:00.00 AM                                                                                                                                                                
+Eleni      29-JANUARY  -2000 12:00.00 AM                                                                                                                                                                
+Ellen      11-MAY      -1996 12:00.00 AM                                                                                                                                                                
+Jonathon   24-MARCH    -1998 12:00.00 AM                                                                                                                                                                
+Kimerely   24-MAY      -1999 12:00.00 AM                                                                                                                                                                
+Michael    17-FEBRUARY -1996 12:00.00 AM                                                                                                                                                                
+Pat        17-AUGUST   -1997 12:00.00 AM                                                                                                                                                                
+
+11 rows selected.
+
+SQL> /
+Enter value for hd: 31-12-1995
+old   1: SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('&HD','FXDD-MM-RR')
+new   1: SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-1995','FXDD-MM-RR')
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > TO_DATE('31-12-1995','FXDD-MM-RR')
+                                                                       *
+ERROR at line 1:
+ORA-01830: date format picture ends before converting entire input string 
+
+
+SQL> REM FX : FIXED FORMAT/EXACT FORMAT
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'Q J W WW') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDAT                                                                                                                                                            
+----------------------------- --------------                                                                                                                                                            
+01-JULY     -2022 04:38.24 PM 3 2459762 1 26                                                                                                                                                            
+
+SQL> REM 01-JAN-4712BC : BEFORE CHRIST
+SQL> 
+SQL> REM 01-JAN-4712BC : BEFORE CHRIST : JULIAN DAY
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'HHH                                                                                                                                                      
+----------------------------- --------------------                                                                                                                                                      
+01-JULY     -2022 04:41.02 PM 04 04 16 41 02 60062                                                                                                                                                      
+
+SQL> REM 1 DAY = 86400 SECONDS
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'HHH                                                                                                                                                      
+----------------------------- --------------------                                                                                                                                                      
+01-JULY     -2022 04:41.56 PM 04 04 16 41 56 60116                                                                                                                                                      
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'AM PM am pm Am Pm A.M. P.M. a.m. p.m.') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'AMPMAMPMAMPMA.M.P.M.                                                                                                                                     
+----------------------------- -------------------------------------                                                                                                                                     
+01-JULY     -2022 04:42.54 PM PM PM pm pm Pm Pm P.M. P.M. p.m. p.m.                                                                                                                                     
+
+SQL> REM MERIDIAN : 12NOON
+SQL> 
+SQL> REM AM : ANTI MERIDIAN / BEFORE 12NOON
+SQL> 
+SQL> REM PM : PAST MERIDIAN / AFTER 12NOON
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'DD DDSP DDTH DDSPTH DDTHSP ddTHSP Ddspth') FROM DUAL;
+
+SYSDATE                       TO_CHAR(SYSDATE,'DDDDSPDDTHDDSPTHDDTHSPDDTHSPDDSPTH')                                                                                                                     
+----------------------------- --------------------------------------------------------------------------------                                                                                          
+01-JULY     -2022 04:45.40 PM 01 ONE 01ST FIRST FIRST first First                                                                                                                                       
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Today is" ddspth "day of month" Month, YYYYSP') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"TODAYIS"DDSPTH"DAYOFMONTH"MONTH,YYYYSP')                                                                                                                                              
+---------------------------------------------------------------------------------------------------------------------                                                                                   
+Today is first day of month July     , TWO THOUSAND TWENTY-TWO                                                                                                                                          
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Today is" FMddspth "day of month" Month, YYYYSP') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"TODAYIS"FMDDSPTH"DAYOFMONTH"MONTH,YYYYSP')                                                                                                                                            
+---------------------------------------------------------------------------------------------------------------------                                                                                   
+Today is first day of month July, TWO THOUSAND TWENTY-TWO                                                                                                                                               
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Today is" FMddspth "day of month" Month, RRRRSP') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"TODAYIS"FMDDSPTH"DAYOFMONTH"MONTH,RRRRSP')                                                                                                                                            
+---------------------------------------------------------------------------------------------------------------------                                                                                   
+Today is first day of month July, TWO THOUSAND TWENTY-TWO                                                                                                                                               
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Today is" FMddspth "day of month" Month, RRSP') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"TODAYIS"FMDDSPTH"DAYOFMONTH"MONTH,RRSP')                                                                                                                                              
+----------------------------------------------------------------------------------------                                                                                                                
+Today is first day of month July, TWENTY-TWO                                                                                                                                                            
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Today is" FMddspth "day of month" Month, Year') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"TODAYIS"FMDDSPTH"DAYOFMONTH"MONTH,YEAR')                                                                                                                                              
+---------------------------------------------------------------------------------------------------------------------                                                                                   
+Today is first day of month July, Twenty Twenty-Two                                                                                                                                                     
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Rathyatra date is" FMddspth "day of month" Month, Year') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"RATHYATRADATEIS"FMDDSPTH"DAYOFMONTH"MONTH,YEAR')                                                                                                                                      
+------------------------------------------------------------------------------------------------------------------------------                                                                          
+Rathyatra date is first day of month July, Twenty Twenty-Two                                                                                                                                            
+
+SQL> SPOOL OFF

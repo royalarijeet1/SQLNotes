@@ -1,0 +1,378 @@
+SQL> 
+SQL> REM DATE FUNCTIONS : SYSDATE CURRENT_DATE ADD_MONTHS MONTHS_BETWEEN LAST_DAY     NEXT_DAY TRUNC ROUND
+SQL> 
+SQL> 
+SQL> REM NEXT_DAY :
+SQL> 
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR DAY';
+
+Session altered.
+
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+---------------------------                                                                                                                                                                             
+21-JUNE     -2022 TUESDAY                                                                                                                                                                               
+
+SQL> SELECT SYSDATE , NEXT_DAY(SYSDATE,'FRI') FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'FRI')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   24-JUNE     -2022 FRIDAY                                                                                                                                                    
+
+SQL> SELECT SYSDATE , NEXT_DAY(SYSDATE,'FRIDAY') FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'FRIDAY')                                                                                                                                                  
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   24-JUNE     -2022 FRIDAY                                                                                                                                                    
+
+SQL> SELECT SYSDATE , NEXT_DAY(SYSDATE,'frI') FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'FRI')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   24-JUNE     -2022 FRIDAY                                                                                                                                                    
+
+SQL> SELECT SYSDATE , NEXT_DAY(SYSDATE,'frId') FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'FRID')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   24-JUNE     -2022 FRIDAY                                                                                                                                                    
+
+SQL> SELECT SYSDATE , NEXT_DAY(SYSDATE,'TUE') FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'TUE')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   28-JUNE     -2022 TUESDAY                                                                                                                                                   
+
+SQL> REM COMPANY PAYS WEEKLY ON EVERY FRIDAY
+SQL> 
+SQL> REM FIND FIRST SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , NEXT_DAY(HIRE_DATE,'FRI') FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE                   NEXT_DAY(HIRE_DATE,'FRI')                                                                                                                                        
+---------- --------------------------- ---------------------------                                                                                                                                      
+Steven     17-JULY     -1987 FRIDAY    24-JULY     -1987 FRIDAY                                                                                                                                         
+Neena      21-SEPTEMBER-1989 THURSDAY  22-SEPTEMBER-1989 FRIDAY                                                                                                                                         
+Lex        13-JANUARY  -1993 WEDNESDAY 15-JANUARY  -1993 FRIDAY                                                                                                                                         
+Alexander  03-JANUARY  -1990 WEDNESDAY 05-JANUARY  -1990 FRIDAY                                                                                                                                         
+Bruce      21-MAY      -1991 TUESDAY   24-MAY      -1991 FRIDAY                                                                                                                                         
+Diana      07-FEBRUARY -1999 SUNDAY    12-FEBRUARY -1999 FRIDAY                                                                                                                                         
+Kevin      16-NOVEMBER -1999 TUESDAY   19-NOVEMBER -1999 FRIDAY                                                                                                                                         
+Trenna     17-OCTOBER  -1995 TUESDAY   20-OCTOBER  -1995 FRIDAY                                                                                                                                         
+Curtis     29-JANUARY  -1997 WEDNESDAY 31-JANUARY  -1997 FRIDAY                                                                                                                                         
+Randall    15-MARCH    -1998 SUNDAY    20-MARCH    -1998 FRIDAY                                                                                                                                         
+Peter      09-JULY     -1998 THURSDAY  10-JULY     -1998 FRIDAY                                                                                                                                         
+Eleni      29-JANUARY  -2000 SATURDAY  04-FEBRUARY -2000 FRIDAY                                                                                                                                         
+Ellen      11-MAY      -1996 SATURDAY  17-MAY      -1996 FRIDAY                                                                                                                                         
+Jonathon   24-MARCH    -1998 TUESDAY   27-MARCH    -1998 FRIDAY                                                                                                                                         
+Kimerely   24-MAY      -1999 MONDAY    28-MAY      -1999 FRIDAY                                                                                                                                         
+Jennifer   17-SEPTEMBER-1987 THURSDAY  18-SEPTEMBER-1987 FRIDAY                                                                                                                                         
+Michael    17-FEBRUARY -1996 SATURDAY  23-FEBRUARY -1996 FRIDAY                                                                                                                                         
+Pat        17-AUGUST   -1997 SUNDAY    22-AUGUST   -1997 FRIDAY                                                                                                                                         
+Shelley    07-JUNE     -1994 TUESDAY   10-JUNE     -1994 FRIDAY                                                                                                                                         
+William    07-JUNE     -1994 TUESDAY   10-JUNE     -1994 FRIDAY                                                                                                                                         
+
+20 rows selected.
+
+SQL> REM FIND 3rd SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , NEXT_DAY(HIRE_DATE + 7*2,'FRI') FROM EMPLOYEES;
+
+FIRST_NAME NEXT_DAY(HIRE_DATE+7*2,'FRI                                                                                                                                                                  
+---------- ---------------------------                                                                                                                                                                  
+Steven     07-AUGUST   -1987 FRIDAY                                                                                                                                                                     
+Neena      06-OCTOBER  -1989 FRIDAY                                                                                                                                                                     
+Lex        29-JANUARY  -1993 FRIDAY                                                                                                                                                                     
+Alexander  19-JANUARY  -1990 FRIDAY                                                                                                                                                                     
+Bruce      07-JUNE     -1991 FRIDAY                                                                                                                                                                     
+Diana      26-FEBRUARY -1999 FRIDAY                                                                                                                                                                     
+Kevin      03-DECEMBER -1999 FRIDAY                                                                                                                                                                     
+Trenna     03-NOVEMBER -1995 FRIDAY                                                                                                                                                                     
+Curtis     14-FEBRUARY -1997 FRIDAY                                                                                                                                                                     
+Randall    03-APRIL    -1998 FRIDAY                                                                                                                                                                     
+Peter      24-JULY     -1998 FRIDAY                                                                                                                                                                     
+Eleni      18-FEBRUARY -2000 FRIDAY                                                                                                                                                                     
+Ellen      31-MAY      -1996 FRIDAY                                                                                                                                                                     
+Jonathon   10-APRIL    -1998 FRIDAY                                                                                                                                                                     
+Kimerely   11-JUNE     -1999 FRIDAY                                                                                                                                                                     
+Jennifer   02-OCTOBER  -1987 FRIDAY                                                                                                                                                                     
+Michael    08-MARCH    -1996 FRIDAY                                                                                                                                                                     
+Pat        05-SEPTEMBER-1997 FRIDAY                                                                                                                                                                     
+Shelley    24-JUNE     -1994 FRIDAY                                                                                                                                                                     
+William    24-JUNE     -1994 FRIDAY                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM 28tH SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , NEXT_DAY(HIRE_DATE + 7*27,'FRI') FROM EMPLOYEES;
+
+FIRST_NAME NEXT_DAY(HIRE_DATE+7*27,'FR                                                                                                                                                                  
+---------- ---------------------------                                                                                                                                                                  
+Steven     29-JANUARY  -1988 FRIDAY                                                                                                                                                                     
+Neena      30-MARCH    -1990 FRIDAY                                                                                                                                                                     
+Lex        23-JULY     -1993 FRIDAY                                                                                                                                                                     
+Alexander  13-JULY     -1990 FRIDAY                                                                                                                                                                     
+Bruce      29-NOVEMBER -1991 FRIDAY                                                                                                                                                                     
+Diana      20-AUGUST   -1999 FRIDAY                                                                                                                                                                     
+Kevin      26-MAY      -2000 FRIDAY                                                                                                                                                                     
+Trenna     26-APRIL    -1996 FRIDAY                                                                                                                                                                     
+Curtis     08-AUGUST   -1997 FRIDAY                                                                                                                                                                     
+Randall    25-SEPTEMBER-1998 FRIDAY                                                                                                                                                                     
+Peter      15-JANUARY  -1999 FRIDAY                                                                                                                                                                     
+Eleni      11-AUGUST   -2000 FRIDAY                                                                                                                                                                     
+Ellen      22-NOVEMBER -1996 FRIDAY                                                                                                                                                                     
+Jonathon   02-OCTOBER  -1998 FRIDAY                                                                                                                                                                     
+Kimerely   03-DECEMBER -1999 FRIDAY                                                                                                                                                                     
+Jennifer   25-MARCH    -1988 FRIDAY                                                                                                                                                                     
+Michael    30-AUGUST   -1996 FRIDAY                                                                                                                                                                     
+Pat        27-FEBRUARY -1998 FRIDAY                                                                                                                                                                     
+Shelley    16-DECEMBER -1994 FRIDAY                                                                                                                                                                     
+William    16-DECEMBER -1994 FRIDAY                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM FIND NEXT SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , NEXT_DAY(SYSDATE ,'FRI') FROM EMPLOYEES;
+
+FIRST_NAME NEXT_DAY(SYSDATE,'FRI')                                                                                                                                                                      
+---------- ---------------------------                                                                                                                                                                  
+Steven     24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Neena      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Lex        24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Alexander  24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Bruce      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Diana      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Kevin      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Trenna     24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Curtis     24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Randall    24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Peter      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Eleni      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Ellen      24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Jonathon   24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Kimerely   24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Jennifer   24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Michael    24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Pat        24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Shelley    24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+William    24-JUNE     -2022 FRIDAY                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM FIND SECOND LAST SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , NEXT_DAY(SYSDATE ,'FRI')-7*2 FROM EMPLOYEES;
+
+FIRST_NAME NEXT_DAY(SYSDATE,'FRI')-7*2                                                                                                                                                                  
+---------- ---------------------------                                                                                                                                                                  
+Steven     10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Neena      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Lex        10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Alexander  10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Bruce      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Diana      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Kevin      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Trenna     10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Curtis     10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Randall    10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Peter      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Eleni      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Ellen      10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Jonathon   10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Kimerely   10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Jennifer   10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Michael    10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Pat        10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+Shelley    10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+William    10-JUNE     -2022 FRIDAY                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM COMPANY PAYS SALARY MONTHLY ON SECOND THURSDAY OF EACH MONTH.
+SQL> 
+SQL> REM FIND FIRST SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , NEXT_DAY(LAST_DAY(HIRE_DATE),'THU')+7 SECOND_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE                   SECOND_SALARY_DATE                                                                                                                                               
+---------- --------------------------- ---------------------------                                                                                                                                      
+Steven     17-JULY     -1987 FRIDAY    13-AUGUST   -1987 THURSDAY                                                                                                                                       
+Neena      21-SEPTEMBER-1989 THURSDAY  12-OCTOBER  -1989 THURSDAY                                                                                                                                       
+Lex        13-JANUARY  -1993 WEDNESDAY 11-FEBRUARY -1993 THURSDAY                                                                                                                                       
+Alexander  03-JANUARY  -1990 WEDNESDAY 08-FEBRUARY -1990 THURSDAY                                                                                                                                       
+Bruce      21-MAY      -1991 TUESDAY   13-JUNE     -1991 THURSDAY                                                                                                                                       
+Diana      07-FEBRUARY -1999 SUNDAY    11-MARCH    -1999 THURSDAY                                                                                                                                       
+Kevin      16-NOVEMBER -1999 TUESDAY   09-DECEMBER -1999 THURSDAY                                                                                                                                       
+Trenna     17-OCTOBER  -1995 TUESDAY   09-NOVEMBER -1995 THURSDAY                                                                                                                                       
+Curtis     29-JANUARY  -1997 WEDNESDAY 13-FEBRUARY -1997 THURSDAY                                                                                                                                       
+Randall    15-MARCH    -1998 SUNDAY    09-APRIL    -1998 THURSDAY                                                                                                                                       
+Peter      09-JULY     -1998 THURSDAY  13-AUGUST   -1998 THURSDAY                                                                                                                                       
+Eleni      29-JANUARY  -2000 SATURDAY  10-FEBRUARY -2000 THURSDAY                                                                                                                                       
+Ellen      11-MAY      -1996 SATURDAY  13-JUNE     -1996 THURSDAY                                                                                                                                       
+Jonathon   24-MARCH    -1998 TUESDAY   09-APRIL    -1998 THURSDAY                                                                                                                                       
+Kimerely   24-MAY      -1999 MONDAY    10-JUNE     -1999 THURSDAY                                                                                                                                       
+Jennifer   17-SEPTEMBER-1987 THURSDAY  08-OCTOBER  -1987 THURSDAY                                                                                                                                       
+Michael    17-FEBRUARY -1996 SATURDAY  14-MARCH    -1996 THURSDAY                                                                                                                                       
+Pat        17-AUGUST   -1997 SUNDAY    11-SEPTEMBER-1997 THURSDAY                                                                                                                                       
+Shelley    07-JUNE     -1994 TUESDAY   14-JULY     -1994 THURSDAY                                                                                                                                       
+William    07-JUNE     -1994 TUESDAY   14-JULY     -1994 THURSDAY                                                                                                                                       
+
+20 rows selected.
+
+SQL> select next_day(last_day(hire_date)+7,'thursday') from employees;
+
+NEXT_DAY(LAST_DAY(HIRE_DATE                                                                                                                                                                             
+---------------------------                                                                                                                                                                             
+13-AUGUST   -1987 THURSDAY                                                                                                                                                                              
+12-OCTOBER  -1989 THURSDAY                                                                                                                                                                              
+11-FEBRUARY -1993 THURSDAY                                                                                                                                                                              
+08-FEBRUARY -1990 THURSDAY                                                                                                                                                                              
+13-JUNE     -1991 THURSDAY                                                                                                                                                                              
+11-MARCH    -1999 THURSDAY                                                                                                                                                                              
+09-DECEMBER -1999 THURSDAY                                                                                                                                                                              
+09-NOVEMBER -1995 THURSDAY                                                                                                                                                                              
+13-FEBRUARY -1997 THURSDAY                                                                                                                                                                              
+09-APRIL    -1998 THURSDAY                                                                                                                                                                              
+13-AUGUST   -1998 THURSDAY                                                                                                                                                                              
+10-FEBRUARY -2000 THURSDAY                                                                                                                                                                              
+13-JUNE     -1996 THURSDAY                                                                                                                                                                              
+09-APRIL    -1998 THURSDAY                                                                                                                                                                              
+10-JUNE     -1999 THURSDAY                                                                                                                                                                              
+08-OCTOBER  -1987 THURSDAY                                                                                                                                                                              
+14-MARCH    -1996 THURSDAY                                                                                                                                                                              
+11-SEPTEMBER-1997 THURSDAY                                                                                                                                                                              
+14-JULY     -1994 THURSDAY                                                                                                                                                                              
+14-JULY     -1994 THURSDAY                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> REM COMPANY PAYS MONTHLY ON 4TH SATURDAY OF NEXT MONTH.
+SQL> 
+SQL> REM FIND 3rd SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE ,
+  2  
+SQL> SELECT FIRST_NAME , HIRE_DATE ,
+  2  NEXT_DAY(ADD_MONTHS(LAST_DAY(HIRE_DATE),2),'SAT')+7*3 "3rd SALARY DATE" FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE                   3rd SALARY DATE                                                                                                                                                  
+---------- --------------------------- ---------------------------                                                                                                                                      
+Steven     17-JULY     -1987 FRIDAY    24-OCTOBER  -1987 SATURDAY                                                                                                                                       
+Neena      21-SEPTEMBER-1989 THURSDAY  23-DECEMBER -1989 SATURDAY                                                                                                                                       
+Lex        13-JANUARY  -1993 WEDNESDAY 24-APRIL    -1993 SATURDAY                                                                                                                                       
+Alexander  03-JANUARY  -1990 WEDNESDAY 28-APRIL    -1990 SATURDAY                                                                                                                                       
+Bruce      21-MAY      -1991 TUESDAY   24-AUGUST   -1991 SATURDAY                                                                                                                                       
+Diana      07-FEBRUARY -1999 SUNDAY    22-MAY      -1999 SATURDAY                                                                                                                                       
+Kevin      16-NOVEMBER -1999 TUESDAY   26-FEBRUARY -2000 SATURDAY                                                                                                                                       
+Trenna     17-OCTOBER  -1995 TUESDAY   27-JANUARY  -1996 SATURDAY                                                                                                                                       
+Curtis     29-JANUARY  -1997 WEDNESDAY 26-APRIL    -1997 SATURDAY                                                                                                                                       
+Randall    15-MARCH    -1998 SUNDAY    27-JUNE     -1998 SATURDAY                                                                                                                                       
+Peter      09-JULY     -1998 THURSDAY  24-OCTOBER  -1998 SATURDAY                                                                                                                                       
+Eleni      29-JANUARY  -2000 SATURDAY  22-APRIL    -2000 SATURDAY                                                                                                                                       
+Ellen      11-MAY      -1996 SATURDAY  24-AUGUST   -1996 SATURDAY                                                                                                                                       
+Jonathon   24-MARCH    -1998 TUESDAY   27-JUNE     -1998 SATURDAY                                                                                                                                       
+Kimerely   24-MAY      -1999 MONDAY    28-AUGUST   -1999 SATURDAY                                                                                                                                       
+Jennifer   17-SEPTEMBER-1987 THURSDAY  26-DECEMBER -1987 SATURDAY                                                                                                                                       
+Michael    17-FEBRUARY -1996 SATURDAY  25-MAY      -1996 SATURDAY                                                                                                                                       
+Pat        17-AUGUST   -1997 SUNDAY    22-NOVEMBER -1997 SATURDAY                                                                                                                                       
+Shelley    07-JUNE     -1994 TUESDAY   24-SEPTEMBER-1994 SATURDAY                                                                                                                                       
+William    07-JUNE     -1994 TUESDAY   24-SEPTEMBER-1994 SATURDAY                                                                                                                                       
+
+20 rows selected.
+
+SQL> REM FIND SECOND LAST SALARY DATE
+SQL> 
+SQL> REM COMPANY PAYS MONTHLY ON 3rd Tuesday OF NEXT MONTH.
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE ,
+  2  NEXT_DAY(ADD_MONTHS(LAST_DAY(SYSDATE),-2),
+  3  
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE ,
+  2  NEXT_DAY(ADD_MONTHS(LAST_DAY(SYSDATE),-2),'TUE')+7*2 "SECOND LAST SALARY DATE"
+  3  FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE                   SECOND LAST SALARY DATE                                                                                                                                          
+---------- --------------------------- ---------------------------                                                                                                                                      
+Steven     17-JULY     -1987 FRIDAY    17-MAY      -2022 TUESDAY                                                                                                                                        
+Neena      21-SEPTEMBER-1989 THURSDAY  17-MAY      -2022 TUESDAY                                                                                                                                        
+Lex        13-JANUARY  -1993 WEDNESDAY 17-MAY      -2022 TUESDAY                                                                                                                                        
+Alexander  03-JANUARY  -1990 WEDNESDAY 17-MAY      -2022 TUESDAY                                                                                                                                        
+Bruce      21-MAY      -1991 TUESDAY   17-MAY      -2022 TUESDAY                                                                                                                                        
+Diana      07-FEBRUARY -1999 SUNDAY    17-MAY      -2022 TUESDAY                                                                                                                                        
+Kevin      16-NOVEMBER -1999 TUESDAY   17-MAY      -2022 TUESDAY                                                                                                                                        
+Trenna     17-OCTOBER  -1995 TUESDAY   17-MAY      -2022 TUESDAY                                                                                                                                        
+Curtis     29-JANUARY  -1997 WEDNESDAY 17-MAY      -2022 TUESDAY                                                                                                                                        
+Randall    15-MARCH    -1998 SUNDAY    17-MAY      -2022 TUESDAY                                                                                                                                        
+Peter      09-JULY     -1998 THURSDAY  17-MAY      -2022 TUESDAY                                                                                                                                        
+Eleni      29-JANUARY  -2000 SATURDAY  17-MAY      -2022 TUESDAY                                                                                                                                        
+Ellen      11-MAY      -1996 SATURDAY  17-MAY      -2022 TUESDAY                                                                                                                                        
+Jonathon   24-MARCH    -1998 TUESDAY   17-MAY      -2022 TUESDAY                                                                                                                                        
+Kimerely   24-MAY      -1999 MONDAY    17-MAY      -2022 TUESDAY                                                                                                                                        
+Jennifer   17-SEPTEMBER-1987 THURSDAY  17-MAY      -2022 TUESDAY                                                                                                                                        
+Michael    17-FEBRUARY -1996 SATURDAY  17-MAY      -2022 TUESDAY                                                                                                                                        
+Pat        17-AUGUST   -1997 SUNDAY    17-MAY      -2022 TUESDAY                                                                                                                                        
+Shelley    07-JUNE     -1994 TUESDAY   17-MAY      -2022 TUESDAY                                                                                                                                        
+William    07-JUNE     -1994 TUESDAY   17-MAY      -2022 TUESDAY                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT SYSDATE,ADD_MONTHS(NEXT_DAY(LAST_DAY(SYSDATE),'TUESDAY')+7*2,-2) FROM EMPLOYEES;
+
+SYSDATE                     ADD_MONTHS(NEXT_DAY(LAST_DA                                                                                                                                                 
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+21-JUNE     -2022 TUESDAY   19-MAY      -2022 THURSDAY                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT SYSDATE,(NEXT_DAY(LAST_DAY(SYSDATE),'TUESDAY')+7*2) FROM EMPLOYEES;
+
+SYSDATE                     (NEXT_DAY(LAST_DAY(SYSDATE)                                                                                                                                                 
+--------------------------- ---------------------------                                                                                                                                                 
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+21-JUNE     -2022 TUESDAY   19-JULY     -2022 TUESDAY                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SPOOL OFF

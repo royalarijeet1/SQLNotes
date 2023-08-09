@@ -1,0 +1,252 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM TYPES OF FUNCTIONS : 4 CONVERSION FUNCTIONS 5 GENERAL FUNCTIONS
+SQL> 
+SQL> REM TYPES OF GENERAL FUNCTIONS : 1 NULL RELATED 2 CONDITIONAL
+SQL> 
+SQL> REM LIST OF NULL RELATED FUNCTIONS : 1 NVL 2 NVL2 3 NULLIF 4 COALESCE
+SQL> 
+SQL> REM NVL
+SQL> 
+SQL> REM .15 COMMISSION_PCT
+SQL> 
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL(COMMISSION_PCT,.15) NEW_COMM_PCT FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NEW_COMM_PCT                                                              
+---------- -------------- ------------                                                              
+Steven                             .15                                                              
+Neena                              .15                                                              
+Lex                                .15                                                              
+Alexander                          .15                                                              
+Bruce                              .15                                                              
+Diana                              .15                                                              
+Kevin                              .15                                                              
+Trenna                             .15                                                              
+Curtis                             .15                                                              
+Randall                            .15                                                              
+Peter                              .15                                                              
+Eleni                  .2           .2                                                              
+Ellen                  .3           .3                                                              
+Jonathon               .3           .3                                                              
+Kimerely              .15          .15                                                              
+Jennifer                           .15                                                              
+Michael                            .15                                                              
+Pat                                .15                                                              
+Shelley                            .15                                                              
+William                            .15                                                              
+
+20 rows selected.
+
+SQL> REM NA
+SQL> 
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL(COMMISSION_PCT,'NA') NEW_COMM_PCT FROM EMPLOYEES;
+SELECT FIRST_NAME , COMMISSION_PCT , NVL(COMMISSION_PCT,'NA') NEW_COMM_PCT FROM EMPLOYEES
+                                                        *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL(TO_CHAR(COMMISSION_PCT),'NA') NEW_COMM_PCT FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NEW_COMM_PCT                                                              
+---------- -------------- ----------------------------------------                                  
+Steven                    NA                                                                        
+Neena                     NA                                                                        
+Lex                       NA                                                                        
+Alexander                 NA                                                                        
+Bruce                     NA                                                                        
+Diana                     NA                                                                        
+Kevin                     NA                                                                        
+Trenna                    NA                                                                        
+Curtis                    NA                                                                        
+Randall                   NA                                                                        
+Peter                     NA                                                                        
+Eleni                  .2 .2                                                                        
+Ellen                  .3 .3                                                                        
+Jonathon               .3 .3                                                                        
+Kimerely              .15 .15                                                                       
+Jennifer                  NA                                                                        
+Michael                   NA                                                                        
+Pat                       NA                                                                        
+Shelley                   NA                                                                        
+William                   NA                                                                        
+
+20 rows selected.
+
+SQL> REM NVL2
+SQL> 
+SQL> REM +.1  , .15
+SQL> 
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , COMMISSION_PCT + .1 , .15) FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NVL2(COMMISSION_PCT,COMMISSION_PCT+.1,.15)                                
+---------- -------------- ------------------------------------------                                
+Steven                                                           .15                                
+Neena                                                            .15                                
+Lex                                                              .15                                
+Alexander                                                        .15                                
+Bruce                                                            .15                                
+Diana                                                            .15                                
+Kevin                                                            .15                                
+Trenna                                                           .15                                
+Curtis                                                           .15                                
+Randall                                                          .15                                
+Peter                                                            .15                                
+Eleni                  .2                                         .3                                
+Ellen                  .3                                         .4                                
+Jonathon               .3                                         .4                                
+Kimerely              .15                                        .25                                
+Jennifer                                                         .15                                
+Michael                                                          .15                                
+Pat                                                              .15                                
+Shelley                                                          .15                                
+William                                                          .15                                
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , COMMISSION_PCT + .1 , .15) NEW_COMM_PCT FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NEW_COMM_PCT                                                              
+---------- -------------- ------------                                                              
+Steven                             .15                                                              
+Neena                              .15                                                              
+Lex                                .15                                                              
+Alexander                          .15                                                              
+Bruce                              .15                                                              
+Diana                              .15                                                              
+Kevin                              .15                                                              
+Trenna                             .15                                                              
+Curtis                             .15                                                              
+Randall                            .15                                                              
+Peter                              .15                                                              
+Eleni                  .2           .3                                                              
+Ellen                  .3           .4                                                              
+Jonathon               .3           .4                                                              
+Kimerely              .15          .25                                                              
+Jennifer                           .15                                                              
+Michael                            .15                                                              
+Pat                                .15                                                              
+Shelley                            .15                                                              
+William                            .15                                                              
+
+20 rows selected.
+
+SQL> REM YES , NO
+SQL> 
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , 'YES' , 'NO') NEW_COMM_PCT FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NEW                                                                       
+---------- -------------- ---                                                                       
+Steven                    NO                                                                        
+Neena                     NO                                                                        
+Lex                       NO                                                                        
+Alexander                 NO                                                                        
+Bruce                     NO                                                                        
+Diana                     NO                                                                        
+Kevin                     NO                                                                        
+Trenna                    NO                                                                        
+Curtis                    NO                                                                        
+Randall                   NO                                                                        
+Peter                     NO                                                                        
+Eleni                  .2 YES                                                                       
+Ellen                  .3 YES                                                                       
+Jonathon               .3 YES                                                                       
+Kimerely              .15 YES                                                                       
+Jennifer                  NO                                                                        
+Michael                   NO                                                                        
+Pat                       NO                                                                        
+Shelley                   NO                                                                        
+William                   NO                                                                        
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , 'YES' , 0) NEW_COMM_PCT FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NEW                                                                       
+---------- -------------- ---                                                                       
+Steven                    0                                                                         
+Neena                     0                                                                         
+Lex                       0                                                                         
+Alexander                 0                                                                         
+Bruce                     0                                                                         
+Diana                     0                                                                         
+Kevin                     0                                                                         
+Trenna                    0                                                                         
+Curtis                    0                                                                         
+Randall                   0                                                                         
+Peter                     0                                                                         
+Eleni                  .2 YES                                                                       
+Ellen                  .3 YES                                                                       
+Jonathon               .3 YES                                                                       
+Kimerely              .15 YES                                                                       
+Jennifer                  0                                                                         
+Michael                   0                                                                         
+Pat                       0                                                                         
+Shelley                   0                                                                         
+William                   0                                                                         
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , COMMISSION_PCT , 'ZERO') NEW_COMM_PCT FROM EMPLOYEES;
+SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , COMMISSION_PCT , 'ZERO') NEW_COMM_PCT FROM EMPLOYEES
+                                                                            *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , TO_CHAR(COMMISSION_PCT) , 'ZERO') NEW_COMM_PCT FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NEW_COMM_PCT                                                              
+---------- -------------- ----------------------------------------                                  
+Steven                    ZERO                                                                      
+Neena                     ZERO                                                                      
+Lex                       ZERO                                                                      
+Alexander                 ZERO                                                                      
+Bruce                     ZERO                                                                      
+Diana                     ZERO                                                                      
+Kevin                     ZERO                                                                      
+Trenna                    ZERO                                                                      
+Curtis                    ZERO                                                                      
+Randall                   ZERO                                                                      
+Peter                     ZERO                                                                      
+Eleni                  .2 .2                                                                        
+Ellen                  .3 .3                                                                        
+Jonathon               .3 .3                                                                        
+Kimerely              .15 .15                                                                       
+Jennifer                  ZERO                                                                      
+Michael                   ZERO                                                                      
+Pat                       ZERO                                                                      
+Shelley                   ZERO                                                                      
+William                   ZERO                                                                      
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT , NVL2(COMMISSION_PCT , HIRE_DATE , SYSDATE) FROM EMPLOYEES;
+
+FIRST_NAME COMMISSION_PCT NVL2(COMMISSION_PCT                                                       
+---------- -------------- -------------------                                                       
+Steven                    24-JUN-22 FRIDAY                                                          
+Neena                     24-JUN-22 FRIDAY                                                          
+Lex                       24-JUN-22 FRIDAY                                                          
+Alexander                 24-JUN-22 FRIDAY                                                          
+Bruce                     24-JUN-22 FRIDAY                                                          
+Diana                     24-JUN-22 FRIDAY                                                          
+Kevin                     24-JUN-22 FRIDAY                                                          
+Trenna                    24-JUN-22 FRIDAY                                                          
+Curtis                    24-JUN-22 FRIDAY                                                          
+Randall                   24-JUN-22 FRIDAY                                                          
+Peter                     24-JUN-22 FRIDAY                                                          
+Eleni                  .2 29-JAN-00 SATURDAY                                                        
+Ellen                  .3 11-MAY-96 SATURDAY                                                        
+Jonathon               .3 24-MAR-98 TUESDAY                                                         
+Kimerely              .15 24-MAY-99 MONDAY                                                          
+Jennifer                  24-JUN-22 FRIDAY                                                          
+Michael                   24-JUN-22 FRIDAY                                                          
+Pat                       24-JUN-22 FRIDAY                                                          
+Shelley                   24-JUN-22 FRIDAY                                                          
+William                   24-JUN-22 FRIDAY                                                          
+
+20 rows selected.
+
+SQL> SPOOL OFF

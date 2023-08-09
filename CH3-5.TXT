@@ -1,0 +1,577 @@
+SQL> CL SCR
+
+SQL> REM DATE FUNCTIONS : SYSDATE CURRENT_DATE ADD_MONTHS
+SQL> 
+SQL> REM DATE FUNCTIONS : MONTHS_BETWEEN LAST_DAY NEXT_DAY TRUNC ROUND
+SQL> 
+SQL> SELECT FIRST_NAME , SYSDATE , HIRE_DATE FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     20-JUN-22 17-JUL-87                                                                                                                                                                          
+Neena      20-JUN-22 21-SEP-89                                                                                                                                                                          
+Lex        20-JUN-22 13-JAN-93                                                                                                                                                                          
+Alexander  20-JUN-22 03-JAN-90                                                                                                                                                                          
+Bruce      20-JUN-22 21-MAY-91                                                                                                                                                                          
+Diana      20-JUN-22 07-FEB-99                                                                                                                                                                          
+Kevin      20-JUN-22 16-NOV-99                                                                                                                                                                          
+Trenna     20-JUN-22 17-OCT-95                                                                                                                                                                          
+Curtis     20-JUN-22 29-JAN-97                                                                                                                                                                          
+Randall    20-JUN-22 15-MAR-98                                                                                                                                                                          
+Peter      20-JUN-22 09-JUL-98                                                                                                                                                                          
+Eleni      20-JUN-22 29-JAN-00                                                                                                                                                                          
+Ellen      20-JUN-22 11-MAY-96                                                                                                                                                                          
+Jonathon   20-JUN-22 24-MAR-98                                                                                                                                                                          
+Kimerely   20-JUN-22 24-MAY-99                                                                                                                                                                          
+Jennifer   20-JUN-22 17-SEP-87                                                                                                                                                                          
+Michael    20-JUN-22 17-FEB-96                                                                                                                                                                          
+Pat        20-JUN-22 17-AUG-97                                                                                                                                                                          
+Shelley    20-JUN-22 07-JUN-94                                                                                                                                                                          
+William    20-JUN-22 07-JUN-94                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> SELECT '13-MAR-73' - '15-JAN-71' FROM DUAL;
+SELECT '13-MAR-73' - '15-JAN-71' FROM DUAL
+       *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT TO_DATE('13-MAR-73') - TO_DATE('15-JAN-71') FROM DUAL;
+
+TO_DATE('13-MAR-73')-TO_DATE('15-JAN-71')                                                                                                                                                               
+-----------------------------------------                                                                                                                                                               
+                                      788                                                                                                                                                               
+
+SQL> SELECT FIRST_NAME , SYSDATE , HIRE_DATE , SYSDATE - HIRE_DATE DAYS FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE       DAYS                                                                                                                                                               
+---------- --------- --------- ----------                                                                                                                                                               
+Steven     20-JUN-22 17-JUL-87 12757.6793                                                                                                                                                               
+Neena      20-JUN-22 21-SEP-89 11960.6793                                                                                                                                                               
+Lex        20-JUN-22 13-JAN-93 10750.6793                                                                                                                                                               
+Alexander  20-JUN-22 03-JAN-90 11856.6793                                                                                                                                                               
+Bruce      20-JUN-22 21-MAY-91 11353.6793                                                                                                                                                               
+Diana      20-JUN-22 07-FEB-99 8534.67926                                                                                                                                                               
+Kevin      20-JUN-22 16-NOV-99 8252.67926                                                                                                                                                               
+Trenna     20-JUN-22 17-OCT-95 9743.67926                                                                                                                                                               
+Curtis     20-JUN-22 29-JAN-97 9273.67926                                                                                                                                                               
+Randall    20-JUN-22 15-MAR-98 8863.67926                                                                                                                                                               
+Peter      20-JUN-22 09-JUL-98 8747.67926                                                                                                                                                               
+Eleni      20-JUN-22 29-JAN-00 8178.67926                                                                                                                                                               
+Ellen      20-JUN-22 11-MAY-96 9536.67926                                                                                                                                                               
+Jonathon   20-JUN-22 24-MAR-98 8854.67926                                                                                                                                                               
+Kimerely   20-JUN-22 24-MAY-99 8428.67926                                                                                                                                                               
+Jennifer   20-JUN-22 17-SEP-87 12695.6793                                                                                                                                                               
+Michael    20-JUN-22 17-FEB-96 9620.67926                                                                                                                                                               
+Pat        20-JUN-22 17-AUG-97 9073.67926                                                                                                                                                               
+Shelley    20-JUN-22 07-JUN-94 10240.6793                                                                                                                                                               
+William    20-JUN-22 07-JUN-94 10240.6793                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , SYSDATE , HIRE_DATE , TRUNC(SYSDATE - HIRE_DATE) DAYS FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE       DAYS                                                                                                                                                               
+---------- --------- --------- ----------                                                                                                                                                               
+Steven     20-JUN-22 17-JUL-87      12757                                                                                                                                                               
+Neena      20-JUN-22 21-SEP-89      11960                                                                                                                                                               
+Lex        20-JUN-22 13-JAN-93      10750                                                                                                                                                               
+Alexander  20-JUN-22 03-JAN-90      11856                                                                                                                                                               
+Bruce      20-JUN-22 21-MAY-91      11353                                                                                                                                                               
+Diana      20-JUN-22 07-FEB-99       8534                                                                                                                                                               
+Kevin      20-JUN-22 16-NOV-99       8252                                                                                                                                                               
+Trenna     20-JUN-22 17-OCT-95       9743                                                                                                                                                               
+Curtis     20-JUN-22 29-JAN-97       9273                                                                                                                                                               
+Randall    20-JUN-22 15-MAR-98       8863                                                                                                                                                               
+Peter      20-JUN-22 09-JUL-98       8747                                                                                                                                                               
+Eleni      20-JUN-22 29-JAN-00       8178                                                                                                                                                               
+Ellen      20-JUN-22 11-MAY-96       9536                                                                                                                                                               
+Jonathon   20-JUN-22 24-MAR-98       8854                                                                                                                                                               
+Kimerely   20-JUN-22 24-MAY-99       8428                                                                                                                                                               
+Jennifer   20-JUN-22 17-SEP-87      12695                                                                                                                                                               
+Michael    20-JUN-22 17-FEB-96       9620                                                                                                                                                               
+Pat        20-JUN-22 17-AUG-97       9073                                                                                                                                                               
+Shelley    20-JUN-22 07-JUN-94      10240                                                                                                                                                               
+William    20-JUN-22 07-JUN-94      10240                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , SYSDATE , HIRE_DATE , TRUNC(SYSDATE - HIRE_DATE) COMPLETED_DAYS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE COMPLETED_DAYS_WORKED                                                                                                                                                    
+---------- --------- --------- ---------------------                                                                                                                                                    
+Steven     20-JUN-22 17-JUL-87                 12757                                                                                                                                                    
+Neena      20-JUN-22 21-SEP-89                 11960                                                                                                                                                    
+Lex        20-JUN-22 13-JAN-93                 10750                                                                                                                                                    
+Alexander  20-JUN-22 03-JAN-90                 11856                                                                                                                                                    
+Bruce      20-JUN-22 21-MAY-91                 11353                                                                                                                                                    
+Diana      20-JUN-22 07-FEB-99                  8534                                                                                                                                                    
+Kevin      20-JUN-22 16-NOV-99                  8252                                                                                                                                                    
+Trenna     20-JUN-22 17-OCT-95                  9743                                                                                                                                                    
+Curtis     20-JUN-22 29-JAN-97                  9273                                                                                                                                                    
+Randall    20-JUN-22 15-MAR-98                  8863                                                                                                                                                    
+Peter      20-JUN-22 09-JUL-98                  8747                                                                                                                                                    
+Eleni      20-JUN-22 29-JAN-00                  8178                                                                                                                                                    
+Ellen      20-JUN-22 11-MAY-96                  9536                                                                                                                                                    
+Jonathon   20-JUN-22 24-MAR-98                  8854                                                                                                                                                    
+Kimerely   20-JUN-22 24-MAY-99                  8428                                                                                                                                                    
+Jennifer   20-JUN-22 17-SEP-87                 12695                                                                                                                                                    
+Michael    20-JUN-22 17-FEB-96                  9620                                                                                                                                                    
+Pat        20-JUN-22 17-AUG-97                  9073                                                                                                                                                    
+Shelley    20-JUN-22 07-JUN-94                 10240                                                                                                                                                    
+William    20-JUN-22 07-JUN-94                 10240                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM COMPLETED_WEEKS_WORKED
+SQL> 
+SQL> SELECT FIRST_NAME,SYSDATE,HIRE_DATE,TRUNC((SYSDATE - HIRE_DATE)/7) COMPLETED_WEEKS_WORKED FROM EMLOYEES;
+SELECT FIRST_NAME,SYSDATE,HIRE_DATE,TRUNC((SYSDATE - HIRE_DATE)/7) COMPLETED_WEEKS_WORKED FROM EMLOYEES
+                                                                                               *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT FIRST_NAME,SYSDATE,HIRE_DATE,TRUNC((SYSDATE - HIRE_DATE)/7) COMPLETED_WEEKS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE COMPLETED_WEEKS_WORKED                                                                                                                                                   
+---------- --------- --------- ----------------------                                                                                                                                                   
+Steven     20-JUN-22 17-JUL-87                   1822                                                                                                                                                   
+Neena      20-JUN-22 21-SEP-89                   1708                                                                                                                                                   
+Lex        20-JUN-22 13-JAN-93                   1535                                                                                                                                                   
+Alexander  20-JUN-22 03-JAN-90                   1693                                                                                                                                                   
+Bruce      20-JUN-22 21-MAY-91                   1621                                                                                                                                                   
+Diana      20-JUN-22 07-FEB-99                   1219                                                                                                                                                   
+Kevin      20-JUN-22 16-NOV-99                   1178                                                                                                                                                   
+Trenna     20-JUN-22 17-OCT-95                   1391                                                                                                                                                   
+Curtis     20-JUN-22 29-JAN-97                   1324                                                                                                                                                   
+Randall    20-JUN-22 15-MAR-98                   1266                                                                                                                                                   
+Peter      20-JUN-22 09-JUL-98                   1249                                                                                                                                                   
+Eleni      20-JUN-22 29-JAN-00                   1168                                                                                                                                                   
+Ellen      20-JUN-22 11-MAY-96                   1362                                                                                                                                                   
+Jonathon   20-JUN-22 24-MAR-98                   1264                                                                                                                                                   
+Kimerely   20-JUN-22 24-MAY-99                   1204                                                                                                                                                   
+Jennifer   20-JUN-22 17-SEP-87                   1813                                                                                                                                                   
+Michael    20-JUN-22 17-FEB-96                   1374                                                                                                                                                   
+Pat        20-JUN-22 17-AUG-97                   1296                                                                                                                                                   
+Shelley    20-JUN-22 07-JUN-94                   1462                                                                                                                                                   
+William    20-JUN-22 07-JUN-94                   1462                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM 1 MONTH = ?? DAYS (28/29/30/31)
+SQL> 
+SQL> SELECT FIRST_NAME,SYSDATE,HIRE_DATE, MONTHS_BETWEEN(SYSDATE , HIRE_DATE) MONTHS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE MONTHS_WORKED                                                                                                                                                            
+---------- --------- --------- -------------                                                                                                                                                            
+Steven     20-JUN-22 17-JUL-87    419.118889                                                                                                                                                            
+Neena      20-JUN-22 21-SEP-89    392.989857                                                                                                                                                            
+Lex        20-JUN-22 13-JAN-93    353.247921                                                                                                                                                            
+Alexander  20-JUN-22 03-JAN-90    389.570502                                                                                                                                                            
+Bruce      20-JUN-22 21-MAY-91    372.989857                                                                                                                                                            
+Diana      20-JUN-22 07-FEB-99     280.44147                                                                                                                                                            
+Kevin      20-JUN-22 16-NOV-99    271.151147                                                                                                                                                            
+Trenna     20-JUN-22 17-OCT-95    320.118889                                                                                                                                                            
+Curtis     20-JUN-22 29-JAN-97    304.731792                                                                                                                                                            
+Randall    20-JUN-22 15-MAR-98    291.183405                                                                                                                                                            
+Peter      20-JUN-22 09-JUL-98    287.376953                                                                                                                                                            
+Eleni      20-JUN-22 29-JAN-00    268.731792                                                                                                                                                            
+Ellen      20-JUN-22 11-MAY-96    313.312437                                                                                                                                                            
+Jonathon   20-JUN-22 24-MAR-98    290.893082                                                                                                                                                            
+Kimerely   20-JUN-22 24-MAY-99    276.893082                                                                                                                                                            
+Jennifer   20-JUN-22 17-SEP-87    417.118889                                                                                                                                                            
+Michael    20-JUN-22 17-FEB-96    316.118889                                                                                                                                                            
+Pat        20-JUN-22 17-AUG-97    298.118889                                                                                                                                                            
+Shelley    20-JUN-22 07-JUN-94     336.44147                                                                                                                                                            
+William    20-JUN-22 07-JUN-94     336.44147                                                                                                                                                            
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME,SYSDATE-3,HIRE_DATE, MONTHS_BETWEEN(SYSDATE-3 , HIRE_DATE) MONTHS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE-3 HIRE_DATE MONTHS_WORKED                                                                                                                                                            
+---------- --------- --------- -------------                                                                                                                                                            
+Steven     17-JUN-22 17-JUL-87           419                                                                                                                                                            
+Neena      17-JUN-22 21-SEP-89    392.893092                                                                                                                                                            
+Lex        17-JUN-22 13-JAN-93    353.151156                                                                                                                                                            
+Alexander  17-JUN-22 03-JAN-90    389.473737                                                                                                                                                            
+Bruce      17-JUN-22 21-MAY-91    372.893092                                                                                                                                                            
+Diana      17-JUN-22 07-FEB-99    280.344705                                                                                                                                                            
+Kevin      17-JUN-22 16-NOV-99    271.054382                                                                                                                                                            
+Trenna     17-JUN-22 17-OCT-95           320                                                                                                                                                            
+Curtis     17-JUN-22 29-JAN-97    304.635027                                                                                                                                                            
+Randall    17-JUN-22 15-MAR-98     291.08664                                                                                                                                                            
+Peter      17-JUN-22 09-JUL-98    287.280189                                                                                                                                                            
+Eleni      17-JUN-22 29-JAN-00    268.635027                                                                                                                                                            
+Ellen      17-JUN-22 11-MAY-96    313.215672                                                                                                                                                            
+Jonathon   17-JUN-22 24-MAR-98    290.796318                                                                                                                                                            
+Kimerely   17-JUN-22 24-MAY-99    276.796318                                                                                                                                                            
+Jennifer   17-JUN-22 17-SEP-87           417                                                                                                                                                            
+Michael    17-JUN-22 17-FEB-96           316                                                                                                                                                            
+Pat        17-JUN-22 17-AUG-97           298                                                                                                                                                            
+Shelley    17-JUN-22 07-JUN-94    336.344705                                                                                                                                                            
+William    17-JUN-22 07-JUN-94    336.344705                                                                                                                                                            
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME,SYSDATE,HIRE_DATE, TRUNC(MONTHS_BETWEEN(SYSDATE , HIRE_DATE)) COMPLETED_MONTHS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE COMPLETED_MONTHS_WORKED                                                                                                                                                  
+---------- --------- --------- -----------------------                                                                                                                                                  
+Steven     20-JUN-22 17-JUL-87                     419                                                                                                                                                  
+Neena      20-JUN-22 21-SEP-89                     392                                                                                                                                                  
+Lex        20-JUN-22 13-JAN-93                     353                                                                                                                                                  
+Alexander  20-JUN-22 03-JAN-90                     389                                                                                                                                                  
+Bruce      20-JUN-22 21-MAY-91                     372                                                                                                                                                  
+Diana      20-JUN-22 07-FEB-99                     280                                                                                                                                                  
+Kevin      20-JUN-22 16-NOV-99                     271                                                                                                                                                  
+Trenna     20-JUN-22 17-OCT-95                     320                                                                                                                                                  
+Curtis     20-JUN-22 29-JAN-97                     304                                                                                                                                                  
+Randall    20-JUN-22 15-MAR-98                     291                                                                                                                                                  
+Peter      20-JUN-22 09-JUL-98                     287                                                                                                                                                  
+Eleni      20-JUN-22 29-JAN-00                     268                                                                                                                                                  
+Ellen      20-JUN-22 11-MAY-96                     313                                                                                                                                                  
+Jonathon   20-JUN-22 24-MAR-98                     290                                                                                                                                                  
+Kimerely   20-JUN-22 24-MAY-99                     276                                                                                                                                                  
+Jennifer   20-JUN-22 17-SEP-87                     417                                                                                                                                                  
+Michael    20-JUN-22 17-FEB-96                     316                                                                                                                                                  
+Pat        20-JUN-22 17-AUG-97                     298                                                                                                                                                  
+Shelley    20-JUN-22 07-JUN-94                     336                                                                                                                                                  
+William    20-JUN-22 07-JUN-94                     336                                                                                                                                                  
+
+20 rows selected.
+
+SQL> REM COMPLETED_YEARS_WORKED
+SQL> 
+SQL> SELECT FIRST_NAME,SYSDATE,HIRE_DATE,TRUNC(MONTHS_BETWEEN(SYSDATE ,HIRE_DATE)/12) COMPLETED_WEEKS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME SYSDATE   HIRE_DATE COMPLETED_WEEKS_WORKED                                                                                                                                                   
+---------- --------- --------- ----------------------                                                                                                                                                   
+Steven     20-JUN-22 17-JUL-87                     34                                                                                                                                                   
+Neena      20-JUN-22 21-SEP-89                     32                                                                                                                                                   
+Lex        20-JUN-22 13-JAN-93                     29                                                                                                                                                   
+Alexander  20-JUN-22 03-JAN-90                     32                                                                                                                                                   
+Bruce      20-JUN-22 21-MAY-91                     31                                                                                                                                                   
+Diana      20-JUN-22 07-FEB-99                     23                                                                                                                                                   
+Kevin      20-JUN-22 16-NOV-99                     22                                                                                                                                                   
+Trenna     20-JUN-22 17-OCT-95                     26                                                                                                                                                   
+Curtis     20-JUN-22 29-JAN-97                     25                                                                                                                                                   
+Randall    20-JUN-22 15-MAR-98                     24                                                                                                                                                   
+Peter      20-JUN-22 09-JUL-98                     23                                                                                                                                                   
+Eleni      20-JUN-22 29-JAN-00                     22                                                                                                                                                   
+Ellen      20-JUN-22 11-MAY-96                     26                                                                                                                                                   
+Jonathon   20-JUN-22 24-MAR-98                     24                                                                                                                                                   
+Kimerely   20-JUN-22 24-MAY-99                     23                                                                                                                                                   
+Jennifer   20-JUN-22 17-SEP-87                     34                                                                                                                                                   
+Michael    20-JUN-22 17-FEB-96                     26                                                                                                                                                   
+Pat        20-JUN-22 17-AUG-97                     24                                                                                                                                                   
+Shelley    20-JUN-22 07-JUN-94                     28                                                                                                                                                   
+William    20-JUN-22 07-JUN-94                     28                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM LAST_DAY
+SQL> 
+SQL> SELECT SYSDATE , LAST_DAY(SYSDATE) FROM EMPLOYEES;
+
+SYSDATE   LAST_DAY(                                                                                                                                                                                     
+--------- ---------                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT SYSDATE , LAST_DAY(SYSDATE) FROM DUAL;
+
+SYSDATE   LAST_DAY(                                                                                                                                                                                     
+--------- ---------                                                                                                                                                                                     
+20-JUN-22 30-JUN-22                                                                                                                                                                                     
+
+SQL> REM DISPLAY FIRST_SALARY_DATE FOR EACH EMPLOYEE
+SQL> 
+SQL> REM COMPANY PAYS SALARY ON LAST DATE OF EACH MONTH
+SQL> 
+SQL> REM HOW MANY DAYS WORKED IN JOINING MONTH ?
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , LAST_DAY(HIRE_DATE) - HIRE_DATE DAYS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE DAYS_WORKED                                                                                                                                                                        
+---------- --------- -----------                                                                                                                                                                        
+Steven     17-JUL-87          14                                                                                                                                                                        
+Neena      21-SEP-89           9                                                                                                                                                                        
+Lex        13-JAN-93          18                                                                                                                                                                        
+Alexander  03-JAN-90          28                                                                                                                                                                        
+Bruce      21-MAY-91          10                                                                                                                                                                        
+Diana      07-FEB-99          21                                                                                                                                                                        
+Kevin      16-NOV-99          14                                                                                                                                                                        
+Trenna     17-OCT-95          14                                                                                                                                                                        
+Curtis     29-JAN-97           2                                                                                                                                                                        
+Randall    15-MAR-98          16                                                                                                                                                                        
+Peter      09-JUL-98          22                                                                                                                                                                        
+Eleni      29-JAN-00           2                                                                                                                                                                        
+Ellen      11-MAY-96          20                                                                                                                                                                        
+Jonathon   24-MAR-98           7                                                                                                                                                                        
+Kimerely   24-MAY-99           7                                                                                                                                                                        
+Jennifer   17-SEP-87          13                                                                                                                                                                        
+Michael    17-FEB-96          12                                                                                                                                                                        
+Pat        17-AUG-97          14                                                                                                                                                                        
+Shelley    07-JUN-94          23                                                                                                                                                                        
+William    07-JUN-94          23                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE , LAST_DAY(HIRE_DATE) , LAST_DAY(HIRE_DATE) - HIRE_DATE DAYS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE LAST_DAY( DAYS_WORKED                                                                                                                                                              
+---------- --------- --------- -----------                                                                                                                                                              
+Steven     17-JUL-87 31-JUL-87          14                                                                                                                                                              
+Neena      21-SEP-89 30-SEP-89           9                                                                                                                                                              
+Lex        13-JAN-93 31-JAN-93          18                                                                                                                                                              
+Alexander  03-JAN-90 31-JAN-90          28                                                                                                                                                              
+Bruce      21-MAY-91 31-MAY-91          10                                                                                                                                                              
+Diana      07-FEB-99 28-FEB-99          21                                                                                                                                                              
+Kevin      16-NOV-99 30-NOV-99          14                                                                                                                                                              
+Trenna     17-OCT-95 31-OCT-95          14                                                                                                                                                              
+Curtis     29-JAN-97 31-JAN-97           2                                                                                                                                                              
+Randall    15-MAR-98 31-MAR-98          16                                                                                                                                                              
+Peter      09-JUL-98 31-JUL-98          22                                                                                                                                                              
+Eleni      29-JAN-00 31-JAN-00           2                                                                                                                                                              
+Ellen      11-MAY-96 31-MAY-96          20                                                                                                                                                              
+Jonathon   24-MAR-98 31-MAR-98           7                                                                                                                                                              
+Kimerely   24-MAY-99 31-MAY-99           7                                                                                                                                                              
+Jennifer   17-SEP-87 30-SEP-87          13                                                                                                                                                              
+Michael    17-FEB-96 29-FEB-96          12                                                                                                                                                              
+Pat        17-AUG-97 31-AUG-97          14                                                                                                                                                              
+Shelley    07-JUN-94 30-JUN-94          23                                                                                                                                                              
+William    07-JUN-94 30-JUN-94          23                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE , LAST_DAY(HIRE_DATE) , (LAST_DAY(HIRE_DATE) - HIRE_DATE)+1 DAYS_WORKED FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE LAST_DAY( DAYS_WORKED                                                                                                                                                              
+---------- --------- --------- -----------                                                                                                                                                              
+Steven     17-JUL-87 31-JUL-87          15                                                                                                                                                              
+Neena      21-SEP-89 30-SEP-89          10                                                                                                                                                              
+Lex        13-JAN-93 31-JAN-93          19                                                                                                                                                              
+Alexander  03-JAN-90 31-JAN-90          29                                                                                                                                                              
+Bruce      21-MAY-91 31-MAY-91          11                                                                                                                                                              
+Diana      07-FEB-99 28-FEB-99          22                                                                                                                                                              
+Kevin      16-NOV-99 30-NOV-99          15                                                                                                                                                              
+Trenna     17-OCT-95 31-OCT-95          15                                                                                                                                                              
+Curtis     29-JAN-97 31-JAN-97           3                                                                                                                                                              
+Randall    15-MAR-98 31-MAR-98          17                                                                                                                                                              
+Peter      09-JUL-98 31-JUL-98          23                                                                                                                                                              
+Eleni      29-JAN-00 31-JAN-00           3                                                                                                                                                              
+Ellen      11-MAY-96 31-MAY-96          21                                                                                                                                                              
+Jonathon   24-MAR-98 31-MAR-98           8                                                                                                                                                              
+Kimerely   24-MAY-99 31-MAY-99           8                                                                                                                                                              
+Jennifer   17-SEP-87 30-SEP-87          14                                                                                                                                                              
+Michael    17-FEB-96 29-FEB-96          13                                                                                                                                                              
+Pat        17-AUG-97 31-AUG-97          15                                                                                                                                                              
+Shelley    07-JUN-94 30-JUN-94          24                                                                                                                                                              
+William    07-JUN-94 30-JUN-94          24                                                                                                                                                              
+
+20 rows selected.
+
+SQL> REM COMPANY PAYS SALARY ON LAST DATE OF EACH MONTH
+SQL> 
+SQL> REM FIND SECOND SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , ADD_MONTHS(LAST_DAY(HIRE_DATE),1) SECOND_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE SECOND_SA                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     17-JUL-87 31-AUG-87                                                                                                                                                                          
+Neena      21-SEP-89 31-OCT-89                                                                                                                                                                          
+Lex        13-JAN-93 28-FEB-93                                                                                                                                                                          
+Alexander  03-JAN-90 28-FEB-90                                                                                                                                                                          
+Bruce      21-MAY-91 30-JUN-91                                                                                                                                                                          
+Diana      07-FEB-99 31-MAR-99                                                                                                                                                                          
+Kevin      16-NOV-99 31-DEC-99                                                                                                                                                                          
+Trenna     17-OCT-95 30-NOV-95                                                                                                                                                                          
+Curtis     29-JAN-97 28-FEB-97                                                                                                                                                                          
+Randall    15-MAR-98 30-APR-98                                                                                                                                                                          
+Peter      09-JUL-98 31-AUG-98                                                                                                                                                                          
+Eleni      29-JAN-00 29-FEB-00                                                                                                                                                                          
+Ellen      11-MAY-96 30-JUN-96                                                                                                                                                                          
+Jonathon   24-MAR-98 30-APR-98                                                                                                                                                                          
+Kimerely   24-MAY-99 30-JUN-99                                                                                                                                                                          
+Jennifer   17-SEP-87 31-OCT-87                                                                                                                                                                          
+Michael    17-FEB-96 31-MAR-96                                                                                                                                                                          
+Pat        17-AUG-97 30-SEP-97                                                                                                                                                                          
+Shelley    07-JUN-94 31-JUL-94                                                                                                                                                                          
+William    07-JUN-94 31-JUL-94                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE , LAST_DAY(ADD_MONTHS(HIRE_DATE,1)) SECOND_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE SECOND_SA                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     17-JUL-87 31-AUG-87                                                                                                                                                                          
+Neena      21-SEP-89 31-OCT-89                                                                                                                                                                          
+Lex        13-JAN-93 28-FEB-93                                                                                                                                                                          
+Alexander  03-JAN-90 28-FEB-90                                                                                                                                                                          
+Bruce      21-MAY-91 30-JUN-91                                                                                                                                                                          
+Diana      07-FEB-99 31-MAR-99                                                                                                                                                                          
+Kevin      16-NOV-99 31-DEC-99                                                                                                                                                                          
+Trenna     17-OCT-95 30-NOV-95                                                                                                                                                                          
+Curtis     29-JAN-97 28-FEB-97                                                                                                                                                                          
+Randall    15-MAR-98 30-APR-98                                                                                                                                                                          
+Peter      09-JUL-98 31-AUG-98                                                                                                                                                                          
+Eleni      29-JAN-00 29-FEB-00                                                                                                                                                                          
+Ellen      11-MAY-96 30-JUN-96                                                                                                                                                                          
+Jonathon   24-MAR-98 30-APR-98                                                                                                                                                                          
+Kimerely   24-MAY-99 30-JUN-99                                                                                                                                                                          
+Jennifer   17-SEP-87 31-OCT-87                                                                                                                                                                          
+Michael    17-FEB-96 31-MAR-96                                                                                                                                                                          
+Pat        17-AUG-97 30-SEP-97                                                                                                                                                                          
+Shelley    07-JUN-94 31-JUL-94                                                                                                                                                                          
+William    07-JUN-94 31-JUL-94                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> REM NEXT SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , LAST_DAY(HIRE_DATE) NEXT_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE NEXT_SALA                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     17-JUL-87 31-JUL-87                                                                                                                                                                          
+Neena      21-SEP-89 30-SEP-89                                                                                                                                                                          
+Lex        13-JAN-93 31-JAN-93                                                                                                                                                                          
+Alexander  03-JAN-90 31-JAN-90                                                                                                                                                                          
+Bruce      21-MAY-91 31-MAY-91                                                                                                                                                                          
+Diana      07-FEB-99 28-FEB-99                                                                                                                                                                          
+Kevin      16-NOV-99 30-NOV-99                                                                                                                                                                          
+Trenna     17-OCT-95 31-OCT-95                                                                                                                                                                          
+Curtis     29-JAN-97 31-JAN-97                                                                                                                                                                          
+Randall    15-MAR-98 31-MAR-98                                                                                                                                                                          
+Peter      09-JUL-98 31-JUL-98                                                                                                                                                                          
+Eleni      29-JAN-00 31-JAN-00                                                                                                                                                                          
+Ellen      11-MAY-96 31-MAY-96                                                                                                                                                                          
+Jonathon   24-MAR-98 31-MAR-98                                                                                                                                                                          
+Kimerely   24-MAY-99 31-MAY-99                                                                                                                                                                          
+Jennifer   17-SEP-87 30-SEP-87                                                                                                                                                                          
+Michael    17-FEB-96 29-FEB-96                                                                                                                                                                          
+Pat        17-AUG-97 31-AUG-97                                                                                                                                                                          
+Shelley    07-JUN-94 30-JUN-94                                                                                                                                                                          
+William    07-JUN-94 30-JUN-94                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> REM PREVIOUS SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , LAST_DAY(SYSDATE) NEXT_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE NEXT_SALA                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     17-JUL-87 30-JUN-22                                                                                                                                                                          
+Neena      21-SEP-89 30-JUN-22                                                                                                                                                                          
+Lex        13-JAN-93 30-JUN-22                                                                                                                                                                          
+Alexander  03-JAN-90 30-JUN-22                                                                                                                                                                          
+Bruce      21-MAY-91 30-JUN-22                                                                                                                                                                          
+Diana      07-FEB-99 30-JUN-22                                                                                                                                                                          
+Kevin      16-NOV-99 30-JUN-22                                                                                                                                                                          
+Trenna     17-OCT-95 30-JUN-22                                                                                                                                                                          
+Curtis     29-JAN-97 30-JUN-22                                                                                                                                                                          
+Randall    15-MAR-98 30-JUN-22                                                                                                                                                                          
+Peter      09-JUL-98 30-JUN-22                                                                                                                                                                          
+Eleni      29-JAN-00 30-JUN-22                                                                                                                                                                          
+Ellen      11-MAY-96 30-JUN-22                                                                                                                                                                          
+Jonathon   24-MAR-98 30-JUN-22                                                                                                                                                                          
+Kimerely   24-MAY-99 30-JUN-22                                                                                                                                                                          
+Jennifer   17-SEP-87 30-JUN-22                                                                                                                                                                          
+Michael    17-FEB-96 30-JUN-22                                                                                                                                                                          
+Pat        17-AUG-97 30-JUN-22                                                                                                                                                                          
+Shelley    07-JUN-94 30-JUN-22                                                                                                                                                                          
+William    07-JUN-94 30-JUN-22                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> REM PREVIOUS SALARY DATE
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , ADD_MONTHS(LAST_DAY(HIRE_DATE),-1) PREVIOUS_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE PREVIOUS_                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     17-JUL-87 30-JUN-87                                                                                                                                                                          
+Neena      21-SEP-89 31-AUG-89                                                                                                                                                                          
+Lex        13-JAN-93 31-DEC-92                                                                                                                                                                          
+Alexander  03-JAN-90 31-DEC-89                                                                                                                                                                          
+Bruce      21-MAY-91 30-APR-91                                                                                                                                                                          
+Diana      07-FEB-99 31-JAN-99                                                                                                                                                                          
+Kevin      16-NOV-99 31-OCT-99                                                                                                                                                                          
+Trenna     17-OCT-95 30-SEP-95                                                                                                                                                                          
+Curtis     29-JAN-97 31-DEC-96                                                                                                                                                                          
+Randall    15-MAR-98 28-FEB-98                                                                                                                                                                          
+Peter      09-JUL-98 30-JUN-98                                                                                                                                                                          
+Eleni      29-JAN-00 31-DEC-99                                                                                                                                                                          
+Ellen      11-MAY-96 30-APR-96                                                                                                                                                                          
+Jonathon   24-MAR-98 28-FEB-98                                                                                                                                                                          
+Kimerely   24-MAY-99 30-APR-99                                                                                                                                                                          
+Jennifer   17-SEP-87 31-AUG-87                                                                                                                                                                          
+Michael    17-FEB-96 31-JAN-96                                                                                                                                                                          
+Pat        17-AUG-97 31-JUL-97                                                                                                                                                                          
+Shelley    07-JUN-94 31-MAY-94                                                                                                                                                                          
+William    07-JUN-94 31-MAY-94                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE , ADD_MONTHS(LAST_DAY(SYDATE),-1) PREVIOUS_SALARY_DATE FROM EMPLOYEES;
+SELECT FIRST_NAME , HIRE_DATE , ADD_MONTHS(LAST_DAY(SYDATE),-1) PREVIOUS_SALARY_DATE FROM EMPLOYEES
+                                                    *
+ERROR at line 1:
+ORA-00904: "SYDATE": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE , ADD_MONTHS(LAST_DAY(SYSDATE),-1) PREVIOUS_SALARY_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE PREVIOUS_                                                                                                                                                                          
+---------- --------- ---------                                                                                                                                                                          
+Steven     17-JUL-87 31-MAY-22                                                                                                                                                                          
+Neena      21-SEP-89 31-MAY-22                                                                                                                                                                          
+Lex        13-JAN-93 31-MAY-22                                                                                                                                                                          
+Alexander  03-JAN-90 31-MAY-22                                                                                                                                                                          
+Bruce      21-MAY-91 31-MAY-22                                                                                                                                                                          
+Diana      07-FEB-99 31-MAY-22                                                                                                                                                                          
+Kevin      16-NOV-99 31-MAY-22                                                                                                                                                                          
+Trenna     17-OCT-95 31-MAY-22                                                                                                                                                                          
+Curtis     29-JAN-97 31-MAY-22                                                                                                                                                                          
+Randall    15-MAR-98 31-MAY-22                                                                                                                                                                          
+Peter      09-JUL-98 31-MAY-22                                                                                                                                                                          
+Eleni      29-JAN-00 31-MAY-22                                                                                                                                                                          
+Ellen      11-MAY-96 31-MAY-22                                                                                                                                                                          
+Jonathon   24-MAR-98 31-MAY-22                                                                                                                                                                          
+Kimerely   24-MAY-99 31-MAY-22                                                                                                                                                                          
+Jennifer   17-SEP-87 31-MAY-22                                                                                                                                                                          
+Michael    17-FEB-96 31-MAY-22                                                                                                                                                                          
+Pat        17-AUG-97 31-MAY-22                                                                                                                                                                          
+Shelley    07-JUN-94 31-MAY-22                                                                                                                                                                          
+William    07-JUN-94 31-MAY-22                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> SPOOL OFF
