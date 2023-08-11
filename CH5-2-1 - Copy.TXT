@@ -1,0 +1,308 @@
+
+
+SQL> REM SELECT SYNTACTICAL PRECEDENCE : SELECT ... FROM ... WHERE ... GROUP BY / HAVING... ORDER BY ... OFFSET ... FETCH ...;
+SQL> 
+SQL> REM SELECT EXECUTION PRECEDENCE : FROM -
+> >
+SQL> REM SELECT EXECUTION PRECEDENCE : FROM -> WHERE -> GROUP BY -> HAVING -> COLUMN ALIAS -> ORDER BY -> OFFSET -> FETCH -> SELECT ...;
+SQL> 
+SQL> 
+SQL> REM FROM : TO READ ALL ROWS OF TABLE AND PUT INTO MEMORY/RAM
+SQL> 
+SQL> REM WHERE : TO REMOVE ROWS WHICH DOESN'T SATISFY CONDITION
+SQL> 
+SQL> REM GROUP BY : 1 WILL FIND DISTINCT VALUES 2 WILL MAKE GROUPS AND DIVIDE ROWS IN GROUPS 3 WILL GENERATE SUMMARY ROWS
+SQL> 
+SQL> REM HAVING : TO REMOVE SUMMARY ROWS WHICH DOESN'T SATISFY CONDITION
+SQL> 
+SQL> REM COLUMN ALIAS : NEW ALIAS WILL BE ATTTACHED TO COLUMN
+SQL> 
+SQL> REM ORDER BY : TO SORT ROWS
+SQL> 
+SQL> REM OFFSET : TO FIX FIRST ROW OF THE RESULT
+SQL> 
+SQL> REM FETCH : TO FIX COUNT OF ROWS IN RESULT
+SQL> 
+SQL> REM SELECT : TO DISPLAY/RETURN ROWS ON SCREEN/TO MAIN STATEMENT
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT DEPARTMENT_ID , SALARY FROM EMPLOYEES ORDER BY 1;
+
+DEPARTMENT_ID     SALARY                                                                                                                                                                                
+------------- ----------                                                                                                                                                                                
+           10       4400                                                                                                                                                                                
+           20      13000                                                                                                                                                                                
+           20       6000                                                                                                                                                                                
+           50       5800                                                                                                                                                                                
+           50       2500                                                                                                                                                                                
+           50       2600                                                                                                                                                                                
+           50       3100                                                                                                                                                                                
+           50       3500                                                                                                                                                                                
+           60       4200                                                                                                                                                                                
+           60       6000                                                                                                                                                                                
+           60       9000                                                                                                                                                                                
+           80      11000                                                                                                                                                                                
+           80      10500                                                                                                                                                                                
+           80       8600                                                                                                                                                                                
+           90      17000                                                                                                                                                                                
+           90      24000                                                                                                                                                                                
+           90      17000                                                                                                                                                                                
+          110       8300                                                                                                                                                                                
+          110      12000                                                                                                                                                                                
+                    7000                                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID ORDER BY 1;
+
+DEPARTMENT_ID MIN(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+           10        4400                                                                                                                                                                               
+           20        6000                                                                                                                                                                               
+           50        2500                                                                                                                                                                               
+           60        4200                                                                                                                                                                               
+           80        8600                                                                                                                                                                               
+           90       17000                                                                                                                                                                               
+          110        8300                                                                                                                                                                               
+                     7000                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID ORDER BY 1;
+
+DEPARTMENT_ID MIN(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+           10        4400                                                                                                                                                                               
+           20       13000                                                                                                                                                                               
+           20        6000                                                                                                                                                                               
+           50        2500                                                                                                                                                                               
+           50        5800                                                                                                                                                                               
+           60        4200                                                                                                                                                                               
+           80       10500                                                                                                                                                                               
+           80        8600                                                                                                                                                                               
+           90       24000                                                                                                                                                                               
+           90       17000                                                                                                                                                                               
+          110        8300                                                                                                                                                                               
+          110       12000                                                                                                                                                                               
+                     7000                                                                                                                                                                               
+
+13 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000;
+
+DEPARTMENT_ID MIN(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+          110        8300                                                                                                                                                                               
+           90       17000                                                                                                                                                                               
+           80        8600                                                                                                                                                                               
+           80       10500                                                                                                                                                                               
+          110       12000                                                                                                                                                                               
+           90       24000                                                                                                                                                                               
+           60        4200                                                                                                                                                                               
+           20       13000                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000 ORDER BY JOB_ID;
+
+DEPARTMENT_ID MIN(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+          110        8300                                                                                                                                                                               
+          110       12000                                                                                                                                                                               
+           90       24000                                                                                                                                                                               
+           90       17000                                                                                                                                                                               
+           60        4200                                                                                                                                                                               
+           20       13000                                                                                                                                                                               
+           80       10500                                                                                                                                                                               
+           80        8600                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000 ORDER BY MANAGER_ID;
+HAVING MAX(SALARY) > 7000 ORDER BY MANAGER_ID
+                                   *
+ERROR at line 2:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000 ORDER BY SUM(SALARY);
+
+DEPARTMENT_ID MIN(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+          110        8300                                                                                                                                                                               
+           80       10500                                                                                                                                                                               
+          110       12000                                                                                                                                                                               
+           20       13000                                                                                                                                                                               
+           60        4200                                                                                                                                                                               
+           80        8600                                                                                                                                                                               
+           90       24000                                                                                                                                                                               
+           90       17000                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> REM SUMMARY FUNCTIONS : MIN MAX COUNT SUM AVG
+SQL> 
+SQL> REM NON SUMMARY : DEPARTMENT_ID , JOB_ID
+SQL> 
+SQL> REM SUMMAY : MIN(SALARY) , MAX(SALARY) , SUM(SALARY)
+SQL> 
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) , SUM(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000 ORDER BY SUM(SALARY);
+
+DEPARTMENT_ID MIN(SALARY) SUM(SALARY)                                                                                                                                                                   
+------------- ----------- -----------                                                                                                                                                                   
+          110        8300        8300                                                                                                                                                                   
+           80       10500       10500                                                                                                                                                                   
+          110       12000       12000                                                                                                                                                                   
+           20       13000       13000                                                                                                                                                                   
+           60        4200       19200                                                                                                                                                                   
+           80        8600       19600                                                                                                                                                                   
+           90       24000       24000                                                                                                                                                                   
+           90       17000       34000                                                                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , JOB_ID , MIN(SALARY) , MAX(SALARY) , SUM(SALAR) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000 ORDER BY SUM(SALARY);
+SELECT DEPARTMENT_ID , JOB_ID , MIN(SALARY) , MAX(SALARY) , SUM(SALAR) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+                                                                *
+ERROR at line 1:
+ORA-00904: "SALAR": invalid identifier 
+
+
+SQL> 
+SQL> SELECT DEPARTMENT_ID , JOB_ID , MIN(SALARY) , MAX(SALARY) , SUM(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID , JOB_ID
+  2  HAVING MAX(SALARY) > 7000 ORDER BY SUM(SALARY);
+
+DEPARTMENT_ID JOB_ID     MIN(SALARY) MAX(SALARY) SUM(SALARY)                                                                                                                                            
+------------- ---------- ----------- ----------- -----------                                                                                                                                            
+          110 AC_ACCOUNT        8300        8300        8300                                                                                                                                            
+           80 SA_MAN           10500       10500       10500                                                                                                                                            
+          110 AC_MGR           12000       12000       12000                                                                                                                                            
+           20 MK_MAN           13000       13000       13000                                                                                                                                            
+           60 IT_PROG           4200        9000       19200                                                                                                                                            
+           80 SA_REP            8600       11000       19600                                                                                                                                            
+           90 AD_PRES          24000       24000       24000                                                                                                                                            
+           90 AD_VP            17000       17000       34000                                                                                                                                            
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , SUM(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID ORDER BY 2;
+
+DEPARTMENT_ID SUM(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+           10        4400                                                                                                                                                                               
+                     7000                                                                                                                                                                               
+           50       17500                                                                                                                                                                               
+           20       19000                                                                                                                                                                               
+           60       19200                                                                                                                                                                               
+          110       20300                                                                                                                                                                               
+           80       30100                                                                                                                                                                               
+           90       58000                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , SUM(SALARY) FROM EMPLOYEES WHERE SUM(SALARY) > 20000 GROUP BY DEPARTMENT_ID ORDER BY 2;
+SELECT DEPARTMENT_ID , SUM(SALARY) FROM EMPLOYEES WHERE SUM(SALARY) > 20000 GROUP BY DEPARTMENT_ID ORDER BY 2
+                                                        *
+ERROR at line 1:
+ORA-00934: group function is not allowed here 
+
+
+SQL> REM SELECT EXECUTION PRECEDENCE : FROM -> WHERE -> GROUP BY -> HAVING -> COLUMN ALIAS -> ORDER BY -> OFFSET -> FETCH -> SELECT ...;
+SQL> 
+
+SQL> 
+SQL> REM WHERE IS USED FOR FILTER OUT TABLE'S ORGINAL ROWS
+SQL> 
+SQL> REM HAVING IS USED FOR FILTER OUT SUMMARY ROWS
+SQL> 
+SQL> 
+SQL> REM WHERE SUPPORTS ONLY NON-SUMMARY ITEMS
+SQL> 
+SQL> REM HAVING SUPPORTS ALL SUMMARY ITEMS + THOSE NON-SUMMARY ITEMS WHICH ARE PART OF GROUP BY CLAUSE
+SQL> 
+SQL> 
+SQL> 
+SQL> REM JOB_ID , NO. OF EMPLOYEES, DISPLAY ONLY THOSE JOBS FOR WHICH 3 OR MORE EMPLOYEES WORK
+SQL> 
+SQL> SELECT JOB_ID , COUNT(*) FROM EMPLOYEES GROUP BY JOB_ID HAVING COUNT(*) >= 3;
+
+JOB_ID       COUNT(*)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+IT_PROG             3                                                                                                                                                                                   
+SA_REP              3                                                                                                                                                                                   
+ST_CLERK            4                                                                                                                                                                                   
+
+SQL> REM DISPLAY MANAGER_ID , LOWEST SALARY , HIGHEST SALARY FOR THOSE MANAGER_ID TO WHICH 15000 OR MORE TOTAL SALARY IS PAID.
+SQL> 
+SQL> SELECT MANAGER_ID , MIN(SALARY) , MAX(SALARY)
+  2  FROM EMPLOYEES
+  3  GROUP BY MANAGER_ID
+  4  HAVING SUM(SALARY) >= 15000;
+
+MANAGER_ID MIN(SALARY) MAX(SALARY)                                                                                                                                                                      
+---------- ----------- -----------                                                                                                                                                                      
+                 24000       24000                                                                                                                                                                      
+       100        5800       17000                                                                                                                                                                      
+       149        7000       11000                                                                                                                                                                      
+       101        4400       12000                                                                                                                                                                      
+
+SQL> REM DISPLAY HIRE YEAR WISE , NO. OF EMPLOYEES HIRED FOR THE YEARS IN WHICH 2 OR LESS EMPLOYEES HIRED.
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_DATE,'RRRR') , COUNT(*)
+  2  FROM EMPLOYEES
+  3  GROUP BY TO_CHAR(HIRE_DATE,'RRRR')
+  4  HAVING COUNT(*) <= 2;
+
+TO_C   COUNT(*)                                                                                                                                                                                         
+---- ----------                                                                                                                                                                                         
+1987          2                                                                                                                                                                                         
+1997          2                                                                                                                                                                                         
+2000          1                                                                                                                                                                                         
+1994          2                                                                                                                                                                                         
+1991          1                                                                                                                                                                                         
+1995          1                                                                                                                                                                                         
+1990          1                                                                                                                                                                                         
+1989          1                                                                                                                                                                                         
+1993          1                                                                                                                                                                                         
+1996          2                                                                                                                                                                                         
+
+10 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , SUM(SALARY) TOTAL_SALARY
+  2  FROM EMPLOYEES
+  3  WHERE JOB_ID NOT LIKE '%P%'
+  4  HAVING MIN(SALARY) BETWEEN 5000 AND 15000
+  5  GROUP BY DEPARTMENT_ID , MANAGER_ID
+  6  ORDER BY TOTAL_SALARY DESC;
+
+DEPARTMENT_ID TOTAL_SALARY                                                                                                                                                                              
+------------- ------------                                                                                                                                                                              
+           20        13000                                                                                                                                                                              
+          110        12000                                                                                                                                                                              
+           80        10500                                                                                                                                                                              
+          110         8300                                                                                                                                                                              
+           50         5800                                                                                                                                                                              
+
+SQL> SELECT MANAGER_ID , MIN(SALARY) MINSAL
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE BETWEEN '01-JAN-91' AND '31-DEC-98'
+  4  HAVING MANAGER_ID NOT IN (100,124,149) AND SUM(SALARY) <= 12000
+  5  GROUP BY MANAGER_ID
+  6  ORDER BY 2;
+
+MANAGER_ID     MINSAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+       201       6000                                                                                                                                                                                   
+       103       6000                                                                                                                                                                                   
+       205       8300                                                                                                                                                                                   
+       101      12000                                                                                                                                                                                   
+
+
+SQL> SPOOL OFF
