@@ -1,0 +1,253 @@
+SQL> 
+SQL> SELECT COUNT(CASE WHEN DEPARTMENT_ID = 20 THEN '*' END) DEPT_20_CNT,
+  2         COUNT(CASE WHEN DEPARTMENT_ID = 50 THEN '*' END) DEPT_50_CNT,
+  3         COUNT(CASE WHEN DEPARTMENT_ID = 90 THEN '*' END) DEPT_90_CNT
+  4  FROM   EMPLOYEES;
+
+DEPT_20_CNT DEPT_50_CNT DEPT_90_CNT                                                                                                                                                                     
+----------- ----------- -----------                                                                                                                                                                     
+          2           5           3                                                                                                                                                                     
+
+SQL> SELECT MANAGER_ID , COUNT(CASE WHEN DEPARTMENT_ID = 20 THEN '*' END) DEPT_20_CNT,
+  2         COUNT(CASE WHEN DEPARTMENT_ID = 50 THEN '*' END) DEPT_50_CNT,
+  3         COUNT(CASE WHEN DEPARTMENT_ID = 90 THEN '*' END) DEPT_90_CNT
+  4  FROM   EMPLOYEES
+  5  GROUP  BY MANAGER_ID;
+
+MANAGER_ID DEPT_20_CNT DEPT_50_CNT DEPT_90_CNT                                                                                                                                                          
+---------- ----------- ----------- -----------                                                                                                                                                          
+                     0           0           1                                                                                                                                                          
+       100           1           1           2                                                                                                                                                          
+       149           0           0           0                                                                                                                                                          
+       205           0           0           0                                                                                                                                                          
+       102           0           0           0                                                                                                                                                          
+       201           1           0           0                                                                                                                                                          
+       101           0           0           0                                                                                                                                                          
+       124           0           4           0                                                                                                                                                          
+       103           0           0           0                                                                                                                                                          
+
+9 rows selected.
+
+SQL> SELECT JOB_ID , COUNT(CASE WHEN DEPARTMENT_ID = 20 THEN '*' END) DEPT_20_CNT,
+  2         COUNT(CASE WHEN DEPARTMENT_ID = 50 THEN '*' END) DEPT_50_CNT,
+  3         COUNT(CASE WHEN DEPARTMENT_ID = 90 THEN '*' END) DEPT_90_CNT
+  4  FROM   EMPLOYEES
+  5  GROUP  BY JOB_ID;
+
+JOB_ID     DEPT_20_CNT DEPT_50_CNT DEPT_90_CNT                                                                                                                                                          
+---------- ----------- ----------- -----------                                                                                                                                                          
+IT_PROG              0           0           0                                                                                                                                                          
+AC_MGR               0           0           0                                                                                                                                                          
+AC_ACCOUNT           0           0           0                                                                                                                                                          
+ST_MAN               0           1           0                                                                                                                                                          
+AD_ASST              0           0           0                                                                                                                                                          
+AD_VP                0           0           2                                                                                                                                                          
+SA_MAN               0           0           0                                                                                                                                                          
+MK_MAN               1           0           0                                                                                                                                                          
+AD_PRES              0           0           1                                                                                                                                                          
+SA_REP               0           0           0                                                                                                                                                          
+MK_REP               1           0           0                                                                                                                                                          
+ST_CLERK             0           4           0                                                                                                                                                          
+
+12 rows selected.
+
+SQL> REM DEPARTMENT_ID WISE : AVG_SAL_IT_PROG   AVG_SAL_SA_REP   AVG_SAL_ST_CLERK
+SQL> 
+SQL> SEELCT DEPARTMENT_ID,AVG(CASE WHEN JOB_ID = 'IT_PROG' THEN SALARY END) AVG_SAL_IT_PROG,AVG(CASE WHEN  JOB_ID='SA_REP' THEN SALARY END) AVG_SAL_SA_REP,AVG(CASE WHEN JOB_ID='ST_CLERK' THEN SALARY END ) AVG_SAL_ST_CLERK FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+SP2-0734: unknown command beginning "SEELCT DEP..." - rest of line ignored.
+SQL> 
+SQL> SELECT DEPARTMENT_ID,AVG(CASE WHEN JOB_ID = 'IT_PROG' THEN SALARY END) AVG_SAL_IT_PROG,
+  2  AVG(CASE WHEN  JOB_ID='SA_REP' THEN SALARY END) AVG_SAL_SA_REP,
+  3  AVG(CASE WHEN JOB_ID='ST_CLERK' THEN SALARY END ) AVG_SAL_ST_CLERK
+  4  FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+DEPARTMENT_ID AVG_SAL_IT_PROG AVG_SAL_SA_REP AVG_SAL_ST_CLERK                                                                                                                                           
+------------- --------------- -------------- ----------------                                                                                                                                           
+                                        7000                                                                                                                                                            
+           90                                                                                                                                                                                           
+           20                                                                                                                                                                                           
+          110                                                                                                                                                                                           
+           50                                            2925                                                                                                                                           
+           80                           9800                                                                                                                                                            
+           60            6400                                                                                                                                                                           
+           10                                                                                                                                                                                           
+
+8 rows selected.
+
+SQL> REM MANAGER_ID WISE : CNT_YEAR_98   CNT_YEAR_99
+SQL> 
+SQL> select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998',*)) CNT_YEAR_98,COUNT(decode(to_char(hire_date,'YYYY'),'1999',*)) CNT_YEAR_99  from employees group by manager_id;
+select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998',*)) CNT_YEAR_98,COUNT(decode(to_char(hire_date,'YYYY'),'1999',*)) CNT_YEAR_99  from employees group by manager_id
+                                                                 *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998',*)) CNT_YEAR_98,
+  2  COUNT(decode(to_char(hire_date,'YYYY'),'1999',*)) CNT_YEAR_99
+  3  from employees group by manager_id;
+select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998',*)) CNT_YEAR_98,
+                                                                 *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998','*')) CNT_YEAR_98,
+  2  COUNT(decode(to_char(hire_date,'YYYY'),'1999','*')) CNT_YEAR_99
+  3  from employees group by manager_id;
+
+MANAGER_ID CNT_YEAR_98 CNT_YEAR_99                                                                                                                                                                      
+---------- ----------- -----------                                                                                                                                                                      
+                     0           0                                                                                                                                                                      
+       100           0           1                                                                                                                                                                      
+       149           1           1                                                                                                                                                                      
+       205           0           0                                                                                                                                                                      
+       102           0           0                                                                                                                                                                      
+       201           0           0                                                                                                                                                                      
+       101           0           0                                                                                                                                                                      
+       124           2           0                                                                                                                                                                      
+       103           0           1                                                                                                                                                                      
+
+9 rows selected.
+
+SQL> select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998','*')) CNT_YEAR_98,
+  2  COUNT(decode(to_char(hire_date,'YYYY'),'1999','*')) CNT_YEAR_99
+  3  from employees group by manager_id
+  4  ORDER BY 1;
+
+MANAGER_ID CNT_YEAR_98 CNT_YEAR_99                                                                                                                                                                      
+---------- ----------- -----------                                                                                                                                                                      
+       100           0           1                                                                                                                                                                      
+       101           0           0                                                                                                                                                                      
+       102           0           0                                                                                                                                                                      
+       103           0           1                                                                                                                                                                      
+       124           2           0                                                                                                                                                                      
+       149           1           1                                                                                                                                                                      
+       201           0           0                                                                                                                                                                      
+       205           0           0                                                                                                                                                                      
+                     0           0                                                                                                                                                                      
+
+9 rows selected.
+
+SQL> SELECT  MANAGER_ID , COUNT(DECODE(TO_CHAR(HIRE_DATE , ' RRRR') , 1998 ,'*'))"CNT_1998" ,
+  2  COUNT(DECODE(TO_CHAR(HIRE_DATE , ' RRRR') , 1999 ,'*'))"CNT_1999"  FROM EMPLOYEES GROUP BY MANAGER_ID;
+
+MANAGER_ID   CNT_1998   CNT_1999                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+                    0          0                                                                                                                                                                        
+       100          0          1                                                                                                                                                                        
+       149          1          1                                                                                                                                                                        
+       205          0          0                                                                                                                                                                        
+       102          0          0                                                                                                                                                                        
+       201          0          0                                                                                                                                                                        
+       101          0          0                                                                                                                                                                        
+       124          2          0                                                                                                                                                                        
+       103          0          1                                                                                                                                                                        
+
+9 rows selected.
+
+SQL> SELECT  MANAGER_ID , COUNT(DECODE(TO_CHAR(HIRE_DATE , ' RRRR') , 1998 ,'*'))"CNT_1998" ,
+  2  COUNT(DECODE(TO_CHAR(HIRE_DATE , ' RRRR') , 1999 ,'*'))"CNT_1999"  FROM EMPLOYEES GROUP BY MANAGER_ID
+  3  ORDER BY 1;
+
+MANAGER_ID   CNT_1998   CNT_1999                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       100          0          1                                                                                                                                                                        
+       101          0          0                                                                                                                                                                        
+       102          0          0                                                                                                                                                                        
+       103          0          1                                                                                                                                                                        
+       124          2          0                                                                                                                                                                        
+       149          1          1                                                                                                                                                                        
+       201          0          0                                                                                                                                                                        
+       205          0          0                                                                                                                                                                        
+                    0          0                                                                                                                                                                        
+
+9 rows selected.
+
+SQL> select manager_id ,count(decode(to_char(hire_date,'YYYY'),'1998','*')) CNT_YEAR_98,
+  2  COUNT(decode(to_char(hire_date,'YYYY'),'1999','*')) CNT_YEAR_99
+  3  from employees group by manager_id
+  4  ORDER BY 1;
+
+MANAGER_ID CNT_YEAR_98 CNT_YEAR_99                                                                                                                                                                      
+---------- ----------- -----------                                                                                                                                                                      
+       100           0           1                                                                                                                                                                      
+       101           0           0                                                                                                                                                                      
+       102           0           0                                                                                                                                                                      
+       103           0           1                                                                                                                                                                      
+       124           2           0                                                                                                                                                                      
+       149           1           1                                                                                                                                                                      
+       201           0           0                                                                                                                                                                      
+       205           0           0                                                                                                                                                                      
+                     0           0                                                                                                                                                                      
+
+9 rows selected.
+
+SQL> SELECT COUNT(DECODE(TO_CHAR(HIRE_DATE,'YYYY'),1998,'*')) CNT_YEAR_98,COUNT(DECODE(TO_CHAR(HIRE_DATE,'YYYY'),1999,'*')) CNT_YEAR_99 FROM EMPLOYEES GROUP BY MANAGER_ID;
+
+CNT_YEAR_98 CNT_YEAR_99                                                                                                                                                                                 
+----------- -----------                                                                                                                                                                                 
+          0           0                                                                                                                                                                                 
+          0           1                                                                                                                                                                                 
+          1           1                                                                                                                                                                                 
+          0           0                                                                                                                                                                                 
+          0           0                                                                                                                                                                                 
+          0           0                                                                                                                                                                                 
+          0           0                                                                                                                                                                                 
+          2           0                                                                                                                                                                                 
+          0           1                                                                                                                                                                                 
+
+9 rows selected.
+
+SQL> SELECT MANAGER_ID , COUNT(DECODE(TO_CHAR(HIRE_DATE,'YYYY'),1998,'*')) CNT_YEAR_98,COUNT(DECODE(TO_CHAR(HIRE_DATE,'YYYY'),1999,'*')) CNT_YEAR_99 FROM EMPLOYEES GROUP BY MANAGER_ID ORDER BY 1;
+
+MANAGER_ID CNT_YEAR_98 CNT_YEAR_99                                                                                                                                                                      
+---------- ----------- -----------                                                                                                                                                                      
+       100           0           1                                                                                                                                                                      
+       101           0           0                                                                                                                                                                      
+       102           0           0                                                                                                                                                                      
+       103           0           1                                                                                                                                                                      
+       124           2           0                                                                                                                                                                      
+       149           1           1                                                                                                                                                                      
+       201           0           0                                                                                                                                                                      
+       205           0           0                                                                                                                                                                      
+                     0           0                                                                                                                                                                      
+
+9 rows selected.
+
+SQL> SELECT MANAGER_ID , COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1998' THEN '*' END) "CNT_YEAR98" , COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1999' THEN '*' END) "CNT_YEAR99" FROM EMPLOYEES GROUP BY MANAGER_ID HAVING COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1998' THEN '*' END)!=0 OR COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1999' THEN '*' END)!=0;
+
+MANAGER_ID CNT_YEAR98 CNT_YEAR99                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       100          0          1                                                                                                                                                                        
+       149          1          1                                                                                                                                                                        
+       124          2          0                                                                                                                                                                        
+       103          0          1                                                                                                                                                                        
+
+SQL> SELECT MANAGER_ID , COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1998' THEN '*' END) "CNT_YEAR98" ,
+  2  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1999' THEN '*' END) "CNT_YEAR99"
+  3  FROM EMPLOYEES GROUP BY MANAGER_ID
+  4  HAVING COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1998' THEN '*' END)!=0
+  5  OR COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1999' THEN '*' END)!=0;
+
+MANAGER_ID CNT_YEAR98 CNT_YEAR99                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       100          0          1                                                                                                                                                                        
+       149          1          1                                                                                                                                                                        
+       124          2          0                                                                                                                                                                        
+       103          0          1                                                                                                                                                                        
+
+SQL> SELECT MANAGER_ID , COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1998' THEN '*' END) "CNT_YEAR98" ,
+  2  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1999' THEN '*' END) "CNT_YEAR99"
+  3  FROM EMPLOYEES GROUP BY MANAGER_ID
+  4  HAVING COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1998' THEN '*' END)>0
+  5  OR COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR')='1999' THEN '*' END)>0;
+
+MANAGER_ID CNT_YEAR98 CNT_YEAR99                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       100          0          1                                                                                                                                                                        
+       149          1          1                                                                                                                                                                        
+       124          2          0                                                                                                                                                                        
+       103          0          1                                                                                                                                                                        
+
+SQL> SPOOL OFF

@@ -1,0 +1,171 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM PCM : PIVOTE/CROSS TAB/MATRIX REPORT
+SQL> 
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES;
+
+MAX(SALARY)                                                                     
+-----------                                                                     
+      24000                                                                     
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 90;
+
+MAX(SALARY)                                                                     
+-----------                                                                     
+      24000                                                                     
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 60;
+
+MAX(SALARY)                                                                     
+-----------                                                                     
+       9000                                                                     
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 50;
+
+MAX(SALARY)                                                                     
+-----------                                                                     
+       5800                                                                     
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 20;
+
+MAX(SALARY)                                                                     
+-----------                                                                     
+      13000                                                                     
+
+SQL> REM DEPT20_MAX_SAL    DEPT50_MAX_SAL    DEPT60_MAX_SAL
+SQL> REM
+SQL> REM         13000              5800             9000
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT MAX(DECODE(DEPARTMENT_ID , 20 , SALARY)) DEPT20_MAX_SAL,
+  2         MAX(DECODE(DEPARTMENT_ID , 50 , SALARY)) DEPT50_MAX_SAL,
+  3         MAX(DECODE(DEPARTMENT_ID , 60 , SALARY)) DEPT60_MAX_SAL
+  4  FROM   EMPLOYEES;
+
+DEPT20_MAX_SAL DEPT50_MAX_SAL DEPT60_MAX_SAL                                    
+-------------- -------------- --------------                                    
+         13000           5800           9000                                    
+
+SQL> SELECT MAX(CASE DEPARTMENT_ID WHEN 20 THEN SALARY END) DEPT20_MAX_SAL,
+  2         MAX(CASE DEPARTMENT_ID WHEN 50 THEN SALARY END) DEPT50_MAX_SAL,
+  3         MAX(CASE DEPARTMENT_ID WHEN 60 THEN SALARY END) DEPT60_MAX_SAL
+  4  FROM   EMPLOYEES;
+
+DEPT20_MAX_SAL DEPT50_MAX_SAL DEPT60_MAX_SAL                                    
+-------------- -------------- --------------                                    
+         13000           5800           9000                                    
+
+SQL> SELECT MAX(CASE WHEN DEPARTMENT_ID = 20 THEN SALARY END) DEPT20_MAX_SAL,
+  2         MAX(CASE WHEN DEPARTMENT_ID = 50 THEN SALARY END) DEPT50_MAX_SAL,
+  3         MAX(CASE WHEN DEPARTMENT_ID = 60 THEN SALARY END) DEPT60_MAX_SAL
+  4  FROM   EMPLOYEES;
+
+DEPT20_MAX_SAL DEPT50_MAX_SAL DEPT60_MAX_SAL                                    
+-------------- -------------- --------------                                    
+         13000           5800           9000                                    
+
+SQL> REM IT_PROG_MIN_SAL    ST_CLERK_MIN_SAL    SA_REP_MIN_SAL
+SQL> 
+SQL> REM 1 DECODE 2 CASE I 3 CASE II
+SQL> 
+SQL> SELECT MIN(DECODE(JOB_ID , 'IT_PROG' , SALARY)) IT_PROG_MIN_SAL,
+  2         MIN(DECODE(JOB_ID , 'ST_CLERK' , SALARY)) ST_CLERK_MIN_SAL,
+  3         MIN(DECODE(JOB_ID , 'SA_REP' , SALARY)) SA_REP_MIN_SAL
+  4  FROM   EMPLOYEES;
+
+IT_PROG_MIN_SAL ST_CLERK_MIN_SAL SA_REP_MIN_SAL                                 
+--------------- ---------------- --------------                                 
+           4200             2500           7000                                 
+
+SQL> SELECT MIN(CASE JOB_ID  WHEN 'IT_PROG' THEN SALARY END) IT_PROG_MIN_SAL,
+  2         MIN(CASE JOB_ID  WHEN 'ST_CLERK' THEN SALARY END) ST_CLERK_MIN_SAL,
+  3         MIN(CASE JOB_ID  WHEN 'SA_REP' THEN SALARY END) SA_REP_MIN_SAL
+  4  FROM   EMPLOYEES;
+
+IT_PROG_MIN_SAL ST_CLERK_MIN_SAL SA_REP_MIN_SAL                                 
+--------------- ---------------- --------------                                 
+           4200             2500           7000                                 
+
+SQL> SELECT MIN(CASE WHEN JOB_ID  = 'IT_PROG' THEN SALARY END) IT_PROG_MIN_SAL,
+  2         MIN(CASE WHEN JOB_ID  = 'ST_CLERK' THEN SALARY END) ST_CLERK_MIN_SAL,
+  3         MIN(CASE WHEN JOB_ID  = 'SA_REP' THEN SALARY END) SA_REP_MIN_SAL
+  4  FROM   EMPLOYEES;
+
+IT_PROG_MIN_SAL ST_CLERK_MIN_SAL SA_REP_MIN_SAL                                 
+--------------- ---------------- --------------                                 
+           4200             2500           7000                                 
+
+SQL> REM MGR_100_CNT   MGR_124_CNT   MGR_149_CNT
+SQL> 
+SQL> REM DECODE        CASE I        CASE II
+SQL> 
+SQL> SELECT COUNT(DECODE(MANAGER_ID , 100 , '*') MGR_100_CNT,
+  2  
+SQL> 
+SQL> SELECT COUNT(DECODE(MANAGER_ID , 100 , '*')) MGR_100_CNT,
+  2         COUNT(CASE MANAGER_ID WHEN 124 THEN '*' END) MGR_124_CNT,
+  3         COUNT(CASE MANAGER_ID WHEN 149 THEN '*' END) MGR_149_CNT
+  4  FROM   EMPLOYEES;
+
+MGR_100_CNT MGR_124_CNT MGR_149_CNT                                             
+----------- ----------- -----------                                             
+          5           4           3                                             
+
+SQL> SELECT COUNT(DECODE(MANAGER_ID , 100 , '*')) MGR_100_CNT,
+  2         COUNT(CASE MANAGER_ID WHEN 124 THEN '*' END) MGR_124_CNT,
+  3         COUNT(CASE WHEN MANAGER_ID = 149 THEN '*' END) MGR_149_CNT
+  4  FROM   EMPLOYEES;
+
+MGR_100_CNT MGR_124_CNT MGR_149_CNT                                             
+----------- ----------- -----------                                             
+          5           4           3                                             
+
+SQL> SELECT COUNT(DECODE(MANAGER_ID , 100 , '*')) MGR_100_CNT,
+  2         COUNT(CASE MANAGER_ID WHEN 124 THEN SALARY END) MGR_124_CNT,
+  3         COUNT(CASE WHEN MANAGER_ID = 149 THEN SYSDATE END) MGR_149_CNT
+  4  FROM   EMPLOYEES;
+
+MGR_100_CNT MGR_124_CNT MGR_149_CNT                                             
+----------- ----------- -----------                                             
+          5           4           3                                             
+
+SQL> SELECT COUNT(DECODE(MANAGER_ID , 100 , 1)) MGR_100_CNT,
+  2         COUNT(CASE WHEN MANAGER_ID = 149 THEN 5 END) MGR_149_CNT
+  3         COUNT(CASE WHEN MANAGER_ID = 149 THEN SYSDATE END) MGR_149_CNT
+  4  FROM   EMPLOYEES;
+       COUNT(CASE WHEN MANAGER_ID = 149 THEN SYSDATE END) MGR_149_CNT
+       *
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT COUNT(DECODE(MANAGER_ID , 100 , 1)) MGR_100_CNT,
+  2         COUNT(CASE MANAGER_ID WHEN 124 THEN 5 END) MGR_124_CNT,
+  3         COUNT(CASE WHEN MANAGER_ID = 149 THEN SYSDATE END) MGR_149_CNT
+  4  FROM   EMPLOYEES;
+
+MGR_100_CNT MGR_124_CNT MGR_149_CNT                                             
+----------- ----------- -----------                                             
+          5           4           3                                             
+
+SQL> REM IT_PROG_MIN_SAL    DEPT_90_AVG_SAL    MGR_100_MAX_SAL
+SQL> 
+SQL> REM DECODE             CASE I             CASE II
+SQL> 
+SQL> SELECT MIN(DECODE(JOB_ID,'IT_PROG',SALARY)) IT_PROG_MIN_SAL ,AVG(CASE DEPARTMENT_ID WHEN 90 THEN SALARY END) DEPT_90_AVG_SAL ,MAX(CASE WHEN MANAGER_ID = 100 THEN SALARY END) MGR_100_MAX_SALARY FROM EMPLOYEES ;
+
+IT_PROG_MIN_SAL DEPT_90_AVG_SAL MGR_100_MAX_SALARY                              
+--------------- --------------- ------------------                              
+           4200      19333.3333              17000                              
+
+SQL> SELECT MIN(DECODE(JOB_ID,'IT_PROG',SALARY)) IT_PROG_MIN_SAL ,
+  2  AVG(CASE DEPARTMENT_ID WHEN 90 THEN SALARY END) DEPT_90_AVG_SAL ,
+  3  MAX(CASE WHEN MANAGER_ID = 100 THEN SALARY END) MGR_100_MAX_SALARY FROM EMPLOYEES ;
+
+IT_PROG_MIN_SAL DEPT_90_AVG_SAL MGR_100_MAX_SALARY                              
+--------------- --------------- ------------------                              
+           4200      19333.3333              17000                              
+
+SQL> SPOOL OFF
