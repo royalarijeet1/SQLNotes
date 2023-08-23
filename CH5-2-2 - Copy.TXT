@@ -1,0 +1,111 @@
+
+SQL> REM NESTED SUMMARY ITEMS
+SQL> 
+SQL> REM WE CAN NEST ONLY UPTO TWO LEVELS.
+SQL> 
+SQL> REM WHEN WE NEST SUMMARY FUNCTION, GROUP BY CLAUSE IS MANDATORY.
+SQL> 
+SQL> REM WHEN WE USE NESTED SUMMARY ITEM IN SELECT, ALL OTHER ITEMS OF SELECT MUST BE NESTED SUMMARY ITEM ONLY. EXCEPTION COUNT(*) , COUNT(GROUP BY COLUMN)
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT AVG(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+AVG(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+       7000                                                                                                                                                                                             
+ 19333.3333                                                                                                                                                                                             
+       9500                                                                                                                                                                                             
+      10150                                                                                                                                                                                             
+       3500                                                                                                                                                                                             
+ 10033.3333                                                                                                                                                                                             
+       6400                                                                                                                                                                                             
+       4400                                                                                                                                                                                             
+
+8 rows selected.
+
+SQL> REM DISPLAY HIGHEST AVERAGE SALARY FIGURE, DEPARTMENT WISE.
+SQL> 
+SQL> SELECT MAX(AVG(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+MAX(AVG(SALARY))                                                                                                                                                                                        
+----------------                                                                                                                                                                                        
+      19333.3333                                                                                                                                                                                        
+
+SQL> SELECT MAX(AVG(SALARY)) FROM EMPLOYEES;
+SELECT MAX(AVG(SALARY)) FROM EMPLOYEES
+           *
+ERROR at line 1:
+ORA-00978: nested group function without GROUP BY 
+
+
+SQL> SELECT MAX(AVG(SALARY)) , MIN(AVG(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+MAX(AVG(SALARY)) MIN(AVG(SALARY))                                                                                                                                                                       
+---------------- ----------------                                                                                                                                                                       
+      19333.3333             3500                                                                                                                                                                       
+
+SQL> SELECT MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+MAX(AVG(SALARY)) SUM(COUNT(SALARY))                                                                                                                                                                     
+---------------- ------------------                                                                                                                                                                     
+      19333.3333                 20                                                                                                                                                                     
+
+SQL> SELECT SUM(SALARY) , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+SELECT SUM(SALARY) , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID
+           *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> SELECT DEPARTMENT_ID , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+SELECT DEPARTMENT_ID , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT COUNT(*) , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+  COUNT(*) MAX(AVG(SALARY)) SUM(COUNT(SALARY))                                                                                                                                                          
+---------- ---------------- ------------------                                                                                                                                                          
+         8       19333.3333                 20                                                                                                                                                          
+
+SQL> SELECT COUNT(DEPARTMENT_ID) , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+COUNT(DEPARTMENT_ID) MAX(AVG(SALARY)) SUM(COUNT(SALARY))                                                                                                                                                
+-------------------- ---------------- ------------------                                                                                                                                                
+                   7       19333.3333                 20                                                                                                                                                
+
+SQL> SELECT COUNT(JOB_ID) , MAX(AVG(SALARY)) , SUM(COUNT(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+COUNT(JOB_ID) MAX(AVG(SALARY)) SUM(COUNT(SALARY))                                                                                                                                                       
+------------- ---------------- ------------------                                                                                                                                                       
+            8       19333.3333                 20                                                                                                                                                       
+
+SQL> SELECT COUNT(DISTINCT JOB_ID) FROM EMPLOYEES;
+
+COUNT(DISTINCTJOB_ID)                                                                                                                                                                                   
+---------------------                                                                                                                                                                                   
+                   12                                                                                                                                                                                   
+
+SQL> REM DISPLAY MANAGER_ID WISE , LOWEST NO. OF EMPLOYEES AND HIGHEST NO. OF EMPLOYEES.
+SQL> 
+SQL> SELECT MIN(COUNT(*)) , MAX(COUNT(*))
+  2  FROM EMPLOYEES
+  3  GROUP BY MANAGER_ID;
+
+MIN(COUNT(*)) MAX(COUNT(*))                                                                                                                                                                             
+------------- -------------                                                                                                                                                                             
+            1             5                                                                                                                                                                             
+
+SQL> SELECT MIN(COUNT(MANAGER_ID)) , MAX(COUNT(MANAGER_ID))
+  2  FROM EMPLOYEES
+  3  GROUP BY MANAGER_ID;
+
+MIN(COUNT(MANAGER_ID)) MAX(COUNT(MANAGER_ID))                                                                                                                                                           
+---------------------- ----------------------                                                                                                                                                           
+                     0                      5                                                                                                                                                           
+
+SQL> 
+SQL> SPOOL OFF
