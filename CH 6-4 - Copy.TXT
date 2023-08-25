@@ -1,0 +1,846 @@
+SQL> 
+SQL> REM WHEN BOTH TABLES HAS UN COMMON COLUMS AND RELATED DATA
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES;
+
+FIRST_NAME     SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Steven          24000                                                                                                                                                                                   
+Neena           17000                                                                                                                                                                                   
+Lex             17000                                                                                                                                                                                   
+Alexander        9000                                                                                                                                                                                   
+Bruce            6000                                                                                                                                                                                   
+Diana            4200                                                                                                                                                                                   
+Kevin            5800                                                                                                                                                                                   
+Trenna           3500                                                                                                                                                                                   
+Curtis           3100                                                                                                                                                                                   
+Randall          2600                                                                                                                                                                                   
+Peter            2500                                                                                                                                                                                   
+Eleni           10500                                                                                                                                                                                   
+Ellen           11000                                                                                                                                                                                   
+Jonathon         8600                                                                                                                                                                                   
+Kimerely         7000                                                                                                                                                                                   
+Jennifer         4400                                                                                                                                                                                   
+Michael         13000                                                                                                                                                                                   
+Pat              6000                                                                                                                                                                                   
+Shelley         12000                                                                                                                                                                                   
+William          8300                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT * FROM JOB_GRADES;
+
+GRA LOWEST_SAL HIGHEST_SAL                                                                                                                                                                              
+--- ---------- -----------                                                                                                                                                                              
+A         1000        2999                                                                                                                                                                              
+B         3000        5999                                                                                                                                                                              
+C         6000        9999                                                                                                                                                                              
+D        10000       14999                                                                                                                                                                              
+E        15000       24999                                                                                                                                                                              
+F        25000       40000                                                                                                                                                                              
+
+6 rows selected.
+
+SQL> RME FIRST_NAME , SALARY , GRADE_LEVEL
+SP2-0734: unknown command beginning "RME FIRST_..." - rest of line ignored.
+SQL> 
+SQL> REM FIRST_NAME , SALARY , GRADE_LEVEL
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME     SALARY GRA                                                                                                                                                                               
+---------- ---------- ---                                                                                                                                                                               
+Peter            2500 A                                                                                                                                                                                 
+Randall          2600 A                                                                                                                                                                                 
+Curtis           3100 B                                                                                                                                                                                 
+Trenna           3500 B                                                                                                                                                                                 
+Diana            4200 B                                                                                                                                                                                 
+Jennifer         4400 B                                                                                                                                                                                 
+Kevin            5800 B                                                                                                                                                                                 
+Bruce            6000 C                                                                                                                                                                                 
+Pat              6000 C                                                                                                                                                                                 
+Kimerely         7000 C                                                                                                                                                                                 
+William          8300 C                                                                                                                                                                                 
+Jonathon         8600 C                                                                                                                                                                                 
+Alexander        9000 C                                                                                                                                                                                 
+Eleni           10500 D                                                                                                                                                                                 
+Ellen           11000 D                                                                                                                                                                                 
+Shelley         12000 D                                                                                                                                                                                 
+Michael         13000 D                                                                                                                                                                                 
+Neena           17000 E                                                                                                                                                                                 
+Lex             17000 E                                                                                                                                                                                 
+Steven          24000 E                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN JOB_GRADES ON SALARY >= LOWEST_SAL AND SALARY <= HIGHEST_SAL;
+
+FIRST_NAME     SALARY GRA                                                                                                                                                                               
+---------- ---------- ---                                                                                                                                                                               
+Peter            2500 A                                                                                                                                                                                 
+Randall          2600 A                                                                                                                                                                                 
+Curtis           3100 B                                                                                                                                                                                 
+Trenna           3500 B                                                                                                                                                                                 
+Diana            4200 B                                                                                                                                                                                 
+Jennifer         4400 B                                                                                                                                                                                 
+Kevin            5800 B                                                                                                                                                                                 
+Bruce            6000 C                                                                                                                                                                                 
+Pat              6000 C                                                                                                                                                                                 
+Kimerely         7000 C                                                                                                                                                                                 
+William          8300 C                                                                                                                                                                                 
+Jonathon         8600 C                                                                                                                                                                                 
+Alexander        9000 C                                                                                                                                                                                 
+Eleni           10500 D                                                                                                                                                                                 
+Ellen           11000 D                                                                                                                                                                                 
+Shelley         12000 D                                                                                                                                                                                 
+Michael         13000 D                                                                                                                                                                                 
+Neena           17000 E                                                                                                                                                                                 
+Lex             17000 E                                                                                                                                                                                 
+Steven          24000 E                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME
+SQL> 
+SQL> REM 1 INNER USING 2 INNER ON
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME DEPARTMENT_NAME                                                                                                                                                                              
+---------- ------------------------------                                                                                                                                                               
+Jennifer   Administration                                                                                                                                                                               
+Michael    Marketing                                                                                                                                                                                    
+Pat        Marketing                                                                                                                                                                                    
+Kevin      Shiping                                                                                                                                                                                      
+Peter      Shiping                                                                                                                                                                                      
+Randall    Shiping                                                                                                                                                                                      
+Curtis     Shiping                                                                                                                                                                                      
+Trenna     Shiping                                                                                                                                                                                      
+Diana      IT                                                                                                                                                                                           
+Bruce      IT                                                                                                                                                                                           
+Alexander  IT                                                                                                                                                                                           
+Ellen      Sales                                                                                                                                                                                        
+Eleni      Sales                                                                                                                                                                                        
+Jonathon   Sales                                                                                                                                                                                        
+Lex        Executive                                                                                                                                                                                    
+Steven     Executive                                                                                                                                                                                    
+Neena      Executive                                                                                                                                                                                    
+William    Accounting                                                                                                                                                                                   
+Shelley    Accounting                                                                                                                                                                                   
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME FROM EMPLOYEES E JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID;
+
+FIRST_NAME DEPARTMENT_NAME                                                                                                                                                                              
+---------- ------------------------------                                                                                                                                                               
+Jennifer   Administration                                                                                                                                                                               
+Michael    Marketing                                                                                                                                                                                    
+Pat        Marketing                                                                                                                                                                                    
+Kevin      Shiping                                                                                                                                                                                      
+Peter      Shiping                                                                                                                                                                                      
+Randall    Shiping                                                                                                                                                                                      
+Curtis     Shiping                                                                                                                                                                                      
+Trenna     Shiping                                                                                                                                                                                      
+Diana      IT                                                                                                                                                                                           
+Bruce      IT                                                                                                                                                                                           
+Alexander  IT                                                                                                                                                                                           
+Ellen      Sales                                                                                                                                                                                        
+Eleni      Sales                                                                                                                                                                                        
+Jonathon   Sales                                                                                                                                                                                        
+Lex        Executive                                                                                                                                                                                    
+Steven     Executive                                                                                                                                                                                    
+Neena      Executive                                                                                                                                                                                    
+William    Accounting                                                                                                                                                                                   
+Shelley    Accounting                                                                                                                                                                                   
+
+19 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , CITY
+SQL> 
+SQL> REM 1 INNER USING 2 INNER ON
+SQL> 
+SQL> REM 1 INNER USING 2 INNER ON 3 USING+ON
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME,CITY FROM EMPLOYEES INNER JOIN DEPARTMENTS USING (DEPARTMENT_ID) INNER JOIN LOCATIONS USING (LOCATION_ID);
+SELECT FIRST_NAME , DEPARTMENT_NAME,CITY FROM EMPLOYEES INNER JOIN DEPARTMENTS USING (DEPARTMENT_ID) INNER JOIN LOCATIONS USING (LOCATION_ID)
+                                                                                                                                 *
+ERROR at line 1:
+ORA-00904: "LOCATIONS"."LOCATION_ID": invalid identifier 
+
+
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME,CITY FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID INNER JOIN LOCATIONS L ON D.LOCATION_ID = L.LOCATION_ID;
+SELECT FIRST_NAME , DEPARTMENT_NAME,CITY FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID INNER JOIN LOCATIONS L ON D.LOCATION_ID = L.LOCATION_ID
+                                                                                                                                                                  *
+ERROR at line 1:
+ORA-00904: "L"."LOCATION_ID": invalid identifier 
+
+
+SQL> 
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,CITY FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID INNER JOIN LOCATIONS USING (LOCATION_ID);
+SELECT FIRST_NAME,DEPARTMENT_NAME,CITY FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID INNER JOIN LOCATIONS USING (LOCATION_ID)
+                                                                                                                                                  *
+ERROR at line 1:
+ORA-00904: "LOCATIONS"."LOCATION_ID": invalid identifier 
+
+
+SQL> ALTER TABLE LOCATIONS RENAME COLUMN LID TO LOCATION_ID;
+
+Table altered.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME,CITY FROM EMPLOYEES INNER JOIN DEPARTMENTS USING (DEPARTMENT_ID) INNER JOIN LOCATIONS USING (LOCATION_ID);
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Diana      IT                             Southlake                                                                                                                                                     
+Bruce      IT                             Southlake                                                                                                                                                     
+Alexander  IT                             Southlake                                                                                                                                                     
+Kevin      Shiping                        South San Francisco                                                                                                                                           
+Peter      Shiping                        South San Francisco                                                                                                                                           
+Randall    Shiping                        South San Francisco                                                                                                                                           
+Curtis     Shiping                        South San Francisco                                                                                                                                           
+Trenna     Shiping                        South San Francisco                                                                                                                                           
+Jennifer   Administration                 Seattle                                                                                                                                                       
+Lex        Executive                      Seattle                                                                                                                                                       
+Steven     Executive                      Seattle                                                                                                                                                       
+Neena      Executive                      Seattle                                                                                                                                                       
+William    Accounting                     Seattle                                                                                                                                                       
+Shelley    Accounting                     Seattle                                                                                                                                                       
+Michael    Marketing                      Toronto                                                                                                                                                       
+Pat        Marketing                      Toronto                                                                                                                                                       
+Ellen      Sales                          Oxford                                                                                                                                                        
+Eleni      Sales                          Oxford                                                                                                                                                        
+Jonathon   Sales                          Oxford                                                                                                                                                        
+
+19 rows selected.
+
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME,CITY FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID INNER JOIN LOCATIONS L ON D.LOCATION_ID = L.LOCATION_ID;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Diana      IT                             Southlake                                                                                                                                                     
+Bruce      IT                             Southlake                                                                                                                                                     
+Alexander  IT                             Southlake                                                                                                                                                     
+Kevin      Shiping                        South San Francisco                                                                                                                                           
+Peter      Shiping                        South San Francisco                                                                                                                                           
+Randall    Shiping                        South San Francisco                                                                                                                                           
+Curtis     Shiping                        South San Francisco                                                                                                                                           
+Trenna     Shiping                        South San Francisco                                                                                                                                           
+Jennifer   Administration                 Seattle                                                                                                                                                       
+Lex        Executive                      Seattle                                                                                                                                                       
+Steven     Executive                      Seattle                                                                                                                                                       
+Neena      Executive                      Seattle                                                                                                                                                       
+William    Accounting                     Seattle                                                                                                                                                       
+Shelley    Accounting                     Seattle                                                                                                                                                       
+Michael    Marketing                      Toronto                                                                                                                                                       
+Pat        Marketing                      Toronto                                                                                                                                                       
+Ellen      Sales                          Oxford                                                                                                                                                        
+Eleni      Sales                          Oxford                                                                                                                                                        
+Jonathon   Sales                          Oxford                                                                                                                                                        
+
+19 rows selected.
+
+SQL> 
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,CITY FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID INNER JOIN LOCATIONS USING (LOCATION_ID);
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Diana      IT                             Southlake                                                                                                                                                     
+Bruce      IT                             Southlake                                                                                                                                                     
+Alexander  IT                             Southlake                                                                                                                                                     
+Kevin      Shiping                        South San Francisco                                                                                                                                           
+Peter      Shiping                        South San Francisco                                                                                                                                           
+Randall    Shiping                        South San Francisco                                                                                                                                           
+Curtis     Shiping                        South San Francisco                                                                                                                                           
+Trenna     Shiping                        South San Francisco                                                                                                                                           
+Jennifer   Administration                 Seattle                                                                                                                                                       
+Lex        Executive                      Seattle                                                                                                                                                       
+Steven     Executive                      Seattle                                                                                                                                                       
+Neena      Executive                      Seattle                                                                                                                                                       
+William    Accounting                     Seattle                                                                                                                                                       
+Shelley    Accounting                     Seattle                                                                                                                                                       
+Michael    Marketing                      Toronto                                                                                                                                                       
+Pat        Marketing                      Toronto                                                                                                                                                       
+Ellen      Sales                          Oxford                                                                                                                                                        
+Eleni      Sales                          Oxford                                                                                                                                                        
+Jonathon   Sales                          Oxford                                                                                                                                                        
+
+19 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME
+SQL> 
+SQL> REM UNION , ON ...
+SQL> 
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,CITY,COUNTRY_NAME FROM EMPLOYEES E INNER JOIN DEPARTMENTS D USING(DEPARTMENT_ID) INNER JOIN LOCATIONS L ON D.LOCATION_ID=L.LOCATION_ID INNER JOIN COUNTRIES C USING(COUNTRY_ID);
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                                                                                                                   
+---------- ------------------------------ ------------------------------ ----------------------------------------                                                                                       
+Michael    Marketing                      Toronto                        Canada                                                                                                                         
+Pat        Marketing                      Toronto                        Canada                                                                                                                         
+Ellen      Sales                          Oxford                         United Kingdom                                                                                                                 
+Eleni      Sales                          Oxford                         United Kingdom                                                                                                                 
+Jonathon   Sales                          Oxford                         United Kingdom                                                                                                                 
+Diana      IT                             Southlake                      United States of America                                                                                                       
+Bruce      IT                             Southlake                      United States of America                                                                                                       
+Alexander  IT                             Southlake                      United States of America                                                                                                       
+Kevin      Shiping                        South San Francisco            United States of America                                                                                                       
+Peter      Shiping                        South San Francisco            United States of America                                                                                                       
+Randall    Shiping                        South San Francisco            United States of America                                                                                                       
+Curtis     Shiping                        South San Francisco            United States of America                                                                                                       
+Trenna     Shiping                        South San Francisco            United States of America                                                                                                       
+Jennifer   Administration                 Seattle                        United States of America                                                                                                       
+Lex        Executive                      Seattle                        United States of America                                                                                                       
+Steven     Executive                      Seattle                        United States of America                                                                                                       
+Neena      Executive                      Seattle                        United States of America                                                                                                       
+William    Accounting                     Seattle                        United States of America                                                                                                       
+Shelley    Accounting                     Seattle                        United States of America                                                                                                       
+
+19 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME
+SQL> 
+SQL> REM UNION , ON ...
+SQL> 
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,CITY,COUNTRY_NAME,REGION_NAME FROM EMPLOYEES  INNER JOIN DEPARTMENTS D USING (DEPARTMENT_ID) INNER JOIN LOCATIONS L ON  D.LOCATION_ID=L.LOCATION_ID INNER JOIN COUNTRIES C USING (COUNTRY_ID) INNER JOIN REGIONS R ON C.REGION_ID= R.REGION_ID ;
+SELECT FIRST_NAME,DEPARTMENT_NAME,CITY,COUNTRY_NAME,REGION_NAME FROM EMPLOYEES  INNER JOIN DEPARTMENTS D USING (DEPARTMENT_ID) INNER JOIN LOCATIONS L ON  D.LOCATION_ID=L.LOCATION_ID INNER JOIN COUNTRIES C USING (COUNTRY_ID) INNER JOIN REGIONS R ON C.REGION_ID= R.REGION_ID 
+                                                                                                                                                                                                                                                                     *
+ERROR at line 1:
+ORA-00904: "R"."REGION_ID": invalid identifier 
+
+
+SQL> ALTER TABLE REGIONS RENAME COLUMN RID TO REGION_ID;
+
+Table altered.
+
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,CITY,COUNTRY_NAME,REGION_NAME FROM EMPLOYEES  INNER JOIN DEPARTMENTS D USING (DEPARTMENT_ID) INNER JOIN LOCATIONS L ON  D.LOCATION_ID=L.LOCATION_ID INNER JOIN COUNTRIES C USING (COUNTRY_ID) INNER JOIN REGIONS R ON C.REGION_ID= R.REGION_ID ;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME                                                                           
+---------- ------------------------------ ------------------------------ ---------------------------------------- -------------------------                                                             
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                                                                                
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                                                                                
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                                                                                
+Michael    Marketing                      Toronto                        Canada                                   Americas                                                                              
+Pat        Marketing                      Toronto                        Canada                                   Americas                                                                              
+Diana      IT                             Southlake                      United States of America                 Americas                                                                              
+Bruce      IT                             Southlake                      United States of America                 Americas                                                                              
+Alexander  IT                             Southlake                      United States of America                 Americas                                                                              
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                                                                              
+Peter      Shiping                        South San Francisco            United States of America                 Americas                                                                              
+Randall    Shiping                        South San Francisco            United States of America                 Americas                                                                              
+Curtis     Shiping                        South San Francisco            United States of America                 Americas                                                                              
+Trenna     Shiping                        South San Francisco            United States of America                 Americas                                                                              
+Jennifer   Administration                 Seattle                        United States of America                 Americas                                                                              
+Lex        Executive                      Seattle                        United States of America                 Americas                                                                              
+Steven     Executive                      Seattle                        United States of America                 Americas                                                                              
+Neena      Executive                      Seattle                        United States of America                 Americas                                                                              
+William    Accounting                     Seattle                        United States of America                 Americas                                                                              
+Shelley    Accounting                     Seattle                        United States of America                 Americas                                                                              
+
+19 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_TITLE
+SQL> 
+SQL> REM UNION , ON ...
+SQL> 
+SQL> SELECT * FROM JOBS;
+
+JOB_ID     JOB_TITLE                           MIN_SALARY MAX_SALARY                                                                                                                                    
+---------- ----------------------------------- ---------- ----------                                                                                                                                    
+AD_PRES    President                                20000      40000                                                                                                                                    
+AD_VP      Administration Vice President            15000      30000                                                                                                                                    
+AD_ASST    Administration Assistant                  3000       6000                                                                                                                                    
+AC_MGR     Accounting Manager                        8200      16000                                                                                                                                    
+AC_ACCOUNT Public Accountant                         4200       9000                                                                                                                                    
+SA_MAN     Sales Manager                            10000      20000                                                                                                                                    
+SA_REP     Sales Representative                      6000      12000                                                                                                                                    
+ST_MAN     Stock Manager                             5500       8500                                                                                                                                    
+ST_CLERK   Stock Clerk                               2000       5000                                                                                                                                    
+IT_PROG    Programmer                                4000      10000                                                                                                                                    
+MK_MAN     Marketing Manager                         9000      15000                                                                                                                                    
+MK_REP     Marketing Representative                  4000       9000                                                                                                                                    
+
+12 rows selected.
+
+SQL> select first_name, department_name,city,country_name,region_name,job_title from employees inner join departments D using (department_id) inner join locations L on D.location_id=L.location_id
+  2  inner join countries C using (country_id) inner join regions R on R.region_id=C.region_id inner join jobs using (job_id);
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                                                   
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- -----------------------------------                         
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Sales Manager                                               
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                                        
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                                        
+Michael    Marketing                      Toronto                        Canada                                   Americas                  Marketing Manager                                           
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Marketing Representative                                    
+Diana      IT                             Southlake                      United States of America                 Americas                  Programmer                                                  
+Bruce      IT                             Southlake                      United States of America                 Americas                  Programmer                                                  
+Alexander  IT                             Southlake                      United States of America                 Americas                  Programmer                                                  
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Stock Manager                                               
+Peter      Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Randall    Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Curtis     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Trenna     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Steven     Executive                      Seattle                        United States of America                 Americas                  President                                                   
+Lex        Executive                      Seattle                        United States of America                 Americas                  Administration Vice President                               
+Neena      Executive                      Seattle                        United States of America                 Americas                  Administration Vice President                               
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Administration Assistant                                    
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Accounting Manager                                          
+William    Accounting                     Seattle                        United States of America                 Americas                  Public Accountant                                           
+
+19 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_TITLE , GRADE_LEVEL
+SQL> 
+SQL> REM UNION , ON ...
+SQL> 
+SQL> SELECT * FROM JOB_GRADES;
+
+GRA LOWEST_SAL HIGHEST_SAL                                                                                                                                                                              
+--- ---------- -----------                                                                                                                                                                              
+A         1000        2999                                                                                                                                                                              
+B         3000        5999                                                                                                                                                                              
+C         6000        9999                                                                                                                                                                              
+D        10000       14999                                                                                                                                                                              
+E        15000       24999                                                                                                                                                                              
+F        25000       40000                                                                                                                                                                              
+
+6 rows selected.
+
+SQL> select first_name , department_name , city , country_name , region_name, job_title from employees e inner join departments d  using (department_id) inner join locations l on d.location_id=
+  2  l.location_id inner join countries c using(country_id) inner join regions r on c.region_id=r.region_id inner join jobs on salary between min_salary and max_salary;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                                                   
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- -----------------------------------                         
+Steven     Executive                      Seattle                        United States of America                 Americas                  President                                                   
+Steven     Executive                      Seattle                        United States of America                 Americas                  Administration Vice President                               
+Neena      Executive                      Seattle                        United States of America                 Americas                  Administration Vice President                               
+Neena      Executive                      Seattle                        United States of America                 Americas                  Sales Manager                                               
+Lex        Executive                      Seattle                        United States of America                 Americas                  Administration Vice President                               
+Lex        Executive                      Seattle                        United States of America                 Americas                  Sales Manager                                               
+Michael    Marketing                      Toronto                        Canada                                   Americas                  Sales Manager                                               
+Michael    Marketing                      Toronto                        Canada                                   Americas                  Marketing Manager                                           
+Michael    Marketing                      Toronto                        Canada                                   Americas                  Accounting Manager                                          
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Sales Manager                                               
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Marketing Manager                                           
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Accounting Manager                                          
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Sales Representative                                        
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Sales Manager                                               
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Marketing Manager                                           
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Accounting Manager                                          
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                                        
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Sales Manager                                               
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Marketing Manager                                           
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Accounting Manager                                          
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                                        
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                                                   
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- -----------------------------------                         
+Alexander  IT                             Southlake                      United States of America                 Americas                  Marketing Manager                                           
+Alexander  IT                             Southlake                      United States of America                 Americas                  Accounting Manager                                          
+Alexander  IT                             Southlake                      United States of America                 Americas                  Sales Representative                                        
+Alexander  IT                             Southlake                      United States of America                 Americas                  Public Accountant                                           
+Alexander  IT                             Southlake                      United States of America                 Americas                  Programmer                                                  
+Alexander  IT                             Southlake                      United States of America                 Americas                  Marketing Representative                                    
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Accounting Manager                                          
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                                        
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Public Accountant                                           
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Programmer                                                  
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Marketing Representative                                    
+William    Accounting                     Seattle                        United States of America                 Americas                  Accounting Manager                                          
+William    Accounting                     Seattle                        United States of America                 Americas                  Sales Representative                                        
+William    Accounting                     Seattle                        United States of America                 Americas                  Stock Manager                                               
+William    Accounting                     Seattle                        United States of America                 Americas                  Public Accountant                                           
+William    Accounting                     Seattle                        United States of America                 Americas                  Programmer                                                  
+William    Accounting                     Seattle                        United States of America                 Americas                  Marketing Representative                                    
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Sales Representative                                        
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Stock Manager                                               
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Public Accountant                                           
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Programmer                                                  
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                                                   
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- -----------------------------------                         
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Marketing Representative                                    
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Administration Assistant                                    
+Bruce      IT                             Southlake                      United States of America                 Americas                  Sales Representative                                        
+Bruce      IT                             Southlake                      United States of America                 Americas                  Stock Manager                                               
+Bruce      IT                             Southlake                      United States of America                 Americas                  Public Accountant                                           
+Bruce      IT                             Southlake                      United States of America                 Americas                  Programmer                                                  
+Bruce      IT                             Southlake                      United States of America                 Americas                  Marketing Representative                                    
+Bruce      IT                             Southlake                      United States of America                 Americas                  Administration Assistant                                    
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Stock Manager                                               
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Public Accountant                                           
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Programmer                                                  
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Marketing Representative                                    
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Administration Assistant                                    
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Public Accountant                                           
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Programmer                                                  
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Marketing Representative                                    
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Administration Assistant                                    
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Stock Clerk                                                 
+Diana      IT                             Southlake                      United States of America                 Americas                  Public Accountant                                           
+Diana      IT                             Southlake                      United States of America                 Americas                  Programmer                                                  
+Diana      IT                             Southlake                      United States of America                 Americas                  Marketing Representative                                    
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                                                   
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- -----------------------------------                         
+Diana      IT                             Southlake                      United States of America                 Americas                  Administration Assistant                                    
+Diana      IT                             Southlake                      United States of America                 Americas                  Stock Clerk                                                 
+Trenna     Shiping                        South San Francisco            United States of America                 Americas                  Administration Assistant                                    
+Trenna     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Curtis     Shiping                        South San Francisco            United States of America                 Americas                  Administration Assistant                                    
+Curtis     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Randall    Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+Peter      Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                                                 
+
+71 rows selected.
+
+SQL> select first_name , department_name , city , country_name , region_name, job_title , grade_level from employees e inner join departments d  using (department_id) inner join locations l on d.location_id=
+  2  l.location_id inner join countries c using(country_id) inner join regions r on c.region_id=r.region_id inner join jobs  using(job_id) inner join job_grades on salary between lowest_sal and highest_sal;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                           GRA                     
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ----------------------------------- ---                     
+Steven     Executive                      Seattle                        United States of America                 Americas                  President                           E                       
+Neena      Executive                      Seattle                        United States of America                 Americas                  Administration Vice President       E                       
+Lex        Executive                      Seattle                        United States of America                 Americas                  Administration Vice President       E                       
+Michael    Marketing                      Toronto                        Canada                                   Americas                  Marketing Manager                   D                       
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Accounting Manager                  D                       
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                D                       
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Sales Manager                       D                       
+Alexander  IT                             Southlake                      United States of America                 Americas                  Programmer                          C                       
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                C                       
+William    Accounting                     Seattle                        United States of America                 Americas                  Public Accountant                   C                       
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Marketing Representative            C                       
+Bruce      IT                             Southlake                      United States of America                 Americas                  Programmer                          C                       
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Stock Manager                       B                       
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Administration Assistant            B                       
+Diana      IT                             Southlake                      United States of America                 Americas                  Programmer                          B                       
+Trenna     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         B                       
+Curtis     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         B                       
+Randall    Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         A                       
+Peter      Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         A                       
+
+19 rows selected.
+
+SQL> select first_name, department_name,city,country_name,region_name,job_title, grade_level from employees inner join departments D using (department_id) inner join locations L on D.location_id=L.location_id
+  2  inner join countries C using (country_id) inner join regions R on R.region_id=C.region_id inner join jobs using (job_id)
+  3  inner join job_grades on salary between lowest_sal and highest_sal;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_TITLE                           GRA                     
+---------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ----------------------------------- ---                     
+Steven     Executive                      Seattle                        United States of America                 Americas                  President                           E                       
+Neena      Executive                      Seattle                        United States of America                 Americas                  Administration Vice President       E                       
+Lex        Executive                      Seattle                        United States of America                 Americas                  Administration Vice President       E                       
+Michael    Marketing                      Toronto                        Canada                                   Americas                  Marketing Manager                   D                       
+Shelley    Accounting                     Seattle                        United States of America                 Americas                  Accounting Manager                  D                       
+Ellen      Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                D                       
+Eleni      Sales                          Oxford                         United Kingdom                           Europe                    Sales Manager                       D                       
+Alexander  IT                             Southlake                      United States of America                 Americas                  Programmer                          C                       
+Jonathon   Sales                          Oxford                         United Kingdom                           Europe                    Sales Representative                C                       
+William    Accounting                     Seattle                        United States of America                 Americas                  Public Accountant                   C                       
+Pat        Marketing                      Toronto                        Canada                                   Americas                  Marketing Representative            C                       
+Bruce      IT                             Southlake                      United States of America                 Americas                  Programmer                          C                       
+Kevin      Shiping                        South San Francisco            United States of America                 Americas                  Stock Manager                       B                       
+Jennifer   Administration                 Seattle                        United States of America                 Americas                  Administration Assistant            B                       
+Diana      IT                             Southlake                      United States of America                 Americas                  Programmer                          B                       
+Trenna     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         B                       
+Curtis     Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         B                       
+Randall    Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         A                       
+Peter      Shiping                        South San Francisco            United States of America                 Americas                  Stock Clerk                         A                       
+
+19 rows selected.
+
+SQL> ALTER TABLE DEPARTMENTS RENAME COLUMN LOCATION_ID TO LID;
+
+Table altered.
+
+SQL> ALTER TABLE COUNTRIES RENAME COLUMN REGION_ID TO RID;
+
+Table altered.
+
+SQL> REM FIRST_NAME , DEPARTMENT_ID ,  DEPARTMENT_NAME , LID , CITY , COUNTRY_NAME , COUNTRY_ID , REGION_NAME , REGION_ID , JOB_TITLE , GRADE_LEVEL
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID ,  DEPARTMENT_NAME , LID , CITY , COUNTRY_NAME , COUNTRY_ID , REGION_NAME , REGION_ID , JOB_TITLE , GRADE_LEVEL
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   L ON D.LID = L.LOCATION_ID
+  5  JOIN COUNTRIES   C USING (COUNTRY_ID)
+  6  JOIN REGIONS     R ON C.RID = R.REGION_ID
+  7  JOIN JOBS        J USING (JOB_ID)
+  8  JOIN JOB_GRADES  JG ON E.SALARY BETWEEN JG.HIGHEST_SAL AND JG.LOWEST_SAL;
+
+no rows selected
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID ,  DEPARTMENT_NAME , LID , CITY , COUNTRY_NAME , COUNTRY_ID , REGION_NAME , REGION_ID , JOB_TITLE , GRADE_LEVEL
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   L ON D.LID = L.LOCATION_ID
+  5  JOIN COUNTRIES   C USING (COUNTRY_ID)
+  6  JOIN REGIONS     R ON C.RID = R.REGION_ID
+  7  JOIN JOBS        J USING (JOB_ID)
+  8  JOIN JOB_GRADES  JG ON E.SALARY BETWEEN JG.LOWEST_SAL AND JG.HIGHEST_SAL;
+
+FIRST_NAME DEPARTMENT_ID DEPARTMENT_NAME                       LID CITY                           COUNTRY_NAME                             CO REGION_NAME                REGION_ID                      
+---------- ------------- ------------------------------ ---------- ------------------------------ ---------------------------------------- -- ------------------------- ----------                      
+JOB_TITLE                           GRA                                                                                                                                                                 
+----------------------------------- ---                                                                                                                                                                 
+Steven                90 Executive                            1700 Seattle                        United States of America                 US Americas                           2                      
+President                           E                                                                                                                                                                   
+                                                                                                                                                                                                        
+Neena                 90 Executive                            1700 Seattle                        United States of America                 US Americas                           2                      
+Administration Vice President       E                                                                                                                                                                   
+                                                                                                                                                                                                        
+Lex                   90 Executive                            1700 Seattle                        United States of America                 US Americas                           2                      
+Administration Vice President       E                                                                                                                                                                   
+                                                                                                                                                                                                        
+Michael               20 Marketing                            1800 Toronto                        Canada                                   CA Americas                           2                      
+Marketing Manager                   D                                                                                                                                                                   
+                                                                                                                                                                                                        
+Shelley              110 Accounting                           1700 Seattle                        United States of America                 US Americas                           2                      
+Accounting Manager                  D                                                                                                                                                                   
+                                                                                                                                                                                                        
+Ellen                 80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1                      
+Sales Representative                D                                                                                                                                                                   
+                                                                                                                                                                                                        
+Eleni                 80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1                      
+
+FIRST_NAME DEPARTMENT_ID DEPARTMENT_NAME                       LID CITY                           COUNTRY_NAME                             CO REGION_NAME                REGION_ID                      
+---------- ------------- ------------------------------ ---------- ------------------------------ ---------------------------------------- -- ------------------------- ----------                      
+JOB_TITLE                           GRA                                                                                                                                                                 
+----------------------------------- ---                                                                                                                                                                 
+Sales Manager                       D                                                                                                                                                                   
+                                                                                                                                                                                                        
+Alexander             60 IT                                   1400 Southlake                      United States of America                 US Americas                           2                      
+Programmer                          C                                                                                                                                                                   
+                                                                                                                                                                                                        
+Jonathon              80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1                      
+Sales Representative                C                                                                                                                                                                   
+                                                                                                                                                                                                        
+William              110 Accounting                           1700 Seattle                        United States of America                 US Americas                           2                      
+Public Accountant                   C                                                                                                                                                                   
+                                                                                                                                                                                                        
+Pat                   20 Marketing                            1800 Toronto                        Canada                                   CA Americas                           2                      
+Marketing Representative            C                                                                                                                                                                   
+                                                                                                                                                                                                        
+Bruce                 60 IT                                   1400 Southlake                      United States of America                 US Americas                           2                      
+Programmer                          C                                                                                                                                                                   
+                                                                                                                                                                                                        
+Kevin                 50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2                      
+Stock Manager                       B                                                                                                                                                                   
+
+FIRST_NAME DEPARTMENT_ID DEPARTMENT_NAME                       LID CITY                           COUNTRY_NAME                             CO REGION_NAME                REGION_ID                      
+---------- ------------- ------------------------------ ---------- ------------------------------ ---------------------------------------- -- ------------------------- ----------                      
+JOB_TITLE                           GRA                                                                                                                                                                 
+----------------------------------- ---                                                                                                                                                                 
+                                                                                                                                                                                                        
+Jennifer              10 Administration                       1700 Seattle                        United States of America                 US Americas                           2                      
+Administration Assistant            B                                                                                                                                                                   
+                                                                                                                                                                                                        
+Diana                 60 IT                                   1400 Southlake                      United States of America                 US Americas                           2                      
+Programmer                          B                                                                                                                                                                   
+                                                                                                                                                                                                        
+Trenna                50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2                      
+Stock Clerk                         B                                                                                                                                                                   
+                                                                                                                                                                                                        
+Curtis                50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2                      
+Stock Clerk                         B                                                                                                                                                                   
+                                                                                                                                                                                                        
+Randall               50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2                      
+Stock Clerk                         A                                                                                                                                                                   
+                                                                                                                                                                                                        
+Peter                 50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2                      
+Stock Clerk                         A                                                                                                                                                                   
+                                                                                                                                                                                                        
+
+19 rows selected.
+
+SQL> SET LINES 300
+SQL> 
+SQL> R
+  1  SELECT FIRST_NAME , DEPARTMENT_ID ,  DEPARTMENT_NAME , LID , CITY , COUNTRY_NAME , COUNTRY_ID , REGION_NAME , REGION_ID , JOB_TITLE , GRADE_LEVEL
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   L ON D.LID = L.LOCATION_ID
+  5  JOIN COUNTRIES   C USING (COUNTRY_ID)
+  6  JOIN REGIONS     R ON C.RID = R.REGION_ID
+  7  JOIN JOBS        J USING (JOB_ID)
+  8* JOIN JOB_GRADES  JG ON E.SALARY BETWEEN JG.LOWEST_SAL AND JG.HIGHEST_SAL
+
+FIRST_NAME DEPARTMENT_ID DEPARTMENT_NAME                       LID CITY                           COUNTRY_NAME                             CO REGION_NAME                REGION_ID JOB_TITLE                           GRA                                                                                  
+---------- ------------- ------------------------------ ---------- ------------------------------ ---------------------------------------- -- ------------------------- ---------- ----------------------------------- ---                                                                                  
+Steven                90 Executive                            1700 Seattle                        United States of America                 US Americas                           2 President                           E                                                                                    
+Neena                 90 Executive                            1700 Seattle                        United States of America                 US Americas                           2 Administration Vice President       E                                                                                    
+Lex                   90 Executive                            1700 Seattle                        United States of America                 US Americas                           2 Administration Vice President       E                                                                                    
+Michael               20 Marketing                            1800 Toronto                        Canada                                   CA Americas                           2 Marketing Manager                   D                                                                                    
+Shelley              110 Accounting                           1700 Seattle                        United States of America                 US Americas                           2 Accounting Manager                  D                                                                                    
+Ellen                 80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1 Sales Representative                D                                                                                    
+Eleni                 80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1 Sales Manager                       D                                                                                    
+Alexander             60 IT                                   1400 Southlake                      United States of America                 US Americas                           2 Programmer                          C                                                                                    
+Jonathon              80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1 Sales Representative                C                                                                                    
+William              110 Accounting                           1700 Seattle                        United States of America                 US Americas                           2 Public Accountant                   C                                                                                    
+Pat                   20 Marketing                            1800 Toronto                        Canada                                   CA Americas                           2 Marketing Representative            C                                                                                    
+Bruce                 60 IT                                   1400 Southlake                      United States of America                 US Americas                           2 Programmer                          C                                                                                    
+Kevin                 50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Manager                       B                                                                                    
+Jennifer              10 Administration                       1700 Seattle                        United States of America                 US Americas                           2 Administration Assistant            B                                                                                    
+Diana                 60 IT                                   1400 Southlake                      United States of America                 US Americas                           2 Programmer                          B                                                                                    
+Trenna                50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         B                                                                                    
+Curtis                50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         B                                                                                    
+Randall               50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         A                                                                                    
+Peter                 50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         A                                                                                    
+
+19 rows selected.
+
+SQL> REM ALTER TABLE DEPARTMENTS RENAME COLUMN LOCATION_ID TO LID;
+SQL> 
+SQL> REM ALTER TABLE COUNTRIES RENAME COLUMN REGION_ID TO RID;
+SQL> 
+SQL> SELECT FIRST_NAME , E.DEPARTMENT_ID ,  DEPARTMENT_NAME , LID , CITY , COUNTRY_NAME , C.COUNTRY_ID , REGION_NAME , REGION_ID , JOB_TITLE , GRADE_LEVEL
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  4  JOIN LOCATIONS   L ON D.LID = L.LOCATION_ID
+  5  JOIN COUNTRIES   C ON L.COUNTRY_ID = C.COUNTRY_ID
+  6  JOIN REGIONS     R ON C.RID = R.REGION_ID
+  7  JOIN JOBS        J ON E.JOB_ID = J.JOB_ID
+  8  JOIN JOB_GRADES JG ON E.SALARY BETWEEN JG.LOWEST_SAL AND JG.HIGHEST_SAL;
+
+FIRST_NAME DEPARTMENT_ID DEPARTMENT_NAME                       LID CITY                           COUNTRY_NAME                             CO REGION_NAME                REGION_ID JOB_TITLE                           GRA                                                                                  
+---------- ------------- ------------------------------ ---------- ------------------------------ ---------------------------------------- -- ------------------------- ---------- ----------------------------------- ---                                                                                  
+Steven                90 Executive                            1700 Seattle                        United States of America                 US Americas                           2 President                           E                                                                                    
+Neena                 90 Executive                            1700 Seattle                        United States of America                 US Americas                           2 Administration Vice President       E                                                                                    
+Lex                   90 Executive                            1700 Seattle                        United States of America                 US Americas                           2 Administration Vice President       E                                                                                    
+Michael               20 Marketing                            1800 Toronto                        Canada                                   CA Americas                           2 Marketing Manager                   D                                                                                    
+Shelley              110 Accounting                           1700 Seattle                        United States of America                 US Americas                           2 Accounting Manager                  D                                                                                    
+Ellen                 80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1 Sales Representative                D                                                                                    
+Eleni                 80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1 Sales Manager                       D                                                                                    
+Alexander             60 IT                                   1400 Southlake                      United States of America                 US Americas                           2 Programmer                          C                                                                                    
+Jonathon              80 Sales                                2500 Oxford                         United Kingdom                           UK Europe                             1 Sales Representative                C                                                                                    
+William              110 Accounting                           1700 Seattle                        United States of America                 US Americas                           2 Public Accountant                   C                                                                                    
+Pat                   20 Marketing                            1800 Toronto                        Canada                                   CA Americas                           2 Marketing Representative            C                                                                                    
+Bruce                 60 IT                                   1400 Southlake                      United States of America                 US Americas                           2 Programmer                          C                                                                                    
+Kevin                 50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Manager                       B                                                                                    
+Jennifer              10 Administration                       1700 Seattle                        United States of America                 US Americas                           2 Administration Assistant            B                                                                                    
+Diana                 60 IT                                   1400 Southlake                      United States of America                 US Americas                           2 Programmer                          B                                                                                    
+Trenna                50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         B                                                                                    
+Curtis                50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         B                                                                                    
+Randall               50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         A                                                                                    
+Peter                 50 Shiping                              1500 South San Francisco            United States of America                 US Americas                           2 Stock Clerk                         A                                                                                    
+
+19 rows selected.
+
+SQL> REM SELECT TABLE_NAME FROM USER_TABLES ORDER BY 1;
+SQL> 
+SQL> REM OUTER JOIN :
+SQL> 
+SQL> REM OUTER JOIN :  TO GET EXTRA/UNMATCHED ROWS OF SINGLE OR BOTH TABLES IN RESULT SET
+SQL> 
+SQL> ALTER TABLE DEPARTMENTS RENAME COLUMN LID TO LOCATION_ID;
+
+Table altered.
+
+SQL> ALTER TABLE COUNTRIES RENAME COLUMN RID TO REGION_ID;
+
+Table altered.
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                                                                                                                      
+-- ---------------------------------------- ----------                                                                                                                                                                                                                                                      
+CA Canada                                            2                                                                                                                                                                                                                                                      
+DE Germany                                           1                                                                                                                                                                                                                                                      
+UK United Kingdom                                    1                                                                                                                                                                                                                                                      
+US United States of America                          2                                                                                                                                                                                                                                                      
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                                                                                                                      
+---------- -------------------------                                                                                                                                                                                                                                                                        
+         1 Europe                                                                                                                                                                                                                                                                                           
+         2 Americas                                                                                                                                                                                                                                                                                         
+         3 Asia                                                                                                                                                                                                                                                                                             
+         4 Middle East and Africa                                                                                                                                                                                                                                                                           
+
+SQL> SELECT COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES
+  3  JOIN REGIONS USING (REGION_ID);
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                                                                                                                        
+---------------------------------------- -------------------------                                                                                                                                                                                                                                          
+Germany                                  Europe                                                                                                                                                                                                                                                             
+United Kingdom                           Europe                                                                                                                                                                                                                                                             
+Canada                                   Americas                                                                                                                                                                                                                                                           
+United States of America                 Americas                                                                                                                                                                                                                                                           
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID FROM EMPLOYEES;
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                                                                                                                                                                                    
+---------- -------------                                                                                                                                                                                                                                                                                    
+Steven                90                                                                                                                                                                                                                                                                                    
+Neena                 90                                                                                                                                                                                                                                                                                    
+Lex                   90                                                                                                                                                                                                                                                                                    
+Alexander             60                                                                                                                                                                                                                                                                                    
+Bruce                 60                                                                                                                                                                                                                                                                                    
+Diana                 60                                                                                                                                                                                                                                                                                    
+Kevin                 50                                                                                                                                                                                                                                                                                    
+Trenna                50                                                                                                                                                                                                                                                                                    
+Curtis                50                                                                                                                                                                                                                                                                                    
+Randall               50                                                                                                                                                                                                                                                                                    
+Peter                 50                                                                                                                                                                                                                                                                                    
+Eleni                 80                                                                                                                                                                                                                                                                                    
+Ellen                 80                                                                                                                                                                                                                                                                                    
+Jonathon              80                                                                                                                                                                                                                                                                                    
+Kimerely                                                                                                                                                                                                                                                                                                    
+Jennifer              10                                                                                                                                                                                                                                                                                    
+Michael               20                                                                                                                                                                                                                                                                                    
+Pat                   20                                                                                                                                                                                                                                                                                    
+Shelley              110                                                                                                                                                                                                                                                                                    
+William              110                                                                                                                                                                                                                                                                                    
+
+20 rows selected.
+
+SQL> SELECT DEPARTMENT_NAME , DEPARTMENT_ID FROM DEPARTMENTS;
+
+DEPARTMENT_NAME                DEPARTMENT_ID                                                                                                                                                                                                                                                                
+------------------------------ -------------                                                                                                                                                                                                                                                                
+Administration                            10                                                                                                                                                                                                                                                                
+Marketing                                 20                                                                                                                                                                                                                                                                
+Shiping                                   50                                                                                                                                                                                                                                                                
+IT                                        60                                                                                                                                                                                                                                                                
+Sales                                     80                                                                                                                                                                                                                                                                
+Executive                                 90                                                                                                                                                                                                                                                                
+Accounting                               110                                                                                                                                                                                                                                                                
+Contracting                              190                                                                                                                                                                                                                                                                
+
+8 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME DEPARTMENT_NAME                                                                                                                                                                                                                                                                                  
+---------- ------------------------------                                                                                                                                                                                                                                                                   
+Jennifer   Administration                                                                                                                                                                                                                                                                                   
+Michael    Marketing                                                                                                                                                                                                                                                                                        
+Pat        Marketing                                                                                                                                                                                                                                                                                        
+Kevin      Shiping                                                                                                                                                                                                                                                                                          
+Peter      Shiping                                                                                                                                                                                                                                                                                          
+Randall    Shiping                                                                                                                                                                                                                                                                                          
+Curtis     Shiping                                                                                                                                                                                                                                                                                          
+Trenna     Shiping                                                                                                                                                                                                                                                                                          
+Diana      IT                                                                                                                                                                                                                                                                                               
+Bruce      IT                                                                                                                                                                                                                                                                                               
+Alexander  IT                                                                                                                                                                                                                                                                                               
+Ellen      Sales                                                                                                                                                                                                                                                                                            
+Eleni      Sales                                                                                                                                                                                                                                                                                            
+Jonathon   Sales                                                                                                                                                                                                                                                                                            
+Lex        Executive                                                                                                                                                                                                                                                                                        
+Steven     Executive                                                                                                                                                                                                                                                                                        
+Neena      Executive                                                                                                                                                                                                                                                                                        
+William    Accounting                                                                                                                                                                                                                                                                                       
+Shelley    Accounting                                                                                                                                                                                                                                                                                       
+
+
+SQL> SPOOL OFF
