@@ -1,0 +1,285 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM DISPLAY THOSE REGION_NAME IN WHICH NO CITY EXISTS
+SQL> 
+SQL> SELECT REGION_NAME
+  2  FROM REGIONS
+  3  LEFT OUTER JOIN COUNTRIES
+  4  
+SQL> 
+SQL> SELECT REGION_NAME
+  2  FROM REGIONS
+  3  LEFT OUTER JOIN COUNTRIES USING (REGION_ID)
+  4  JOIN LOCATIONS USING (COUNTRY_ID);
+
+REGION_NAME                                                                                                                                                                                             
+-------------------------                                                                                                                                                                               
+Americas                                                                                                                                                                                                
+Americas                                                                                                                                                                                                
+Americas                                                                                                                                                                                                
+Americas                                                                                                                                                                                                
+Europe                                                                                                                                                                                                  
+
+SQL> SELECT REGION_NAME
+  2  FROM REGIONS
+  3  LEFT OUTER JOIN COUNTRIES USING (REGION_ID)
+  4  LEFT OUTER JOIN LOCATIONS USING (COUNTRY_ID);
+
+REGION_NAME                                                                                                                                                                                             
+-------------------------                                                                                                                                                                               
+Americas                                                                                                                                                                                                
+Americas                                                                                                                                                                                                
+Americas                                                                                                                                                                                                
+Americas                                                                                                                                                                                                
+Europe                                                                                                                                                                                                  
+Europe                                                                                                                                                                                                  
+Middle East and Africa                                                                                                                                                                                  
+Asia                                                                                                                                                                                                    
+
+8 rows selected.
+
+SQL> SELECT REGION_NAME
+  2  FROM REGIONS
+  3  LEFT OUTER JOIN COUNTRIES USING (REGION_ID)
+  4  LEFT OUTER JOIN LOCATIONS USING (COUNTRY_ID)
+  5  WHERE LOCATION_ID IS NULL;
+
+REGION_NAME                                                                                                                                                                                             
+-------------------------                                                                                                                                                                               
+Europe                                                                                                                                                                                                  
+Middle East and Africa                                                                                                                                                                                  
+Asia                                                                                                                                                                                                    
+
+SQL> SELECT REGION_NAME
+  2  FROM REGIONS
+  3  LEFT OUTER JOIN COUNTRIES USING (REGION_ID)
+  4  LEFT OUTER JOIN LOCATIONS USING (COUNTRY_ID)
+  5  WHERE COUNTRY_ID IS NULL;
+
+REGION_NAME                                                                                                                                                                                             
+-------------------------                                                                                                                                                                               
+Middle East and Africa                                                                                                                                                                                  
+Asia                                                                                                                                                                                                    
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                           
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                           
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                           
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                           
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                           
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                           
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                           
+
+SQL> SELECT COUNTRY_NAME
+  2  FROM COUNTRIES
+  3  LEFT OUTER JOIN LOCATIONS USING (COUNTRY_ID)
+  4  WHERE LOCATION_ID IS NULL;
+
+COUNTRY_NAME                                                                                                                                                                                            
+----------------------------------------                                                                                                                                                                
+Germany                                                                                                                                                                                                 
+
+SQL> CL SCR
+
+SQL> REM SUB QUERY : IS NOTHING BUT SELECT STATEMENT WITHIN ANOTHER STATEMENT
+SQL> 
+SQL> REM OUTER/INNER
+SQL> 
+SQL> REM PARENT /CHILD
+SQL> 
+SQL> REM MAIN/SUB
+SQL> 
+SQL> REM OUTER STATEMENT MAY BE CREATE , INSERT ,UDPATE , DELETE ...
+SQL> 
+SQL> REM INNER STATEMENT IS GENERALLY SELECT ONLY.
+SQL> 
+SQL> 
+SQL> REM WHEN WE USE SUB QUERY, IT GETS EXECUTED FIRST AND IT'S RESULT IS THEN USED BY MAIN STATEMENT.
+SQL> 
+SQL> 
+SQL> REM SELECT ... (SELECT ...);
+SQL> 
+SQL> REM SELECT ... (SELECT ...) FROM (SELECT ...) WHERE (SELECT ...) GROUP BY ... HAVING (SELECT ...)
+SQL> 
+SQL> 
+SQL> REM IN BELOW 4 SITUATIONS WE USE SUB QUERY
+SQL> 
+SQL> REM 1 WHEN WE WANT TO COMPARE SUMMARY ITEM IN 'WHERE' CLAUSE.
+SQL> 
+SQL> REM 2 WHEN OUR MAIN REQUIREMENT HAS SOME HIDDEN REQUIREMENT.
+SQL> 
+SQL> REM 3 WHEN WE WANT TO COMPARE NESTED SUMMARY ITEM IN 'HAVING' CLAUSE.
+SQL> 
+SQL> REM 4 WHEN WE WANT TO USE RESULT OF SUBQUERY AS TABLE FOR MAIN QUERY.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 WHEN WE WANT TO COMPARE SUMMARY ITEM IN 'WHERE' CLAUSE.
+SQL> 
+SQL> REM EXECUTION PRECEDENCE : FROM -> WHERE -> GROUP BY -> HAVING ->
+SQL> 
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEE WHO GETS HIGHEST SALARY IN COMPANY
+SQL> 
+SQL> REM SALARY = HIGHEST SALARY
+SQL> 
+SQL> REM NON-SUMMARY ITEM = MAX(SALAR)/ SUMMARY ITEM
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY = MAX(SALARY);
+WHERE SALARY = MAX(SALARY)
+               *
+ERROR at line 3:
+ORA-00934: group function is not allowed here 
+
+
+SQL> SELECT FIRST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY = (SELECT MAX(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME     SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Steven          24000                                                                                                                                                                                   
+
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEE WHO GETS LOWEST COMMISSION_PCT
+SQL> 
+SQL> SELECT FIRST_NAME,COMMISSION_PCT FROM EMPLOYEES WHERE COMMISSION_PCT = (SELECT MIN(COMMISSION_PCT) FROM EMPLOYEES);
+
+FIRST_NAME COMMISSION_PCT                                                                                                                                                                               
+---------- --------------                                                                                                                                                                               
+Kimerely              .15                                                                                                                                                                               
+
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEES WHO WAS HIRED FIRST IN COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE IN (SELECT MIN(HIRE_DATE) FROM EMPLOYEES);
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- ---------                                                                                                                                                                                    
+Steven     17-JUL-87                                                                                                                                                                                    
+
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEE WHO GETS HIGHEST COMMISSION AMOUNT.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY * COMMISSION_PCT COMM_AMOUNT
+  2  FROM EMPLOYEES
+  3  WHERE SALARY * COMMISSION_PCT = (SELECT MAX(SALARY * COMMISSION_PCT) FROM EMPLOYEES);
+
+FIRST_NAME COMM_AMOUNT                                                                                                                                                                                  
+---------- -----------                                                                                                                                                                                  
+Ellen             3300                                                                                                                                                                                  
+
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEE WHO GETS HIGHER SALARY THAN AVERAGE SALARY PAID BY COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME     SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Steven          24000                                                                                                                                                                                   
+Neena           17000                                                                                                                                                                                   
+Lex             17000                                                                                                                                                                                   
+Alexander        9000                                                                                                                                                                                   
+Eleni           10500                                                                                                                                                                                   
+Ellen           11000                                                                                                                                                                                   
+Michael         13000                                                                                                                                                                                   
+Shelley         12000                                                                                                                                                                                   
+
+8 rows selected.
+
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEES WHO GETS SALARY LOWER THAN AVERAGE SALARY PAID TO IT_PROG.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY < (SELECT AVG(SALARY) FROM EMPLOYEES WHERE JOB_ID = 'IT_PROG');
+
+FIRST_NAME     SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Bruce            6000                                                                                                                                                                                   
+Diana            4200                                                                                                                                                                                   
+Kevin            5800                                                                                                                                                                                   
+Trenna           3500                                                                                                                                                                                   
+Curtis           3100                                                                                                                                                                                   
+Randall          2600                                                                                                                                                                                   
+Peter            2500                                                                                                                                                                                   
+Jennifer         4400                                                                                                                                                                                   
+Pat              6000                                                                                                                                                                                   
+
+9 rows selected.
+
+SQL> SELECT FIRST_NAME ,SALARY FROM EMPLOYEES WHERE SALARY < (SELECT AVG(SALARY) FROM EMPLOYEES GROUP BY JOB_ID HAVING JOB_ID = 'IT_PROG');
+
+FIRST_NAME     SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Bruce            6000                                                                                                                                                                                   
+Diana            4200                                                                                                                                                                                   
+Kevin            5800                                                                                                                                                                                   
+Trenna           3500                                                                                                                                                                                   
+Curtis           3100                                                                                                                                                                                   
+Randall          2600                                                                                                                                                                                   
+Peter            2500                                                                                                                                                                                   
+Jennifer         4400                                                                                                                                                                                   
+Pat              6000                                                                                                                                                                                   
+
+9 rows selected.
+
+SQL> REM DISPLAY THOSE SA_REP WHO GETS HIGHER SALARY THAN AVERAGE SALARY PAID BY COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES) AND JOB_ID = 'SA_REP';
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+Ellen      SA_REP          11000                                                                                                                                                                        
+
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE JOB_ID = 'SA_REP' AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+Ellen      SA_REP          11000                                                                                                                                                                        
+
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE JOB_ID = 'SA_REP' AND (SELECT AVG(SALARY) FROM EMPLOYEES) < SALARY;
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+Ellen      SA_REP          11000                                                                                                                                                                        
+
+SQL> REM DISPLAY THOSE IT_PROG WHO GETS HIGHER SALARY THAN AVERAGE SALARY PAID TO SA_REP.
+SQL> 
+SQL> SELECT FIRST_NAME, JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE JOB_ID = 'IT_PROG'
+  4  AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES WHERE JOB_ID = 'SA_REP');
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+Alexander  IT_PROG          9000                                                                                                                                                                        
+
+SQL> SPOOL OFF
