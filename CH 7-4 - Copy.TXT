@@ -1,0 +1,576 @@
+SQL> 
+SQL> REM SUB QUERY IS USED WHEN OUR MAIN QUESTION/QUERY HAS HIDDEN REQUIREMENT.
+SQL> 
+SQL> REM DISPLAY THOSE WHO GETS HIGHER SALARY THAN Abel.
+SQL> 
+SQL> SELECT SALARY FROM EMPLOYEES WHERE LAST_NAME  = 'Abel';
+
+    SALARY                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     11000                                                                                                                                                                                              
+
+SQL> SELECT LAST_NAME , SALARY FROM EMPLOYEES
+  2  WHERE SALARY > (SELECT SALARY FROM EMPLOYEES WHERE LAST_NAME  = 'Abel');
+
+LAST_NAME      SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+King            24000                                                                                                                                                                                   
+Kochhar         17000                                                                                                                                                                                   
+De Haan         17000                                                                                                                                                                                   
+Hartstein       13000                                                                                                                                                                                   
+Higgins         12000                                                                                                                                                                                   
+
+SQL> REM DISPLAY THOSE WHO WERE HIRED BEFORE Hartstein
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                               
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                               
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                               
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                               
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                               
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                               
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                               
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                               
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                               
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                               
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                               
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                               
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                               
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                             
+        200 Jennifer   Whalen     JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                               
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                               
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                               
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                               
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                               
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME,HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE < (SELECT HIRE_DATE FROM EMPLOYEES WHERE LAST_NAME = 'Hartstein');
+
+LAST_NAME  HIRE_DATE                                                                                                                                                                                    
+---------- ---------                                                                                                                                                                                    
+King       17-JUL-87                                                                                                                                                                                    
+Kochhar    21-SEP-89                                                                                                                                                                                    
+De Haan    13-JAN-93                                                                                                                                                                                    
+Hunold     03-JAN-90                                                                                                                                                                                    
+Ernst      21-MAY-91                                                                                                                                                                                    
+Rajs       17-OCT-95                                                                                                                                                                                    
+Whalen     17-SEP-87                                                                                                                                                                                    
+Higgins    07-JUN-94                                                                                                                                                                                    
+Gietz      07-JUN-94                                                                                                                                                                                    
+
+9 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                               
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                               
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                               
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                               
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                               
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                               
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                               
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                               
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                               
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                               
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                               
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                               
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                               
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                             
+        200 Jennifer   Whalen     JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                               
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                               
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                               
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                               
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                               
+
+20 rows selected.
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHO WORKS IN Administrative DEPARTMENT
+SQL> 
+SQL> REM DISPLAY THOSE FIRST_NAME WHO WORKS IN Administration DEPARTMENT
+SQL> 
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME = 'Administration';
+
+DEPARTMENT_ID                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+           10                                                                                                                                                                                           
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME = 'Administration');
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                                                                                
+---------- -------------                                                                                                                                                                                
+Jennifer              10                                                                                                                                                                                
+
+SQL> REM DISPLAY DEPARTMENT_NAME WHICH ARE LOCATED IN CITY 'Seattle'
+SQL> 
+SQL> REM DISPLAY CITY AND STATE_PROVINCE WHICH ARE LOCATED IN COUNTRY 'Canada'
+SQL> 
+SQL> SELECT DEPARTMENT_NAME FROM DEPARTMENTS
+  2  WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle');
+
+DEPARTMENT_NAME                                                                                                                                                                                         
+------------------------------                                                                                                                                                                          
+Administration                                                                                                                                                                                          
+Executive                                                                                                                                                                                               
+Accounting                                                                                                                                                                                              
+Contracting                                                                                                                                                                                             
+
+SQL> SELECT CITY , STATE_PROVINCE FROM LOCATIONS
+  2  WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME = 'Canada');
+
+CITY                           STATE_PROVINCE                                                                                                                                                           
+------------------------------ -------------------------                                                                                                                                                
+Toronto                        Ontario                                                                                                                                                                  
+
+SQL> REM DISPLAY FIRST_NAME WHO WORKS IN CITY 'Seattle'
+SQL> 
+SQL> REM JOIN -> E D L C R
+SQL> 
+SQL> REM SUB QUERY -> R C L D E
+SQL> 
+SQL> SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle';
+
+LOCATION_ID                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+       1700                                                                                                                                                                                             
+
+SQL> SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN
+  2  (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle');
+
+DEPARTMENT_ID                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+           10                                                                                                                                                                                           
+           90                                                                                                                                                                                           
+          110                                                                                                                                                                                           
+          190                                                                                                                                                                                           
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID IN
+  2  (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN);
+(SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN)
+                                                           *
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle')
+  2  
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID IN
+  2  (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN
+  3  (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle'));
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                                                                                
+---------- -------------                                                                                                                                                                                
+Jennifer              10                                                                                                                                                                                
+Steven                90                                                                                                                                                                                
+Neena                 90                                                                                                                                                                                
+Lex                   90                                                                                                                                                                                
+Shelley              110                                                                                                                                                                                
+William              110                                                                                                                                                                                
+
+6 rows selected.
+
+SQL> REM DISPLAY DEPARTMENT_NAME WHICH ARE LOCATED IN Canada
+SQL> 
+SQL> SELECT DEPARTMENT_NAME FROM DEPARTMENTS WHERE LOCATION_ID IN
+  2  (SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN
+  3  (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME ='Canada'));
+
+DEPARTMENT_NAME                                                                                                                                                                                         
+------------------------------                                                                                                                                                                          
+Marketing                                                                                                                                                                                               
+
+SQL> REM DISPLAY FIRST_NAME WHO WORKS IN Americas
+SQL> 
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID = ANY(SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID = ANY(SELECT DEPARTMENT_ID FROM LOCATIONS WHERE LOCATION_ID = ANY(SELECT LOCATION_ID FROM COUNTRIES WHERE REGION_ID = ANY(SELECT REGION_ID FROM REgIONS WHERE REGION_NAME = 'Americas'))));
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Peter                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Jonathon                                                                                                                                                                                                
+William                                                                                                                                                                                                 
+Pat                                                                                                                                                                                                     
+Shelley                                                                                                                                                                                                 
+Bruce                                                                                                                                                                                                   
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Jennifer                                                                                                                                                                                                
+Alexander                                                                                                                                                                                               
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Curtis                                                                                                                                                                                                  
+Randall                                                                                                                                                                                                 
+Diana                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Michael                                                                                                                                                                                                 
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID = ANY
+  2  (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID = ANY
+  3  (SELECT LOCATION_ID FROM COUNTRIES WHERE REGION_ID = ANY
+  4  
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID IN
+  2  (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN
+  3  (SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN
+  4  (SELECT COUNTRY_ID FROM COUNTRIES WHERE REGION_ID IN
+  5  (SELECT REGION_ID FROM REGIONS WHERE REGION_NAME = 'Americas'))));
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Pat                                                                                                                                                                                                     
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Curtis                                                                                                                                                                                                  
+Randall                                                                                                                                                                                                 
+Peter                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Diana                                                                                                                                                                                                   
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Shelley                                                                                                                                                                                                 
+William                                                                                                                                                                                                 
+
+16 rows selected.
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES E
+  2  JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  3  JOIN LOCATIONS L ON D.LOCATION_ID = L.LOCATION_ID
+  4  JOIN COUNTRIES C ON L.COUNTRY_ID = C.COUNTRY_ID
+  5  JOIN REGIONS R ON C.REGION_ID=R.REGION_ID WHERE REGION_NAME = 'Americans';
+
+no rows selected
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES E
+  2  JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  3  JOIN LOCATIONS L ON D.LOCATION_ID = L.LOCATION_ID
+  4  JOIN COUNTRIES C ON L.COUNTRY_ID = C.COUNTRY_ID
+  5  JOIN REGIONS R ON C.REGION_ID=R.REGION_ID WHERE REGION_NAME = 'Americas';
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Michael                                                                                                                                                                                                 
+Pat                                                                                                                                                                                                     
+Diana                                                                                                                                                                                                   
+Bruce                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Kevin                                                                                                                                                                                                   
+Peter                                                                                                                                                                                                   
+Randall                                                                                                                                                                                                 
+Curtis                                                                                                                                                                                                  
+Trenna                                                                                                                                                                                                  
+Jennifer                                                                                                                                                                                                
+Lex                                                                                                                                                                                                     
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+William                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+
+16 rows selected.
+
+SQL> REM JOIN
+SQL> 
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D ON E.DEPATMENT_ID = D.DEPARTMENT_ID
+  4  JOIN LOCATIONS   L ON D.LOCATION_ID  = L.LOCATION_ID
+  5  JOIN COUNTRIES   C ON L.COUNTRY_ID   = C.COUNTRY_ID
+  6  JOIN REGIONS     R ON C.REGION_DI    = R.REGION_ID
+  7  WHERE REGION_NAME ='Americas'
+  8  
+SQL> 
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D ON E.DEPATMENT_ID = D.DEPARTMENT_ID
+  4  JOIN LOCATIONS   L ON D.LOCATION_ID  = L.LOCATION_ID
+  5  JOIN COUNTRIES   C ON L.COUNTRY_ID   = C.COUNTRY_ID
+  6  JOIN REGIONS     R ON C.REGION_ID    = R.REGION_ID
+  7  WHERE REGION_NAME ='Americas'
+  8  ;
+JOIN DEPARTMENTS D ON E.DEPATMENT_ID = D.DEPARTMENT_ID
+                      *
+ERROR at line 3:
+ORA-00904: "E"."DEPATMENT_ID": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  4  JOIN LOCATIONS   L ON D.LOCATION_ID  = L.LOCATION_ID
+  5  JOIN COUNTRIES   C ON L.COUNTRY_ID   = C.COUNTRY_ID
+  6  JOIN REGIONS     R ON C.REGION_ID    = R.REGION_ID
+  7  WHERE REGION_NAME ='Americas';
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Michael                                                                                                                                                                                                 
+Pat                                                                                                                                                                                                     
+Diana                                                                                                                                                                                                   
+Bruce                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Kevin                                                                                                                                                                                                   
+Peter                                                                                                                                                                                                   
+Randall                                                                                                                                                                                                 
+Curtis                                                                                                                                                                                                  
+Trenna                                                                                                                                                                                                  
+Jennifer                                                                                                                                                                                                
+Lex                                                                                                                                                                                                     
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+William                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+
+16 rows selected.
+
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS JOIN LOCATIONS USING (LOCATION_ID)
+  5                                         JOIN COUNTRIES USING (COUNTRY_ID)
+  6                                         JOIN REGIONS   USING (REGION_ID)
+  7                                         WHERE REGION_NAME = 'Americas';
+                                       WHERE REGION_NAME = 'Americas'
+                                                                    *
+ERROR at line 7:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS JOIN LOCATIONS USING (LOCATION_ID)
+  5                                         JOIN COUNTRIES USING (COUNTRY_ID)
+  6                                         JOIN REGIONS   USING (REGION_ID))
+  7  
+SQL> 
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS JOIN LOCATIONS USING (LOCATION_ID)
+  5                                         JOIN COUNTRIES USING (COUNTRY_ID)
+  6                                         JOIN REGIONS   USING (REGION_ID)
+  7                                         WHERE REGION_NAME = 'Americas');
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Pat                                                                                                                                                                                                     
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Curtis                                                                                                                                                                                                  
+Randall                                                                                                                                                                                                 
+Peter                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Diana                                                                                                                                                                                                   
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Shelley                                                                                                                                                                                                 
+William                                                                                                                                                                                                 
+
+16 rows selected.
+
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS
+  5  
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS
+  5  JOIN LOCATIONS   L ON D.LOCATION_ID  = L.LOCATION_ID
+  6  JOIN COUNTRIES   C ON L.COUNTRY_ID   = C.COUNTRY_ID
+  7  JOIN REGIONS     R ON C.REGION_ID    = R.REGION_ID
+  8  WHERE REGION_NAME ='Americas');
+JOIN LOCATIONS   L ON D.LOCATION_ID  = L.LOCATION_ID
+                      *
+ERROR at line 5:
+ORA-00904: "D"."LOCATION_ID": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS D
+  5    JOIN LOCATIONS   L ON D.LOCATION_ID  = L.LOCATION_ID
+  6  JOIN COUNTRIES   C ON L.COUNTRY_ID   = C.COUNTRY_ID
+  7  JOIN REGIONS     R ON C.REGION_ID    = R.REGION_ID
+  8  WHERE REGION_NAME ='Americas');
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Pat                                                                                                                                                                                                     
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Curtis                                                                                                                                                                                                  
+Randall                                                                                                                                                                                                 
+Peter                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Diana                                                                                                                                                                                                   
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Shelley                                                                                                                                                                                                 
+William                                                                                                                                                                                                 
+
+16 rows selected.
+
+SQL> REM DEPARTMENT_NAME , COUNT
+SQL> 
+SQL> SELECT COUNTRY_NAME , COUNT(*) FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID) JOIN LOCATIONS USING (LOCATION_ID) JOIN COUNTRIES USING (COUNTRY_ID) GROUP BY COUNTRY_NAME;
+
+COUNTRY_NAME                               COUNT(*)                                                                                                                                                     
+---------------------------------------- ----------                                                                                                                                                     
+United Kingdom                                    3                                                                                                                                                     
+United States of America                         14                                                                                                                                                     
+Canada                                            2                                                                                                                                                     
+
+SQL> SELECT REGION_NAME , COUNT(*)FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID) JOIN LOCATIONS USING (LOCATION_ID) JOIN COUNTRIES USING (COUNTRY_ID) JOIN REGIONS USING (REGION_ID) GROUP BY REGION_NAME;
+
+REGION_NAME                 COUNT(*)                                                                                                                                                                    
+------------------------- ----------                                                                                                                                                                    
+Europe                             3                                                                                                                                                                    
+Americas                          16                                                                                                                                                                    
+
+SQL> SELECT DEPARTMENT_NAME , COUNT(*)
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  GROUP BY DEPARTMENT_NAME;
+
+DEPARTMENT_NAME                  COUNT(*)                                                                                                                                                               
+------------------------------ ----------                                                                                                                                                               
+Administration                          1                                                                                                                                                               
+Accounting                              2                                                                                                                                                               
+IT                                      3                                                                                                                                                               
+Executive                               3                                                                                                                                                               
+Shiping                                 5                                                                                                                                                               
+Sales                                   3                                                                                                                                                               
+Marketing                               2                                                                                                                                                               
+
+7 rows selected.
+
+SQL> SELECT DEPARTMENT_NAME , COUNT(*)
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  4  GROUP BY DEPARTMENT_NAME;
+JOIN DEPARTMENTS D E.DEPARTMENT_ID = D.DEPARTMENT_ID
+                   *
+ERROR at line 3:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT DEPARTMENT_NAME , COUNT(*)
+  2  FROM EMPLOYEES E
+  3  JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  4  GROUP BY DEPARTMENT_NAME;
+
+DEPARTMENT_NAME                  COUNT(*)                                                                                                                                                               
+------------------------------ ----------                                                                                                                                                               
+Administration                          1                                                                                                                                                               
+Accounting                              2                                                                                                                                                               
+IT                                      3                                                                                                                                                               
+Executive                               3                                                                                                                                                               
+Shiping                                 5                                                                                                                                                               
+Sales                                   3                                                                                                                                                               
+Marketing                               2                                                                                                                                                               
+
+7 rows selected.
+
+SQL> SELECT CITY , COUNT(*)
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   USING (LOCATION_ID)
+  5  ;
+SELECT CITY , COUNT(*)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT CITY , COUNT(*)
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   USING (LOCATION_ID)
+  5  GROUP BY CITY;
+
+CITY                             COUNT(*)                                                                                                                                                               
+------------------------------ ----------                                                                                                                                                               
+Seattle                                 6                                                                                                                                                               
+South San Francisco                     5                                                                                                                                                               
+Toronto                                 2                                                                                                                                                               
+Southlake                               3                                                                                                                                                               
+Oxford                                  3                                                                                                                                                               
+
+SQL> SELECT COUNTRY_NAME , COUNT(*)
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   USING (LOCATION_ID)
+  5  JOIN COUNTRIES   USING (COUNTRY_ID)
+  6  GROUP BY COUNTRY_NAME;
+
+COUNTRY_NAME                               COUNT(*)                                                                                                                                                     
+---------------------------------------- ----------                                                                                                                                                     
+United Kingdom                                    3                                                                                                                                                     
+United States of America                         14                                                                                                                                                     
+Canada                                            2                                                                                                                                                     
+
+SQL> SELECT REGION_NAME , COUNT(*)
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   USING (LOCATION_ID)
+  5  JOIN COUNTRIES   USING (COUNTRY_ID)
+  6  JOIN REGIONS     USING (REGION_ID)
+  7  GROUP BY REGION_NAME;
+
+REGION_NAME                 COUNT(*)                                                                                                                                                                    
+------------------------- ----------                                                                                                                                                                    
+Europe                             3                                                                                                                                                                    
+Americas                          16                                                                                                                                                                    
+
+SQL> SPOOL OFF
