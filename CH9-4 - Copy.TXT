@@ -1,0 +1,156 @@
+SQL> 
+SQL> REM UPDATE : TO UPDATE/EDIT/CHANGE/MODIFY EXISTING ROW VALUES
+SQL> 
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+              IT                                    103                                                                                                                                                                                                                                                     
+              Sales                                 149                                                                                                                                                                                                                                                     
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE MANAGER_ID = 149;
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+              IT                                    103                                                                                                                                                                                                                                                     
+              SALES                                 149                                                                                                                                                                                                                                                     
+
+SQL> UPDATE D1 SET DEPARTMENT_ID = ROWNUM * 10;
+
+2 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103                                                                                                                                                                                                                                                     
+           20 SALES                                 149                                                                                                                                                                                                                                                     
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = INITCAP(DEPARTMENT_NAME) , MANAGER_ID = 777 WHERE DEPARTMENT_ID = 20;
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103                                                                                                                                                                                                                                                     
+           20 Sales                                 777                                                                                                                                                                                                                                                     
+
+SQL> REM VALUES : LITERAL , DEFAULT , NULL , '' , EXPRESSION/FORMULA , FUNCTION , SCALAR SUB QUERY
+SQL> 
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                                                                                                                               
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                                                                                                                               
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                                                                                                                               
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                                                                                                                               
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                                                                                                                               
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                                                                                                                               
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                                                                                                                               
+
+SQL> UPDATE D1 SET LOCATION_ID = (SELECT LOCATION_ID FROM LOCATIONS WHERE STATE_PROVINCE = 'Ontario') WHERE DEPARTMENT_ID = 10;
+
+1 row updated.
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                                                                                                                               
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                                                                                                                               
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                                                                                                                               
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                                                                                                                               
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                                                                                                                               
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                                                                                                                               
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                                                                                                                               
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103        1800                                                                                                                                                                                                                                         
+           20 Sales                                 777                                                                                                                                                                                                                                                     
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 Administration                        200        1700                                                                                                                                                                                                                                         
+           20 Marketing                             201        1800                                                                                                                                                                                                                                         
+           50 Shiping                               124        1500                                                                                                                                                                                                                                         
+           60 IT                                    103        1400                                                                                                                                                                                                                                         
+           80 Sales                                 149        2500                                                                                                                                                                                                                                         
+           90 Executive                             100        1700                                                                                                                                                                                                                                         
+          110 Accounting                            205        1700                                                                                                                                                                                                                                         
+          190 Contracting                                      1700                                                                                                                                                                                                                                         
+
+8 rows selected.
+
+SQL> UPDATE D1 SET (MANAGER_ID,LOCATION_ID) = (SELECT MANAGER_ID,LOCATION_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID = 50) WHERE DEPARTMENT_ID = 20;
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103        1800                                                                                                                                                                                                                                         
+           20 Sales                                 124        1500                                                                                                                                                                                                                                         
+
+SQL> REM TCL : COMMIT ROLLBACK SAVEPOINT
+SQL> 
+SQL> REM DML : INSERT UPDATE DELETE
+SQL> 
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103        1800                                                                                                                                                                                                                                         
+           20 Sales                                 124        1500                                                                                                                                                                                                                                         
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID IN (50,60);
+
+2 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103        1800                                                                                                                                                                                                                                         
+           20 Sales                                 124        1500                                                                                                                                                                                                                                         
+           50 Shiping                               124        1500                                                                                                                                                                                                                                         
+           60 IT                                    103        1400                                                                                                                                                                                                                                         
+
+SQL> REM MEMORY : 4 ROWS , TABLE : 2 ROWS
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> REM MEMORY : 0 ROWS , TABLE : 4 ROWS
+SQL> 
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE DEPARTMENT_ID = 50;
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                                                                                                                         
+------------- ------------------------------ ---------- -----------                                                                                                                                                                                                                                         
+           10 IT                                    103        1800                                                                                                                                                                                                                                         
+           20 Sales                                 124        1500                                                                                                                                                                                                                                         
+           50 SHIPING                               124        1500                                                                                                                                                                                                                                         
+           60 IT                                    103        1400                                                                                                                                                                                                                                         
+
+SQL> COMMIT;
+
+Commit complete.
+

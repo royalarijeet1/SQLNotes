@@ -1,0 +1,218 @@
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS WHERE REGION_ID = 0;
+
+Table created.
+
+SQL> DESC R1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGION_ID                                 NOT NULL NUMBER
+ REGION_NAME                                        VARCHAR2(25)
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> REM THE BELOW INSERT COMMAND WILL START NEW TRANSACTION.
+SQL> 
+SQL> INSERT INTO R1 VALUES (1,'ASIA');
+
+1 row created.
+
+SQL> REM MEMORY = 1 ROW , TABLE = 0 ROW
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+
+SQL> INSERT INTO R1 VALUES (2,'AMERICA');
+
+1 row created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+
+SQL> REM MEMORY = 2 ROW , TABLE = 0 ROW
+SQL> 
+SQL> REM ROLLBACK : TO UNDO THE CHANGES DONE IN CURRENT TRANSACTION FROM MEMORY/RAM
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> REM MEMORY = 0 ROW , TABLE = 0 ROW
+SQL> 
+SQL> REM ABOVE ROLLBACK STATEMENT COMPLETED THE TRANSACTION.
+SQL> 
+SQL> REM BELOW INSERT STATEMENT WILL START NEW TRANSACTION.
+SQL> 
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> INSERT INTO R1 VALUES (1,'ASIA');
+
+1 row created.
+
+SQL> REM MEMORY = 1 ROW , TABLE = 0 ROW
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+
+SQL> INSERT INTO R1 VALUES (2,'AMERICA');
+
+1 row created.
+
+SQL> REM MEMORY = 2 ROW , TABLE = 0 ROW
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+
+SQL> REM COMMIT : TO SAVE THE CHANGES DONE IN CURRENT TRANSACTION TO TABLE/HARDDISK/DATABASE PERMANENTLY
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> REM MEMORY = 0 ROW , TABLE = 2 ROW
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+
+SQL> REM ABOVE COMMIT STATEMENT COMPLETED THE SECOND TRANSACTION.
+SQL> 
+SQL> REM BELOW INSERT STATEMENT WILL START 3RD TRANSACTION OF THIS SESSION.
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+
+SQL> REM MEMORY = 0 ROW , TABLE = 2 ROW
+SQL> 
+SQL> INSERT INTO R1 VALUES (3,'AFRICA');
+
+1 row created.
+
+SQL> REM MEMORY = 1 ROW , TABLE = 2 ROW
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+         3 AFRICA                                                               
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> REM ABOVE STATEMENT WILL CREATE SAVEPOINT NAMED 'A'. THIS WILL BREAK OUR TRANSACTION INTO PARTS. WE CAN USE THIS SAVEPOINT WITH ROLLBACK COMMAND FOR PARTIAL UNDO.
+SQL> 
+SQL> INSERT INTO R1 VALUES (4,'ANTARCTICA');
+
+1 row created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+         3 AFRICA                                                               
+         4 ANTARCTICA                                                           
+
+SQL> REM MEMORY = 2 ROW , TABLE = 2 ROW
+SQL> 
+SQL> REM POSSIBILITIES : 1 COMMIT/FULL SAVE 2 ROLLBACK/FULL UNDO 3 ROLLBACK TO A; + COMMIT; (UNDO CHANGES DONE AFTER SAVEPOINT AND COMMIT CHANGES DONE BEFORE SAVEPOINT)
+SQL> 
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+         3 AFRICA                                                               
+
+SQL> REM MEMORY = 1 ROW , TABLE = 2 ROWS
+SQL> 
+SQL> REM SAVEPOINT IS UNAFFECTED AND EXIST.
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                          
+---------- -------------------------                                            
+         1 ASIA                                                                 
+         2 AMERICA                                                              
+         3 AFRICA                                                               
+
+SQL> REM MEMORY = 0 ROW , TABLE = 3 ROW
+SQL> 
+SQL> REM SAVEPOINT REMOVED AUTOMATICALLY.
+SQL> 
+SQL> REM INSERT , INSERT , SAVEPOINT A , INSERT , INSERT , SAVEPOINT B , INSERT , INSERT
+SQL> 
+SQL> REM ROLLBACK TO B; : WILL UNDO ONLY LAST TWO INSERTS, BUT WILL KEEP ALL FIRST 4 INSERT CHANGES IN OPEN STATE AND WILL KEEP BOTH SAVEPOINTS UNAFFECTED.
+SQL> 
+SQL> REM ROLLBACK TO A; : WILL UNDO LAST FOUR INSERTS AND REMOVE SAVEPOINT B , BUT WILL KEEP ALL FIRST 2 INSERT CHANGES IN OPEN STATE AND WILL KEEP FIRST SAVEPOINT UNAFFECTED.
+SQL> 
+SQL> REM ROLLBACK; : WILL UNDO ALL 6 INSERT CHANGES AND WILL REMOVE BOTH SAVEPOINTS.
+SQL> 
+SQL> REM INSERT HAS TWO SYNTAXES : 1 INSERT ... VALUES   2 INSERT ... SUB QUERY
+SQL> 
+SQL> 
+SQL> REM INSERT ... VALUES : IT CAN INSERT SINGLE ROW PER SINGLE EXECUTION.
+SQL> 
+SQL> REM INSERT ... SUB QUERY : CAN INSERT ZERO , ONE , MULTIPLE OR ALL ROWS (WHICH IS RETURNED BY SUB QUERY)
+SQL> 
+SQL> 
+SQL> 
+SQL> REM INSERT ... VALUES : IT CAN INSERT SINGLE ROW PER SINGLE EXECUTION.
+SQL> 
+SQL> DROP TABLE D1;
+DROP TABLE D1
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
