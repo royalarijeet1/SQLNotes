@@ -1,0 +1,218 @@
+SQL> 
+SQL> REM TABLE HAS : 1 DEFINITION 2 DATA
+SQL> 
+SQL> REM DEFINITION : 1 COLUMN NAMES 2 DATA TYPES 3 SIZE 4 DEFAULT VALUES 5 CONSTRAINTS (DATA VALIDATION RULES)
+SQL> 
+SQL> REM DATA : FIGURE AND FACTS ABOUT BUSINESS TRANSACTIONS
+SQL> 
+SQL> REM TABLE CAN BE CREATED IN TWO WAYS : 1 FROM SCTRATCH/NEW 2 USING SUB QUERY/EXISTING TABLE
+SQL> 
+SQL> REM SYNTAX FOR CREATING TABLE FROM SCTRATCH : CREATE TABLE table_name (column_name datatype (size) DEFAULT default_value column level constraints,...,table level constraints);
+SQL> 
+SQL> REM SYNTAX FOR CREATING TABLE USING SUB QUERY : CREATE TABLE table_name AS sub query/SELECT ...;
+SQL> 
+SQL> 
+SQL> 
+SQL> REM SYNTAX FOR CREATING TABLE FROM SCTRATCH : CREATE TABLE table_name (column_name datatype (size) DEFAULT default_value column level constraints,...,table level constraints);
+SQL> 
+SQL> REM ORACLE SUPPORTS TWO TYPES OF NAMING CONVENTIONS FOR TABLE NAMING :
+SQL> 
+SQL> REM 1 CASE INSENSITIVE (DEFAULT) 2 CASE SENSITIVE
+SQL> 
+SQL> 
+SQL> 
+SQL> REM RULES FOR CASE INSENSITIVE NAMING :
+SQL> 
+SQL> REM 1 MINIMUM 1 CHARACTER , MAXIMUM 128 CHARACTERS
+SQL> 
+SQL> REM 2 FIRST CHARACTER MUST BE ALPHABET, REMAINING CHARACTERS MAY BE ALPHABETS, DIGITS OR ANY OF THE 3 SPECIAL CHARACTERS _ # $
+SQL> 
+SQL> REM 3 WE CAN'T USE IDENTICAL TABLE NAME UNDER SAME USER/SCHEMA
+SQL> 
+SQL> REM 4 WE CAN'T USE ORACLE/SQL KEY/RESERVE WORD AS TABLE NAME
+SQL> 
+SQL> 
+SQL> 
+SQL> create table pqr(rno number(3));
+create table pqr(rno number(3))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> drop table pqr;
+
+Table dropped.
+
+SQL> create table pqr(rno number(3));
+
+Table created.
+
+SQL> INSERT INTO PQR VALUES (10);
+
+1 row created.
+
+SQL> select * from Pqr;
+
+       RNO                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+        10                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> 
+SQL> 
+SQL> REM RULES FOR CASE SENSITIVE NAMING :
+SQL> 
+SQL> REM 1 MIN 1 CHARACTER , MAX 128 CHARACTERS
+SQL> 
+SQL> REM 2 FIRST CHARACTER MAY BE ANY CHARACTER (ALPHABET, DIGIT , SPECIAL)
+SQL> 
+SQL> REM 3 REMAINING CHARACTERS MAY BE ANY CHARACTER (ALPHABET, DIGIT , SPECIAL)
+SQL> 
+SQL> REM 4 WE CAN CREATE TABLE WITH IDENTICAL SPELLING, BUT CASE OR SPACING MUST BE DIFFERENT
+SQL> 
+SQL> REM 5 WE CAN USE ANY SQL/ORACLE KEY/RESERVE WORD AS TABLE NAME
+SQL> 
+SQL> REM 6 WE MUST DELIMIT THE NAME WITH DOUBLE QUOTES
+SQL> 
+SQL> REM 7 WE SHOULD NOT USE ALL CAPITAL ALPHABETS.
+SQL> 
+SQL> 
+SQL> 
+SQL> CREATE TABLE "123ONE"(NO NUMBER);
+
+Table created.
+
+SQL> CREATE TABLE "123ONE#^*"(NO NUMBER);
+
+Table created.
+
+SQL> CREATE TABLE "123ONe"(NO NUMBER);
+
+Table created.
+
+SQL> CREATE TABLE "insert" (NO NUMBER);
+
+Table created.
+
+SQL> insert into "insert" values (10);
+
+1 row created.
+
+SQL> select * from "insert";
+
+        NO                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+        10                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> select * from insert;
+select * from insert
+              *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> select * from "inserT";
+select * from "inserT"
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> select * from "inser";
+select * from "inser"
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into "GANESH" values (10);
+insert into "GANESH" values (10)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> CREATE TABLE "GANESH" (NO NUMBER);
+
+Table created.
+
+SQL> insert into ganesh values (10);
+
+1 row created.
+
+SQL> select * from GanEsh;
+
+        NO                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+        10                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> DROP TABLE FEES;
+DROP TABLE FEES
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> CREATE TABLE FEES(RECDATE DATE,AMOUNT NUMBER(10));
+
+Table created.
+
+SQL> INSERT INTO FEES VALUES (SYSDATE,5000);
+
+1 row created.
+
+SQL> INSERT INTO FEES VALUES (SYSDATE,15000);
+
+1 row created.
+
+SQL> DROP TABLE FEES;
+
+Table dropped.
+
+SQL> CREATE TABLE FEES(RECDATE DATE DEFAULT SYSDATE,AMOUNT NUMBER(10));
+
+Table created.
+
+SQL> INSERT INTO FEES (AMOUNT) VALUES (15000);
+
+1 row created.
+
+SQL> INSERT INTO FEES (AMOUNT) VALUES (25000);
+
+1 row created.
+
+SQL> SELECT * FROM FEES;
+
+RECDATE       AMOUNT                                                                                                                                                                                                                                                                                                                                                                                            
+--------- ----------                                                                                                                                                                                                                                                                                                                                                                                            
+17-AUG-22      15000                                                                                                                                                                                                                                                                                                                                                                                            
+17-AUG-22      25000                                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> DROP TABLE FEES;
+
+Table dropped.
+
+SQL> CREATE SEQUENCE RECNO;
+
+Sequence created.
+
+SQL> CREATE TABLE FEES(RECNO NUMBER(4) DEFAULT RECNO.NEXTVAL,RECDATE DATE DEFAULT SYSDATE,AMOUNT NUMBER(10));
+
+Table created.
+
+SQL> INSERT INTO FEES (AMOUNT) VALUES (25000);
+
+1 row created.
+
+SQL> INSERT INTO FEES (AMOUNT) VALUES (35000);
+
+1 row created.
+
+SQL> SELECT * FROM FEES;
+
+     RECNO RECDATE       AMOUNT                                                                                                                                                                                                                                                                                                                                                                                 
+---------- --------- ----------                                                                                                                                                                                                                                                                                                                                                                                 
+         1 17-AUG-22      25000                                                                                                                                                                                                                                                                                                                                                                                 
+         2 17-AUG-22      35000                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SPOOL OFF

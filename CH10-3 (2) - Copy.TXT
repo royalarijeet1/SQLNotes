@@ -1,0 +1,505 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM LEVELS OF CONSTRAINTS : 1 COLUMN 2 TABLE
+SQL> 
+SQL> REM COLUMN LEVEL CONSTRAINT IS ATTACHED TO COLUMN DEFINITION, IT CAN REFER THE COLUMN TO WHICH CONSTRAINT IS ATTACHED EXCEPTION : REFERENCES
+SQL> 
+SQL> REM TABLE LEVEL CONSTRAINT IS ATTACHED TO TABLE DEFINITION, IT CAN REFER MULTIPLE COLUMNS OF SAME TABLE EXCEPTION : REFERENCES CAN REFER OTHER TABLE COLUMNS TOO
+SQL> 
+SQL> REM TABLE LEVEL CONSTRAINTS ARE PLACED AFTER THE LAST COLUMN DEFINITION
+SQL> 
+SQL> REM WE CAN WRITE MULTIPLE TABLE LEVEL CONSTRAINTS WITH , SEPARATOR
+SQL> 
+SQL> REM ONLY NOT NULL CONSTRAINT IS NOT AVAILABLE AT TABLE LEVEL
+SQL> 
+SQL> 
+SQL> 
+SQL> REM UNIQUE AND NOT NULL CONSTRAINTS ARE AVAILABLE SINGLE TIME PER COLUMN
+SQL> 
+SQL> REM CHECK AND REFERENCES CONSTRAINTS ARE AVAILABLE MULTIPLE TIMES PER COLUMN
+SQL> 
+SQL> REM PRIMARY KEY CONSTRAINT IS SUPPORTED SINGLE TIME PER TABLE
+SQL> 
+SQL> REM NOT NULL CONSTRAINT IS AVAILABLE ONLY FOR COLUMN LEVEL
+SQL> 
+SQL> REM REFERENCES CONSTRAINT HAS DIFFERENCE SYNTAX FOR COLUMN AND TABLE LEVEL
+SQL> 
+SQL> 
+SQL> 
+SQL> DROP TABLE SCHOOL;
+DROP TABLE SCHOOL
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys 
+
+
+SQL> DROP TABLE SCHOOL CASCADE CONSTRAINTS;
+
+Table dropped.
+
+SQL> DROP TABLE FEES;
+
+Table dropped.
+
+SQL> CREATE TABLE SCHOOL(STD NUMBER(2),DIV CHAR,RNO NUMBER(2) PRIMARY KEY (STD,DIV,RNO),NM VARCHAR(30));
+CREATE TABLE SCHOOL(STD NUMBER(2),DIV CHAR,RNO NUMBER(2) PRIMARY KEY (STD,DIV,RNO),NM VARCHAR(30))
+                                                                     *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE TABLE SCHOOL(STD NUMBER(2),DIV CHAR,RNO NUMBER(2),NM VARCHAR(30),CONSTRAINT SCOTT_SCHOOL_STD_DIV_RNO_PK PRIMARY KEY (STD,DIV,RNO));
+
+Table created.
+
+SQL> REM COMPOSITE PRIMARY KEY : IT INCLUDES MULTIPLE COLUMNS
+SQL> 
+SQL> REM CANDIDATE KEYS : THE COLUMNS WHICH ARE PART OF COMPOSITE CONSTRAINTS
+SQL> 
+SQL> INSERT INTO SCHOOL VALUES (5,'A',1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO SCHOOL VALUES (5,'A',2,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO SCHOOL VALUES (5,'A',2,'SIDDHI');
+INSERT INTO SCHOOL VALUES (5,'A',2,'SIDDHI')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SCOTT_SCHOOL_STD_DIV_RNO_PK) violated 
+
+
+SQL> INSERT INTO SCHOOL VALUES (5,'B',2,'SIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO SCHOOL VALUES (6,'B',2,'LABH');
+
+1 row created.
+
+SQL> INSERT INTO SCHOOL VALUES (6,'B',1,'SHUBH');
+
+1 row created.
+
+SQL> SELECT * FROM SCHOOL;
+
+       STD D        RNO NM                                                      
+---------- - ---------- ------------------------------                          
+         5 A          1 GANESH                                                  
+         5 A          2 RIDDHI                                                  
+         5 B          2 SIDDHI                                                  
+         6 B          2 LABH                                                    
+         6 B          1 SHUBH                                                   
+
+SQL> DROP TABLE SCHOOL;
+
+Table dropped.
+
+SQL> CREATE TABLE SCHOOL(STD NUMBER(2),DIV CHAR,RNO NUMBER(2),NM VARCHAR(30),CONSTRAINT SCOTT_SCHOOL_STD_DIV_RNO_UK UNIQUE NOT NULL (STD,DIV,RNO));
+CREATE TABLE SCHOOL(STD NUMBER(2),DIV CHAR,RNO NUMBER(2),NM VARCHAR(30),CONSTRAINT SCOTT_SCHOOL_STD_DIV_RNO_UK UNIQUE NOT NULL (STD,DIV,RNO))
+                                                                                                                      *
+ERROR at line 1:
+ORA-00906: missing left parenthesis 
+
+
+SQL> CREATE TABLE SCHOOL(STD NUMBER(2) NOT NULL,DIV CHAR NOT NULL,RNO NUMBER(2) NOT NULL,NM VARCHAR(30),CONSTRAINT SCOTT_SCHOOL_STD_DIV_RNO_UK UNIQUE (STD,DIV,RNO));
+
+Table created.
+
+SQL> INSERT INTO SCHOOL VALUES (5,'A',1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO SCHOOL VALUES (5,'A',2,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO SCHOOL VALUES (5,'A',2,'SIDDHI');
+INSERT INTO SCHOOL VALUES (5,'A',2,'SIDDHI')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SCOTT_SCHOOL_STD_DIV_RNO_UK) violated 
+
+
+SQL> INSERT INTO SCHOOL VALUES (5,'B',2,'SIDDHI');
+
+1 row created.
+
+SQL> DROP TABLE SCHOOL;
+
+Table dropped.
+
+
+
+SQL> CREATE TABLE SCHOOL(STD NUMBER(2),DIV CHAR CHECK (DIV IN ('A','B','C')),RNO NUMBER(2),NM VARCHAR(30),
+  2  CONSTRAINT SCOTT_SCHOOL_STD_DIV_RNO_PK PRIMARY KEY (STD,DIV,RNO),
+  3  CHECK ((STD BETWEEN 1 AND 4 AND RNO BETWEEN 1 AND 60) OR
+  4         (STD BETWEEN 5 AND 8 AND RNO BETWEEN 1 AND 45) OR
+  5         (STD BETWEEN 9 AND 12 AND RNO BETWEEN 1 AND 30)));
+
+Table created.
+
+SQL> CREATE TABLE FEES(STANDARD NUMBER(2),DIV CHAR,ROLLNO NUMBER(2),AMOUNT NUMBER(5) CHECK (AMOUNT BETWEEN 1 AND 50000),
+  2  FOREIGN KEY (DIV,ROLLNO,STANDARD) REFERENCES SCHOOL);
+FOREIGN KEY (DIV,ROLLNO,STANDARD) REFERENCES SCHOOL)
+             *
+ERROR at line 2:
+ORA-02267: column type incompatible with referenced column type 
+
+
+SQL> CREATE TABLE FEES(STANDARD NUMBER(2),DIV CHAR,ROLLNO NUMBER(2),AMOUNT NUMBER(5) CHECK (AMOUNT BETWEEN 1 AND 50000),
+  2  FOREIGN KEY (DIV,ROLLNO,STANDARD) REFERENCES SCHOOL(DIV,RNO,STD));
+
+Table created.
+
+SQL> REM CHECK CONSTRAINT DOESN'T ALLOW SOME ITEMS LIKE SYSDATE , CURRENT_DATE , TIMESTAMP FUNCTIONS, ROWNUM ...
+SQL> 
+SQL> REM CREATE TABLE USING SUB QUERY
+SQL> 
+SQL> REM SYNTAX : CREATE TABLE TABLENAME AS SUB QUERY/SELECT STATEMENT
+SQL> 
+
+
+
+SQL> CREATE TABLE T1 AS SELECT * FROM REGIONS;
+
+Table created.
+
+SQL> DESC REGIONS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> DESC T1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM T1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM WHEN WE CREATE TABLE USING EXISTING TABLE/SUBQUERY, ONLY NOT NULL CONSTRAINT IS COPIED TO NEW TABLE. ALL REMAINING CONSTRAINTS MUST BE ADD AFTERWARDS USING ALTER TABLE COMMAND.
+SQL> 
+SQL> CREATE TABLE T2 AS SELECT EMPLOYEE_ID , FIRST_NAME , SALARY FROM EMPLOYEES;
+
+Table created.
+
+SQL> DESC T2
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPLOYEE_ID                                                                                                       NOT NULL NUMBER(6)
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ SALARY                                                                                                                     NUMBER(8,2)
+
+SQL> SELECT * FROM T2;
+
+EMPLOYEE_ID FIRST_NAME          SALARY                                                                                                                                                                  
+----------- --------------- ----------                                                                                                                                                                  
+        100 Steven               24000                                                                                                                                                                  
+        101 Neena                17000                                                                                                                                                                  
+        102 Lex                  17000                                                                                                                                                                  
+        103 Alexander             9000                                                                                                                                                                  
+        104 Bruce                 6000                                                                                                                                                                  
+        107 Diana                 4200                                                                                                                                                                  
+        124 Kevin                 5800                                                                                                                                                                  
+        141 Trenna                3500                                                                                                                                                                  
+        142 Curtis                3100                                                                                                                                                                  
+        143 Randall               2600                                                                                                                                                                  
+        144 Peter                 2500                                                                                                                                                                  
+        149 Eleni                10500                                                                                                                                                                  
+        174 Ellen                11000                                                                                                                                                                  
+        176 Jonathon              8600                                                                                                                                                                  
+        178 Kimerely              7000                                                                                                                                                                  
+        200 Jennifer              4400                                                                                                                                                                  
+        201 Michael              13000                                                                                                                                                                  
+        202 Pat                   6000                                                                                                                                                                  
+        205 Shelley              12000                                                                                                                                                                  
+        206 William               8300                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> CREATE TABLE T3 AS SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID >= 60;
+
+Table created.
+
+SQL> DESC T3
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> SELECT * FROM T3;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+SQL> CREATE TABLE T4 AS SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE SALARY BETWEEN 6000 AND 11000 ORDER BY SALARY;
+
+Table created.
+
+SQL> DESC T4
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ HIRE_DATE                                                                                                         NOT NULL DATE
+
+SQL> SELECT * FROM T4;
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                               
+--------------- ---------                                                                                                                                                                               
+Bruce           21-MAY-91                                                                                                                                                                               
+Pat             17-AUG-97                                                                                                                                                                               
+Kimerely        24-MAY-99                                                                                                                                                                               
+William         07-JUN-94                                                                                                                                                                               
+Jonathon        24-MAR-98                                                                                                                                                                               
+Alexander       03-JAN-90                                                                                                                                                                               
+Eleni           29-JAN-00                                                                                                                                                                               
+Ellen           11-MAY-96                                                                                                                                                                               
+
+8 rows selected.
+
+
+
+
+SQL> CREATE TABLE T5 AS SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME, SALARY FROM EMPLOYEES;
+
+Table created.
+
+SQL> SELECT * FROM T5;
+
+FULLNAME                            SALARY                                                                                                                                                              
+------------------------------- ----------                                                                                                                                                              
+Steven King                          24000                                                                                                                                                              
+Neena Kochhar                        17000                                                                                                                                                              
+Lex De Haan                          17000                                                                                                                                                              
+Alexander Hunold                      9000                                                                                                                                                              
+Bruce Ernst                           6000                                                                                                                                                              
+Diana Lorentz                         4200                                                                                                                                                              
+Kevin Mourgos                         5800                                                                                                                                                              
+Trenna Rajs                           3500                                                                                                                                                              
+Curtis Davies                         3100                                                                                                                                                              
+Randall Matos                         2600                                                                                                                                                              
+Peter Vargas                          2500                                                                                                                                                              
+Eleni Zlotkey                        10500                                                                                                                                                              
+Ellen Abel                           11000                                                                                                                                                              
+Jonathon Taylor                       8600                                                                                                                                                              
+Kimerely Grant                        7000                                                                                                                                                              
+Jennifer Whalen                       4400                                                                                                                                                              
+Michael Hartstein                    13000                                                                                                                                                              
+Pat Fay                               6000                                                                                                                                                              
+Shelley Higgins                      12000                                                                                                                                                              
+William Gietz                         8300                                                                                                                                                              
+
+20 rows selected.
+
+SQL> DESC EMPLOYEES
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPLOYEE_ID                                                                                                       NOT NULL NUMBER(6)
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ LAST_NAME                                                                                                         NOT NULL VARCHAR2(15)
+ EMAIL                                                                                                             NOT NULL VARCHAR2(10)
+ PHONE_NUMBER                                                                                                               VARCHAR2(20)
+ HIRE_DATE                                                                                                         NOT NULL DATE
+ JOB_ID                                                                                                            NOT NULL VARCHAR2(10)
+ SALARY                                                                                                                     NUMBER(8,2)
+ COMMISSION_PCT                                                                                                             NUMBER(2,2)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+
+SQL> DESC T5
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ FULLNAME                                                                                                                   VARCHAR2(31)
+ SALARY                                                                                                                     NUMBER(8,2)
+
+SQL> CREATE TABLE T6 AS SELECT FIRST_NAME , LOWER(EMAIL) EMAIL FROM EMPLOYEES;
+
+Table created.
+
+SQL> SELECT * FROM T6;
+
+FIRST_NAME      EMAIL                                                                                                                                                                                   
+--------------- ----------                                                                                                                                                                              
+Alexander       ahunold                                                                                                                                                                                 
+Bruce           bernst                                                                                                                                                                                  
+Curtis          cdavies                                                                                                                                                                                 
+Diana           dlorentz                                                                                                                                                                                
+Ellen           eabel                                                                                                                                                                                   
+Eleni           ezlotkey                                                                                                                                                                                
+Jonathon        jtaylor                                                                                                                                                                                 
+Jennifer        jwhalen                                                                                                                                                                                 
+Kimerely        kgrant                                                                                                                                                                                  
+Kevin           kmourgos                                                                                                                                                                                
+Lex             ldehaan                                                                                                                                                                                 
+Michael         mhartste                                                                                                                                                                                
+Neena           nkochhar                                                                                                                                                                                
+Pat             pfay                                                                                                                                                                                    
+Peter           pvargas                                                                                                                                                                                 
+Randall         rmatos                                                                                                                                                                                  
+Shelley         shiggins                                                                                                                                                                                
+Steven          sking                                                                                                                                                                                   
+Trenna          trajs                                                                                                                                                                                   
+William         wgietz                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> CREATE TABLE T7 AS SELECT DEPARTMENT_ID , COUNT(*) DEPT_CNT FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+Table created.
+
+SQL> SELECT * FROM T7;
+
+DEPARTMENT_ID   DEPT_CNT                                                                                                                                                                                
+------------- ----------                                                                                                                                                                                
+                       1                                                                                                                                                                                
+           90          3                                                                                                                                                                                
+           20          2                                                                                                                                                                                
+          110          2                                                                                                                                                                                
+           50          5                                                                                                                                                                                
+           80          3                                                                                                                                                                                
+           60          3                                                                                                                                                                                
+           10          1                                                                                                                                                                                
+
+8 rows selected.
+
+SQL> CREATE TABLE T8 AS SELECT DEPARTMENT_NAME , CITY , STATE_PROVINCE FROM DEPARTMENTS NATURAL JOIN LOCATIONS;
+
+Table created.
+
+SQL> SELECT * FROM T8;
+
+DEPARTMENT_NAME                CITY                           STATE_PROVINCE                                                                                                                            
+------------------------------ ------------------------------ -------------------------                                                                                                                 
+Administration                 Seattle                        Washington                                                                                                                                
+Marketing                      Toronto                        Ontario                                                                                                                                   
+Shiping                        South San Francisco            California                                                                                                                                
+IT                             Southlake                      Texas                                                                                                                                     
+Sales                          Oxford                         Oxford                                                                                                                                    
+Executive                      Seattle                        Washington                                                                                                                                
+Accounting                     Seattle                        Washington                                                                                                                                
+Contracting                    Seattle                        Washington                                                                                                                                
+
+8 rows selected.
+
+SQL> CREATE TABLE T9 AS SELECT FIRST_NAME , JOB_ID , MAX(SALARY) JOB_MAX_SAL FROM EMPLOYEES WHERE (JOB_ID,SALARY) IN (SELECT JOB_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY JOB_ID);
+CREATE TABLE T9 AS SELECT FIRST_NAME , JOB_ID , MAX(SALARY) JOB_MAX_SAL FROM EMPLOYEES WHERE (JOB_ID,SALARY) IN (SELECT JOB_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY JOB_ID)
+                          *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> CREATE TABLE T9 AS SELECT FIRST_NAME , JOB_ID , SALARY JOB_MAX_SAL FROM EMPLOYEES WHERE (JOB_ID,SALARY) IN (SELECT JOB_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY JOB_ID);
+
+Table created.
+
+SQL> SELECT * FROM T9;
+
+FIRST_NAME      JOB_ID     JOB_MAX_SAL                                                                                                                                                                  
+--------------- ---------- -----------                                                                                                                                                                  
+Kevin           ST_MAN            5800                                                                                                                                                                  
+Trenna          ST_CLERK          3500                                                                                                                                                                  
+Shelley         AC_MGR           12000                                                                                                                                                                  
+Steven          AD_PRES          24000                                                                                                                                                                  
+William         AC_ACCOUNT        8300                                                                                                                                                                  
+Michael         MK_MAN           13000                                                                                                                                                                  
+Alexander       IT_PROG           9000                                                                                                                                                                  
+Ellen           SA_REP           11000                                                                                                                                                                  
+Jennifer        AD_ASST           4400                                                                                                                                                                  
+Pat             MK_REP            6000                                                                                                                                                                  
+Neena           AD_VP            17000                                                                                                                                                                  
+Lex             AD_VP            17000                                                                                                                                                                  
+Eleni           SA_MAN           10500                                                                                                                                                                  
+
+13 rows selected.
+
+SQL> CREATE TABLE T10 AS SELECT FIRST_NAME FROM EMPLOYEES UNION ALL SELECT CITY FROM LOCATIONS;
+
+Table created.
+
+SQL> SELECT * FROM T10;
+
+FIRST_NAME                                                                                                                                                                                              
+------------------------------                                                                                                                                                                          
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Curtis                                                                                                                                                                                                  
+Diana                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+Jonathon                                                                                                                                                                                                
+Kevin                                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Lex                                                                                                                                                                                                     
+Michael                                                                                                                                                                                                 
+Neena                                                                                                                                                                                                   
+Pat                                                                                                                                                                                                     
+Peter                                                                                                                                                                                                   
+Randall                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+Steven                                                                                                                                                                                                  
+Trenna                                                                                                                                                                                                  
+William                                                                                                                                                                                                 
+Southlake                                                                                                                                                                                               
+
+FIRST_NAME                                                                                                                                                                                              
+------------------------------                                                                                                                                                                          
+South San Francisco                                                                                                                                                                                     
+Seattle                                                                                                                                                                                                 
+Toronto                                                                                                                                                                                                 
+Oxford                                                                                                                                                                                                  
+
+25 rows selected.
+
+SQL> CREATE TABLE T11 AS SELECT * FROM EMPLOYEES WHERE ROWNUM = 0;
+
+Table created.
+
+SQL> DESC T11
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPLOYEE_ID                                                                                                       NOT NULL NUMBER(6)
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ LAST_NAME                                                                                                         NOT NULL VARCHAR2(15)
+ EMAIL                                                                                                             NOT NULL VARCHAR2(10)
+ PHONE_NUMBER                                                                                                               VARCHAR2(20)
+ HIRE_DATE                                                                                                         NOT NULL DATE
+ JOB_ID                                                                                                            NOT NULL VARCHAR2(10)
+ SALARY                                                                                                                     NUMBER(8,2)
+ COMMISSION_PCT                                                                                                             NUMBER(2,2)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+
+SQL> SELECT * FROM T11;
+
+no rows selected
+
+SQL> SPOOL OFF

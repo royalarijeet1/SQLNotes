@@ -1,0 +1,443 @@
+
+SQL> 
+SQL> CL SCR
+
+SQL> REM CONSTRAINTS : ARE NOTHING BUT DATA VALIDATION RULES
+SQL> 
+SQL> REM TYPES OF CONSTRAINTS : CHECK , NOT NULL , UNIQUE , PRIMARY KEY , REFERENCES
+SQL> 
+SQL> REM CHECK : IS USED TO CHECK DATA/VALUE WITH SOME CONDITION(S)
+SQL> 
+SQL> REM NOT NULL : WILL NOT ALLOW TO KEEP VALUE NULL I.E. SOME VALUE MUST BE STORED
+SQL> 
+SQL> REM UNIQUE : WILL NOT ALLOW DUPLICATE VALUES WITHIN COLUMN(S)
+SQL> 
+SQL> REM PRIMARY KEY : NOT NULL + UNIQUE : IT WILL NOT ALLOW NULL AS WELL AS DUPLICATE VALUES
+SQL> 
+SQL> REM REFERENCES : IT WILL ALLOW ONLY THOSE VALUES WHICH ARE AVAILABLE IN REFERRED PRIMARY KEY OR UNIQUE COLUMN
+SQL> 
+SQL> 
+SQL> REM LEVELS OF CONSTRAINTS : 1 COLUMN LEVEL 2 TABLE LEVEL
+SQL> 
+SQL> REM COLUMN LEVEL CONSTRAINT IS ATTACHED TO COLUMN DEFINITION
+SQL> 
+SQL> REM TABLE LEVEL CONSTRAINT IS ATTACHED TO TABLE I.E. AFTER LAST COLUMN DEFINITION
+SQL> 
+SQL> REM COLUMN LEVEL CONSTRAINT CAN REFER SINGLE COLUMN
+SQL> 
+SQL> REM TABLE LEVEL CONSTRAINT CAN REFER SINGLE OR MULTIPLE COLUMNS
+SQL> 
+SQL> 
+SQL> 
+SQL> CREATE TABLE INV(INVNO NUMBER(4),INVDT DATE DEFAULT SYSDATE,AMOUNT NUMBER(8,2));
+
+Table created.
+
+SQL> REM NULL IS DEFAULT VALUE FOR EACH COLUMN OF TABLE, IF IT IS NOT SPECIFIED.
+SQL> 
+SQL> DESC INV
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ INVNO                                              NUMBER(4)
+ INVDT                                              DATE
+ AMOUNT                                             NUMBER(8,2)
+
+SQL> DESC USER_TAB_COLS
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TABLE_NAME                                NOT NULL VARCHAR2(128)
+ COLUMN_NAME                               NOT NULL VARCHAR2(128)
+ DATA_TYPE                                          VARCHAR2(128)
+ DATA_TYPE_MOD                                      VARCHAR2(3)
+ DATA_TYPE_OWNER                                    VARCHAR2(128)
+ DATA_LENGTH                               NOT NULL NUMBER
+ DATA_PRECISION                                     NUMBER
+ DATA_SCALE                                         NUMBER
+ NULLABLE                                           VARCHAR2(1)
+ COLUMN_ID                                          NUMBER
+ DEFAULT_LENGTH                                     NUMBER
+ DATA_DEFAULT                                       LONG
+ NUM_DISTINCT                                       NUMBER
+ LOW_VALUE                                          RAW(2000)
+ HIGH_VALUE                                         RAW(2000)
+ DENSITY                                            NUMBER
+ NUM_NULLS                                          NUMBER
+ NUM_BUCKETS                                        NUMBER
+ LAST_ANALYZED                                      DATE
+ SAMPLE_SIZE                                        NUMBER
+ CHARACTER_SET_NAME                                 VARCHAR2(44)
+ CHAR_COL_DECL_LENGTH                               NUMBER
+ GLOBAL_STATS                                       VARCHAR2(3)
+ USER_STATS                                         VARCHAR2(3)
+ AVG_COL_LEN                                        NUMBER
+ CHAR_LENGTH                                        NUMBER
+ CHAR_USED                                          VARCHAR2(1)
+ V80_FMT_IMAGE                                      VARCHAR2(3)
+ DATA_UPGRADED                                      VARCHAR2(3)
+ HIDDEN_COLUMN                                      VARCHAR2(3)
+ VIRTUAL_COLUMN                                     VARCHAR2(3)
+ SEGMENT_COLUMN_ID                                  NUMBER
+ INTERNAL_COLUMN_ID                        NOT NULL NUMBER
+ HISTOGRAM                                          VARCHAR2(15)
+ QUALIFIED_COL_NAME                                 VARCHAR2(4000)
+ USER_GENERATED                                     VARCHAR2(3)
+ DEFAULT_ON_NULL                                    VARCHAR2(3)
+ IDENTITY_COLUMN                                    VARCHAR2(3)
+ EVALUATION_EDITION                                 VARCHAR2(128)
+ UNUSABLE_BEFORE                                    VARCHAR2(128)
+ UNUSABLE_BEGINNING                                 VARCHAR2(128)
+ COLLATION                                          VARCHAR2(100)
+ COLLATED_COLUMN_ID                                 NUMBER
+
+SQL> SELECT COLUMN_NAME , DATA_DEFAULT FROM USER_TAB_COLS WHERE TABLE_NAME = 'INV';
+
+COLUMN_NAME                                                                     
+--------------------------------------------------------------------------------
+DATA_DEFAULT                                                                    
+--------------------------------------------------------------------------------
+INVNO                                                                           
+                                                                                
+                                                                                
+INVDT                                                                           
+SYSDATE                                                                         
+                                                                                
+AMOUNT                                                                          
+                                                                                
+                                                                                
+
+SQL> SET LINES 200 PAGES 24
+SQL> 
+SQL> R
+  1* SELECT COLUMN_NAME , DATA_DEFAULT FROM USER_TAB_COLS WHERE TABLE_NAME = 'INV'
+
+COLUMN_NAME                                                                                                                                                                                             
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+DATA_DEFAULT                                                                                                                                                                                            
+--------------------------------------------------------------------------------                                                                                                                        
+INVNO                                                                                                                                                                                                   
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+INVDT                                                                                                                                                                                                   
+SYSDATE                                                                                                                                                                                                 
+                                                                                                                                                                                                        
+AMOUNT                                                                                                                                                                                                  
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+
+SQL> COL COLUMN_NAME FORMAT A30
+SQL> 
+SQL> COL DATA_DEFAULT FORMAT A30
+SQL> 
+SQL> R
+  1* SELECT COLUMN_NAME , DATA_DEFAULT FROM USER_TAB_COLS WHERE TABLE_NAME = 'INV'
+
+COLUMN_NAME                    DATA_DEFAULT                                                                                                                                                             
+------------------------------ ------------------------------                                                                                                                                           
+INVNO                                                                                                                                                                                                   
+INVDT                          SYSDATE                                                                                                                                                                  
+AMOUNT                                                                                                                                                                                                  
+
+SQL> INSERT INTO INV (INVNO,INVDT) VALUES (1,SYSDATE-2);
+
+1 row created.
+
+SQL> SELECT * FROM IVN;
+SELECT * FROM IVN
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT * FROM INV;
+
+     INVNO INVDT         AMOUNT                                                                                                                                                                         
+---------- --------- ----------                                                                                                                                                                         
+         1 22-DEC-21                                                                                                                                                                                    
+
+SQL> INSERT INTO INV (INVDT,AMOUNT) VALUES (SYSDATE-1,1000);
+
+1 row created.
+
+SQL> SELECT * FROM INV;
+
+     INVNO INVDT         AMOUNT                                                                                                                                                                         
+---------- --------- ----------                                                                                                                                                                         
+         1 22-DEC-21                                                                                                                                                                                    
+           23-DEC-21       1000                                                                                                                                                                         
+
+SQL> INSERT INTO INV (INVNO,AMOUNT) VALUES (5,2000);
+
+1 row created.
+
+SQL> SELECT * FROM INV;
+
+     INVNO INVDT         AMOUNT                                                                                                                                                                         
+---------- --------- ----------                                                                                                                                                                         
+         1 22-DEC-21                                                                                                                                                                                    
+           23-DEC-21       1000                                                                                                                                                                         
+         5 24-DEC-21       2000                                                                                                                                                                         
+
+SQL> DROP TABLE INV;
+
+Table dropped.
+
+SQL> CREATE SEQUENCE INVS;
+
+Sequence created.
+
+SQL> CREATE TABLE INV(INVNO NUMBER(4) DEFAULT INVS.NEXTVAL,INVDT DATE DEFAULT SYSDATE,AMOUNT NUMBER(8,2));
+
+Table created.
+
+SQL> INSERT INTO INV (AMOUNT) VALUES (1000);
+
+1 row created.
+
+SQL> INSERT INTO INV (AMOUNT) VALUES (2000);
+
+1 row created.
+
+SQL> INSERT INTO INV (AMOUNT) VALUES (5000);
+
+1 row created.
+
+SQL> INSERT INTO INV (AMOUNT) VALUES (5600);
+
+1 row created.
+
+SQL> SELECT * FROM INV;
+
+     INVNO INVDT         AMOUNT                                                                                                                                                                         
+---------- --------- ----------                                                                                                                                                                         
+         1 24-DEC-21       1000                                                                                                                                                                         
+         2 24-DEC-21       2000                                                                                                                                                                         
+         3 24-DEC-21       5000                                                                                                                                                                         
+         4 24-DEC-21       5600                                                                                                                                                                         
+
+SQL> REM CHECK : IS USED TO CHECK DATA/VALUE WITH SOME CONDITION(S)
+SQL> 
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2),NM VARCHAR(10));
+
+Table created.
+
+SQL> REM NUMBER(2) : RANGE -99 TO +99
+SQL> 
+SQL> REM ACTUAL REQUIREMENT : 1-30
+SQL> 
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (0,'SIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (-1,'SHUBH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (99,'LABH');
+
+1 row created.
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         1 RIDDHI                                                                                                                                                                                       
+         0 SIDDHI                                                                                                                                                                                       
+        -1 SHUBH                                                                                                                                                                                        
+        99 LABH                                                                                                                                                                                         
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) CHECK(RNO BETWEEN 1 AND 30),NM VARCHAR(10));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (0,'SIDDHI');
+INSERT INTO STD5A VALUES (0,'SIDDHI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029259) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (-1,'SHUBH');
+INSERT INTO STD5A VALUES (-1,'SHUBH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029259) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (99,'LABH');
+INSERT INTO STD5A VALUES (99,'LABH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029259) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (NULL,'LABH');
+
+1 row created.
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         1 RIDDHI                                                                                                                                                                                       
+           LABH                                                                                                                                                                                         
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) CHECK(RNO BETWEEN 1 AND 30) UNIQUE NOT NULL,NM VARCHAR(10));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+INSERT INTO STD5A VALUES (1,'RIDDHI')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0029262) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (0,'RIDDHI');
+INSERT INTO STD5A VALUES (0,'RIDDHI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029261) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (-1,'RIDDHI');
+INSERT INTO STD5A VALUES (-1,'RIDDHI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029261) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (31,'RIDDHI');
+INSERT INTO STD5A VALUES (31,'RIDDHI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029261) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (-99,'RIDDHI');
+INSERT INTO STD5A VALUES (-99,'RIDDHI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029261) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (NULL,'RIDDHI');
+INSERT INTO STD5A VALUES (NULL,'RIDDHI')
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."STD5A"."RNO") 
+
+
+SQL> INSERT INTO STD5A VALUES (2,'RIDDHI');
+
+1 row created.
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         2 RIDDHI                                                                                                                                                                                       
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) CHECK(RNO BETWEEN 1 AND 30) UNIQUE NOT NULL,NM VARCHAR(10) CHECK(NM=INITCAP(NM));
+CREATE TABLE STD5A(RNO NUMBER(2) CHECK(RNO BETWEEN 1 AND 30) UNIQUE NOT NULL,NM VARCHAR(10) CHECK(NM=INITCAP(NM))
+                                                                                                                *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) CHECK(RNO BETWEEN 1 AND 30) UNIQUE NOT NULL,NM VARCHAR(10) CHECK(NM=INITCAP(NM)));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+INSERT INTO STD5A VALUES (1,'GANESH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029265) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (1,'ganesh');
+INSERT INTO STD5A VALUES (1,'ganesh')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029265) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (1,'Ganesh');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'Riddhi');
+INSERT INTO STD5A VALUES (1,'Riddhi')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0029266) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (2,'Siddhi');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (22,'Siddhi');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (32,'Siddhi');
+INSERT INTO STD5A VALUES (32,'Siddhi')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0029264) violated 
+
+
+SQL> INSERT INTO STD5A VALUES ('','Siddhi');
+INSERT INTO STD5A VALUES ('','Siddhi')
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."STD5A"."RNO") 
+
+
+SQL> INSERT INTO STD5A VALUES (null,'Siddhi');
+INSERT INTO STD5A VALUES (null,'Siddhi')
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."STD5A"."RNO") 
+
+
